@@ -24,17 +24,13 @@ export default async function Header() {
           <Link href="/my-trips" className="text-sm font-medium text-gray-300 hover:text-gold transition-colors">
             My Trips
           </Link>
-          {session ? (
-            <span className="text-gold font-semibold">
-              Hello, {firstName}
-            </span>
-          ) : (
+       
             <Link href="/auth/login">
               <Button className="bg-gold hover:bg-yellow-600 text-black font-semibold">
                 Login
               </Button>
             </Link>
-          )}
+
         </nav>
       </div>
     </header>

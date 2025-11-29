@@ -5,7 +5,6 @@ import { PreviousTrips } from "@/components/homepage/PreviousTrips";
 import Footer from "@/components/layout/Footer";
 import Header from "@/components/layout/Header";
 import BottomTabBar from "@/components/layout/BottomTabBar";
-
 export const metadata: Metadata = {
   title: "",
   description: "",
@@ -18,8 +17,7 @@ export const metadata: Metadata = {
   },
 };
 
-export default function HomePage() {
-
+export default async function HomePage() {
   return (
     <main className="min-h-screen bg-black pb-16 md:pb-0">
       <Header />

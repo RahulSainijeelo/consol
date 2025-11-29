@@ -267,15 +267,6 @@ export default function RootLayout({
           </ClerkProvider>
           <Toaster />
         </ThemeProvider>
-
-        {/* Google AdSense - Load after hydration */}
-        <Script
-          id="google-adsense"
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5404939334049607"
-          crossOrigin="anonymous"
-          strategy="afterInteractive"
-        />
-
         {/* Analytics */}
         <Analytics />
         <SpeedInsights />
