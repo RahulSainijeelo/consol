@@ -1,0 +1,28 @@
+.no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+@media (max-width: 768px) {
+  .mobile-portfolio-modal {
+    border-radius: 1.25rem 1.25rem 0 0 !important;
+    max-width: 100vw !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    bottom: 0 !important;
+    top: auto !important;
+    position: fixed !important;
+    animation: slideUpPortfolioModal 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    padding-bottom: env(safe-area-inset-bottom, 1.5rem) !important;
+  }
+  @keyframes slideUpPortfolioModal {
+    from {
+      transform: translateX(-50%) translateY(100%);
+    }
+    to {
+      transform: translateX(-50%) translateY(0);
+    }
+  }
+}

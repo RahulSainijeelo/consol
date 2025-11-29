@@ -1,0 +1,12 @@
+{
+  "name": "Kurukshetra - Take You to the Reality",
+  "short_name": "Kurukshetra",
+  "description": "Dharmic journalism bringing truth and authentic narratives to light",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#ea580c",
+  "orientation": "portrait",
+  "categories": ["news", "education", "lifestyle"],
+  "lang": "en-IN"
+}

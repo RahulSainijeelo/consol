@@ -1,0 +1,97 @@
+.no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.responsive-review-modal {
+  display: flex !important;
+  flex-direction: column !important;
+  max-height: 90vh !important;
+  height: 90vh !important;
+  overflow-y: auto !important;
+  padding: 0.5rem 0.25rem !important;
+}
+@media (min-width: 768px) {
+  .responsive-review-modal {
+    padding: 1.25rem 1.5rem 1rem 1.5rem !important;
+    border-radius: 1.25rem !important;
+    max-width: 420px !important;
+  }
+}
+.responsive-review-modal .DialogTitle {
+  font-size: 1.25rem !important;
+  font-weight: 700 !important;
+  text-align: center !important;
+  margin-bottom: 0.25rem !important;
+  letter-spacing: -0.01em;
+  color: #22223b;
+}
+.responsive-review-modal .DialogDescription {
+  font-size: 1rem !important;
+  color: #4b5563 !important;
+  text-align: center !important;
+  margin-bottom: 0.5rem !important;
+}
+.responsive-review-modal .DialogClose,
+.responsive-review-modal [data-dialog-close] {
+  width: 2.5rem !important;
+  height: 2.5rem !important;
+  min-width: 2.5rem !important;
+  min-height: 2.5rem !important;
+  font-size: 1.5rem !important;
+  top: 0.5rem !important;
+  right: 0.5rem !important;
+  border-radius: 9999px !important;
+}
+@media (max-width: 767px) {
+  .responsive-review-modal {
+    position: fixed !important;
+    left: 50% !important;
+    bottom: 0 !important;
+    top: auto !important;
+    transform: translateX(-50%) !important;
+    width: 100vw !important;
+    max-width: 100vw !important;
+    border-radius: 1.25rem 1.25rem 0 0 !important;
+    animation: slideUpReviewModal 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    padding: 1rem 1rem 1rem 1rem !important;
+  }
+  .responsive-review-modal input,
+  .responsive-review-modal textarea {
+    min-height: 28px !important;
+    font-size: 0.89rem !important;
+    padding-top: 0.75rem !important;
+    padding-bottom: 0.35rem !important;
+  }
+  .responsive-review-modal .FormItem,
+  .responsive-review-modal .form-item {
+    margin-bottom: 0.5rem !important;
+    max-width: 96vw;
+  }
+  .responsive-review-modal .DialogTitle {
+    font-size: 1.1rem !important;
+    margin-bottom: 0.15rem !important;
+  }
+  .responsive-review-modal .DialogDescription {
+    font-size: 0.97rem !important;
+    margin-bottom: 0.25rem !important;
+  }
+  .responsive-review-modal .DialogClose,
+  .responsive-review-modal [data-dialog-close] {
+    width: 2.75rem !important;
+    height: 2.75rem !important;
+    font-size: 1.7rem !important;
+    top: 0.25rem !important;
+    right: 0.25rem !important;
+  }
+  @keyframes slideUpReviewModal {
+    from {
+      transform: translateX(-50%) translateY(100%);
+    }
+    to {
+      transform: translateX(-50%) translateY(0);
+    }
+  }
+}

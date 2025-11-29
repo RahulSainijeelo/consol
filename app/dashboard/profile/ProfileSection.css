@@ -1,0 +1,65 @@
+@media (max-width: 767px) {
+  .profile-card {
+    padding-left: 0.5rem !important;
+    padding-right: 0.5rem !important;
+    padding-top: 0.75rem !important;
+    padding-bottom: 0.75rem !important;
+    border-radius: 1rem !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  }
+  .profile-card .CardHeader,
+  .profile-card .card-header {
+    padding-bottom: 0.5rem !important;
+  }
+  .profile-card .CardContent,
+  .profile-card .card-content {
+    padding-top: 0.5rem !important;
+    padding-bottom: 0.5rem !important;
+  }
+  .profile-card form {
+    gap: 1rem !important;
+  }
+  .profile-card .flex.flex-col.items-center,
+  .profile-card .profile-avatar {
+    gap: 0.5rem !important;
+    align-items: center !important;
+  }
+  .profile-card img,
+  .profile-card .profile-avatar-img {
+    width: 72px !important;
+    height: 72px !important;
+    border-radius: 50% !important;
+    object-fit: cover !important;
+  }
+  .profile-card h2,
+  .profile-card .profile-title {
+    font-size: 1.15rem !important;
+    margin-top: 0.5rem !important;
+    text-align: center !important;
+    font-weight: 600 !important;
+  }
+  .profile-card .grid,
+  .profile-card .profile-form-grid {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 0.75rem !important;
+  }
+  .profile-card .Input,
+  .profile-card input,
+  .profile-card textarea {
+    font-size: 0.95rem !important;
+    min-height: 32px !important;
+    padding: 0.45rem 0.7rem !important;
+    border-radius: 0.5rem !important;
+  }
+  .profile-card .flex.items-center.gap-2.mb-1,
+  .profile-card .profile-phone-row {
+    gap: 0.5rem !important;
+  }
+  .profile-card button,
+  .profile-card .Button {
+    font-size: 0.97rem !important;
+    padding: 0.4rem 0.9rem !important;
+    border-radius: 0.5rem !important;
+  }
+}
