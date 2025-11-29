@@ -120,7 +120,7 @@ export default async function PrevTripPage({ params }: PrevTripPageProps) {
     }
 
     return (
-        <div className="min-h-screen bg-white pb-16 md:pb-0">
+        <div className="min-h-screen bg-black pb-16 md:pb-0">
             <Header />
 
             {/* Hero Section */}
@@ -134,8 +134,8 @@ export default async function PrevTripPage({ params }: PrevTripPageProps) {
 
                 {/* Completed Badge */}
                 <div className="absolute top-6 left-6 md:top-12 md:left-12">
-                    <div className="inline-flex items-center gap-2 px-4 py-2 bg-green-600 text-white text-sm font-semibold rounded-full">
-                        <span className="w-2 h-2 bg-white rounded-full animate-pulse"></span>
+                    <div className="inline-flex items-center gap-2 px-4 py-2 bg-green-900/80 backdrop-blur-sm text-green-100 text-sm font-semibold rounded-full border border-green-500/30">
+                        <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
                         Completed Trip
                     </div>
                 </div>
@@ -143,24 +143,24 @@ export default async function PrevTripPage({ params }: PrevTripPageProps) {
                 {/* Title Overlay */}
                 <div className="absolute bottom-0 left-0 right-0 p-6 md:p-12">
                     <div className="container mx-auto">
-                        <div className="inline-block px-4 py-1 bg-teal-600 text-white text-sm font-medium rounded-full mb-4">
+                        <div className="inline-block px-4 py-1 bg-gold text-black text-sm font-medium rounded-full mb-4">
                             {trip.category}
                         </div>
-                        <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4">
+                        <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-white mb-4">
                             {trip.title}
                         </h1>
-                        <p className="text-lg md:text-xl text-gray-200 max-w-3xl mb-4">
+                        <p className="text-lg md:text-xl text-gray-300 max-w-3xl mb-4">
                             {trip.shortDescription}
                         </p>
 
                         {/* Rating */}
                         <div className="flex items-center gap-4 flex-wrap">
-                            <div className="flex items-center gap-2 bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full">
-                                <Star className="w-5 h-5 fill-yellow-400 text-yellow-400" />
+                            <div className="flex items-center gap-2 bg-black/40 backdrop-blur-sm px-4 py-2 rounded-full border border-white/10">
+                                <Star className="w-5 h-5 fill-gold text-gold" />
                                 <span className="text-white font-semibold">{trip.rating} / 5.0</span>
-                                <span className="text-gray-200">({trip.totalReviews} reviews)</span>
+                                <span className="text-gray-400">({trip.totalReviews} reviews)</span>
                             </div>
-                            <div className="flex items-center gap-2 bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full text-white">
+                            <div className="flex items-center gap-2 bg-black/40 backdrop-blur-sm px-4 py-2 rounded-full text-white border border-white/10">
                                 <Users className="w-5 h-5" />
                                 <span>{trip.participants} travelers</span>
                             </div>
@@ -175,25 +175,25 @@ export default async function PrevTripPage({ params }: PrevTripPageProps) {
                     {/* Left Column */}
                     <div className="lg:col-span-2 space-y-8">
                         {/* Trip Highlights */}
-                        <div className="bg-white rounded-2xl border border-gray-200 p-6 md:p-8">
-                            <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-6">
+                        <div className="bg-white/5 rounded-2xl border border-white/10 p-6 md:p-8">
+                            <h2 className="text-2xl md:text-3xl font-bold text-white mb-6">
                                 Trip Highlights
                             </h2>
                             <ul className="space-y-3">
                                 {trip.highlights.map((highlight, index) => (
                                     <li key={index} className="flex items-start gap-3">
-                                        <div className="flex-shrink-0 w-6 h-6 bg-teal-100 rounded-full flex items-center justify-center mt-0.5">
-                                            <div className="w-2 h-2 bg-teal-600 rounded-full"></div>
+                                        <div className="flex-shrink-0 w-6 h-6 bg-gold/20 rounded-full flex items-center justify-center mt-0.5">
+                                            <div className="w-2 h-2 bg-gold rounded-full"></div>
                                         </div>
-                                        <span className="text-gray-700 leading-relaxed">{highlight}</span>
+                                        <span className="text-gray-300 leading-relaxed">{highlight}</span>
                                     </li>
                                 ))}
                             </ul>
                         </div>
 
                         {/* Photo Gallery */}
-                        <div className="bg-white rounded-2xl border border-gray-200 p-6 md:p-8">
-                            <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-6">
+                        <div className="bg-white/5 rounded-2xl border border-white/10 p-6 md:p-8">
+                            <h2 className="text-2xl md:text-3xl font-bold text-white mb-6">
                                 Photo Gallery
                             </h2>
                             <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
@@ -211,21 +211,21 @@ export default async function PrevTripPage({ params }: PrevTripPageProps) {
                         </div>
 
                         {/* Reviews Section */}
-                        <div className="bg-white rounded-2xl border border-gray-200 p-6 md:p-8">
+                        <div className="bg-white/5 rounded-2xl border border-white/10 p-6 md:p-8">
                             <div className="flex items-center justify-between mb-8">
-                                <h2 className="text-2xl md:text-3xl font-bold text-gray-900">
+                                <h2 className="text-2xl md:text-3xl font-bold text-white">
                                     Traveler Reviews
                                 </h2>
                                 <div className="flex items-center gap-2">
-                                    <Star className="w-6 h-6 fill-yellow-400 text-yellow-400" />
-                                    <span className="text-2xl font-bold text-gray-900">{trip.rating}</span>
-                                    <span className="text-gray-600">/ 5.0</span>
+                                    <Star className="w-6 h-6 fill-gold text-gold" />
+                                    <span className="text-2xl font-bold text-white">{trip.rating}</span>
+                                    <span className="text-gray-400">/ 5.0</span>
                                 </div>
                             </div>
 
                             <div className="space-y-6">
                                 {trip.reviews.map((review) => (
-                                    <div key={review.id} className="border-b border-gray-200 last:border-0 pb-6 last:pb-0">
+                                    <div key={review.id} className="border-b border-white/10 last:border-0 pb-6 last:pb-0">
                                         <div className="flex items-start gap-4">
                                             {/* Avatar */}
                                             <div className="flex-shrink-0">
@@ -236,7 +236,7 @@ export default async function PrevTripPage({ params }: PrevTripPageProps) {
                                                         className="w-12 h-12 rounded-full object-cover"
                                                     />
                                                 ) : (
-                                                    <div className="w-12 h-12 bg-teal-600 rounded-full flex items-center justify-center text-white font-bold">
+                                                    <div className="w-12 h-12 bg-gold rounded-full flex items-center justify-center text-black font-bold">
                                                         {review.name.charAt(0)}
                                                     </div>
                                                 )}
@@ -246,8 +246,8 @@ export default async function PrevTripPage({ params }: PrevTripPageProps) {
                                             <div className="flex-1">
                                                 <div className="flex items-center justify-between mb-2">
                                                     <div>
-                                                        <h4 className="font-semibold text-gray-900">{review.name}</h4>
-                                                        <p className="text-sm text-gray-500">
+                                                        <h4 className="font-semibold text-white">{review.name}</h4>
+                                                        <p className="text-sm text-gray-400">
                                                             {new Date(review.date).toLocaleDateString('en-US', {
                                                                 year: 'numeric',
                                                                 month: 'long',
@@ -260,8 +260,8 @@ export default async function PrevTripPage({ params }: PrevTripPageProps) {
                                                             <Star
                                                                 key={i}
                                                                 className={`w-4 h-4 ${i < review.rating
-                                                                        ? 'fill-yellow-400 text-yellow-400'
-                                                                        : 'fill-gray-200 text-gray-200'
+                                                                    ? 'fill-gold text-gold'
+                                                                    : 'fill-gray-700 text-gray-700'
                                                                     }`}
                                                             />
                                                         ))}
@@ -269,8 +269,8 @@ export default async function PrevTripPage({ params }: PrevTripPageProps) {
                                                 </div>
 
                                                 <div className="relative">
-                                                    <Quote className="absolute -left-1 -top-1 w-6 h-6 text-teal-200" />
-                                                    <p className="text-gray-700 leading-relaxed pl-6">{review.comment}</p>
+                                                    <Quote className="absolute -left-1 -top-1 w-6 h-6 text-gold/20" />
+                                                    <p className="text-gray-300 leading-relaxed pl-6">{review.comment}</p>
                                                 </div>
 
                                                 {/* Review Images */}
@@ -297,15 +297,15 @@ export default async function PrevTripPage({ params }: PrevTripPageProps) {
                     {/* Right Column - Sidebar */}
                     <div className="space-y-6">
                         {/* Trip Info Card */}
-                        <div className="bg-gradient-to-br from-teal-50 to-teal-100 rounded-2xl p-6 border border-teal-200 sticky top-24">
-                            <h3 className="text-xl font-bold text-gray-900 mb-6">Trip Information</h3>
+                        <div className="bg-gradient-to-br from-gray-900 to-black rounded-2xl p-6 border border-white/10 sticky top-24">
+                            <h3 className="text-xl font-bold text-white mb-6">Trip Information</h3>
 
                             <div className="space-y-4">
                                 <div className="flex items-start gap-3">
-                                    <Calendar className="w-5 h-5 text-teal-600 mt-0.5" />
+                                    <Calendar className="w-5 h-5 text-gold mt-0.5" />
                                     <div>
-                                        <p className="text-sm text-gray-600">Completed On</p>
-                                        <p className="font-semibold text-gray-900">
+                                        <p className="text-sm text-gray-400">Completed On</p>
+                                        <p className="font-semibold text-white">
                                             {new Date(trip.completedDate).toLocaleDateString('en-US', {
                                                 year: 'numeric',
                                                 month: 'long',
@@ -316,33 +316,33 @@ export default async function PrevTripPage({ params }: PrevTripPageProps) {
                                 </div>
 
                                 <div className="flex items-start gap-3">
-                                    <MapPin className="w-5 h-5 text-teal-600 mt-0.5" />
+                                    <MapPin className="w-5 h-5 text-gold mt-0.5" />
                                     <div>
-                                        <p className="text-sm text-gray-600">Duration</p>
-                                        <p className="font-semibold text-gray-900">{trip.duration}</p>
+                                        <p className="text-sm text-gray-400">Duration</p>
+                                        <p className="font-semibold text-white">{trip.duration}</p>
                                     </div>
                                 </div>
 
                                 <div className="flex items-start gap-3">
-                                    <Users className="w-5 h-5 text-teal-600 mt-0.5" />
+                                    <Users className="w-5 h-5 text-gold mt-0.5" />
                                     <div>
-                                        <p className="text-sm text-gray-600">Participants</p>
-                                        <p className="font-semibold text-gray-900">{trip.participants} travelers</p>
+                                        <p className="text-sm text-gray-400">Participants</p>
+                                        <p className="font-semibold text-white">{trip.participants} travelers</p>
                                     </div>
                                 </div>
 
                                 <div className="flex items-start gap-3">
-                                    <Star className="w-5 h-5 text-yellow-400 mt-0.5 fill-yellow-400" />
+                                    <Star className="w-5 h-5 text-gold mt-0.5 fill-gold" />
                                     <div>
-                                        <p className="text-sm text-gray-600">Average Rating</p>
-                                        <p className="font-semibold text-gray-900">{trip.rating} / 5.0</p>
+                                        <p className="text-sm text-gray-400">Average Rating</p>
+                                        <p className="font-semibold text-white">{trip.rating} / 5.0</p>
                                     </div>
                                 </div>
                             </div>
 
-                            <div className="mt-6 pt-6 border-t border-teal-200">
-                                <p className="text-sm text-gray-600 mb-4">Interested in a similar trip?</p>
-                                <button className="w-full bg-teal-600 hover:bg-teal-700 text-white font-semibold py-3 px-6 rounded-xl transition-colors">
+                            <div className="mt-6 pt-6 border-t border-white/10">
+                                <p className="text-sm text-gray-400 mb-4">Interested in a similar trip?</p>
+                                <button className="w-full bg-gold hover:bg-yellow-600 text-black font-semibold py-3 px-6 rounded-xl transition-colors">
                                     View Upcoming Trips
                                 </button>
                             </div>

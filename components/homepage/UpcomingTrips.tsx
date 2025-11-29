@@ -44,56 +44,56 @@ const trips = [
 
 export function UpcomingTrips() {
     return (
-        <section className="py-20 bg-gray-50 dark:bg-gray-900">
+        <section className="py-20 bg-black">
             <div className="container mx-auto px-4">
                 <div className="mb-12 text-center">
-                    <h2 className="mb-4 text-3xl font-bold text-gray-900 dark:text-white sm:text-4xl">
-                        Upcoming <span className="text-teal-600">Trips</span>
+                    <h2 className="mb-4 text-3xl font-display font-bold text-white sm:text-4xl">
+                        Upcoming <span className="text-gold">Trips</span>
                     </h2>
-                    <p className="mx-auto max-w-2xl text-gray-600 dark:text-gray-400">
+                    <p className="mx-auto max-w-2xl text-gray-400">
                         Join us on our next adventures. Limited spots available for these exclusive experiences.
                     </p>
                 </div>
 
                 <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
                     {trips.map((trip) => (
-                        <Card key={trip.id} className="overflow-hidden border-none shadow-lg transition-transform hover:-translate-y-1 hover:shadow-xl">
+                        <Card key={trip.id} className="overflow-hidden border-white/10 bg-white/5 shadow-lg transition-transform hover:-translate-y-1 hover:shadow-gold/20">
                             <div className="relative h-64 w-full overflow-hidden">
                                 <img
                                     src={trip.image}
                                     alt={trip.title}
                                     className="h-full w-full object-cover transition-transform duration-300 hover:scale-110"
                                 />
-                                <div className="absolute top-4 right-4 rounded-full bg-white/90 px-3 py-1 text-sm font-bold text-teal-600 shadow-sm backdrop-blur-sm">
+                                <div className="absolute top-4 right-4 rounded-full bg-black/80 px-3 py-1 text-sm font-bold text-gold shadow-sm backdrop-blur-sm border border-gold/20">
                                     {trip.price}
                                 </div>
                             </div>
                             <CardHeader>
                                 <div className="flex items-center justify-between">
-                                    <div className="flex items-center text-sm text-gray-500 dark:text-gray-400">
-                                        <MapPin className="mr-1 h-4 w-4 text-teal-600" />
+                                    <div className="flex items-center text-sm text-gray-400">
+                                        <MapPin className="mr-1 h-4 w-4 text-gold" />
                                         {trip.location}
                                     </div>
                                 </div>
-                                <CardTitle className="text-xl font-bold mt-2">{trip.title}</CardTitle>
-                                <CardDescription className="line-clamp-2 mt-2">
+                                <CardTitle className="text-xl font-bold mt-2 text-white">{trip.title}</CardTitle>
+                                <CardDescription className="line-clamp-2 mt-2 text-gray-400">
                                     {trip.description}
                                 </CardDescription>
                             </CardHeader>
                             <CardContent>
-                                <div className="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400">
+                                <div className="flex items-center justify-between text-sm text-gray-400">
                                     <div className="flex items-center">
-                                        <Calendar className="mr-2 h-4 w-4" />
+                                        <Calendar className="mr-2 h-4 w-4 text-gold" />
                                         {trip.date}
                                     </div>
                                     <div className="flex items-center">
-                                        <Clock className="mr-2 h-4 w-4" />
+                                        <Clock className="mr-2 h-4 w-4 text-gold" />
                                         {trip.duration}
                                     </div>
                                 </div>
                             </CardContent>
                             <CardFooter>
-                                <Button className="w-full bg-teal-600 hover:bg-teal-700 text-white">
+                                <Button className="w-full bg-gold hover:bg-yellow-600 text-black font-semibold">
                                     View Details
                                 </Button>
                             </CardFooter>
@@ -102,7 +102,7 @@ export function UpcomingTrips() {
                 </div>
 
                 <div className="mt-12 text-center">
-                    <Button variant="outline" size="lg" className="border-teal-600 text-teal-600 hover:bg-teal-50">
+                    <Button variant="outline" size="lg" className="border-gold text-gold hover:bg-gold/10">
                         View All Destinations
                     </Button>
                 </div>

@@ -75,17 +75,17 @@ export default function MyTripsPage() {
     const [activeTab, setActiveTab] = useState<'upcoming' | 'past'>('upcoming');
 
     return (
-        <div className="min-h-screen bg-gray-50 pb-16 md:pb-0">
+        <div className="min-h-screen bg-black pb-16 md:pb-0">
             <Header />
 
             {/* Hero Section */}
-            <div className="text-black py-6 md:py-8">
+            <div className="text-white py-6 md:py-8">
                 <div className="container mx-auto px-4">
                     <div className="max-w-3xl">
-                        <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4">
+                        <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold mb-4">
                             My Trips
                         </h1>
-                        <p className="text-lg md:text-xl text-gray-600">
+                        <p className="text-lg md:text-xl text-gray-400">
                             Manage your upcoming adventures and revisit your past journeys.
                         </p>
                     </div>
@@ -93,30 +93,30 @@ export default function MyTripsPage() {
             </div>
 
             {/* Tabs */}
-            <div className="bg-white border-b border-gray-200 sticky top-16 z-40">
+            <div className="bg-black/95 border-b border-white/10 sticky top-16 z-40 backdrop-blur supports-[backdrop-filter]:bg-black/60">
                 <div className="container mx-auto px-4">
                     <div className="flex gap-8">
                         <button
                             onClick={() => setActiveTab('upcoming')}
                             className={`py-4 px-2 font-semibold border-b-2 transition-colors ${activeTab === 'upcoming'
-                                    ? 'border-teal-600 text-teal-600'
-                                    : 'border-transparent text-gray-600 hover:text-gray-900'
+                                ? 'border-gold text-gold'
+                                : 'border-transparent text-gray-400 hover:text-white'
                                 }`}
                         >
                             Upcoming Trips
-                            <span className="ml-2 px-2 py-0.5 bg-teal-100 text-teal-600 text-xs font-bold rounded-full">
+                            <span className={`ml-2 px-2 py-0.5 text-xs font-bold rounded-full ${activeTab === 'upcoming' ? 'bg-gold/20 text-gold' : 'bg-white/10 text-gray-400'}`}>
                                 {upcomingTrips.length}
                             </span>
                         </button>
                         <button
                             onClick={() => setActiveTab('past')}
                             className={`py-4 px-2 font-semibold border-b-2 transition-colors ${activeTab === 'past'
-                                    ? 'border-teal-600 text-teal-600'
-                                    : 'border-transparent text-gray-600 hover:text-gray-900'
+                                ? 'border-gold text-gold'
+                                : 'border-transparent text-gray-400 hover:text-white'
                                 }`}
                         >
                             Past Trips
-                            <span className="ml-2 px-2 py-0.5 bg-gray-200 text-gray-600 text-xs font-bold rounded-full">
+                            <span className={`ml-2 px-2 py-0.5 text-xs font-bold rounded-full ${activeTab === 'past' ? 'bg-gold/20 text-gold' : 'bg-white/10 text-gray-400'}`}>
                                 {pastTrips.length}
                             </span>
                         </button>
@@ -132,7 +132,7 @@ export default function MyTripsPage() {
                         {upcomingTrips.length > 0 ? (
                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                                 {upcomingTrips.map((trip) => (
-                                    <Card key={trip.id} className="overflow-hidden border-none shadow-lg hover:shadow-xl transition-shadow group">
+                                    <Card key={trip.id} className="overflow-hidden border-white/10 bg-white/5 shadow-lg hover:shadow-gold/20 transition-shadow group">
                                         {/* Trip Image */}
                                         <div className="relative h-64 overflow-hidden">
                                             <img
@@ -140,33 +140,33 @@ export default function MyTripsPage() {
                                                 alt={trip.title}
                                                 className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
                                             />
-                                            <div className="absolute top-4 right-4 px-3 py-1 bg-teal-600 text-white text-xs font-semibold rounded-full flex items-center gap-1">
+                                            <div className="absolute top-4 right-4 px-3 py-1 bg-gold text-black text-xs font-semibold rounded-full flex items-center gap-1">
                                                 <Clock className="w-3 h-3" />
                                                 Upcoming
                                             </div>
-                                            <div className="absolute top-4 left-4 px-3 py-1 bg-white/90 backdrop-blur-sm text-teal-600 text-xs font-semibold rounded-full">
+                                            <div className="absolute top-4 left-4 px-3 py-1 bg-black/80 backdrop-blur-sm text-gold text-xs font-semibold rounded-full border border-gold/20">
                                                 {trip.category}
                                             </div>
                                             {trip.spotsLeft <= 3 && (
-                                                <div className="absolute bottom-4 right-4 px-3 py-1 bg-orange-500 text-white text-xs font-semibold rounded-full">
+                                                <div className="absolute bottom-4 right-4 px-3 py-1 bg-red-500/90 text-white text-xs font-semibold rounded-full">
                                                     Only {trip.spotsLeft} spots left!
                                                 </div>
                                             )}
                                         </div>
 
                                         <CardHeader className="pb-3">
-                                            <h3 className="text-xl font-bold text-gray-900 line-clamp-2 group-hover:text-teal-600 transition-colors">
+                                            <h3 className="text-xl font-bold text-white line-clamp-2 group-hover:text-gold transition-colors">
                                                 {trip.title}
                                             </h3>
-                                            <p className="text-sm text-gray-600 line-clamp-2 mt-2">
+                                            <p className="text-sm text-gray-400 line-clamp-2 mt-2">
                                                 {trip.shortDescription}
                                             </p>
                                         </CardHeader>
 
                                         <CardContent className="pb-3">
-                                            <div className="space-y-2 text-sm text-gray-600">
+                                            <div className="space-y-2 text-sm text-gray-400">
                                                 <div className="flex items-center gap-2">
-                                                    <Calendar className="w-4 h-4 text-teal-600" />
+                                                    <Calendar className="w-4 h-4 text-gold" />
                                                     <span>
                                                         Starts {new Date(trip.startDate).toLocaleDateString('en-US', {
                                                             year: 'numeric',
@@ -176,11 +176,11 @@ export default function MyTripsPage() {
                                                     </span>
                                                 </div>
                                                 <div className="flex items-center gap-2">
-                                                    <MapPin className="w-4 h-4 text-teal-600" />
+                                                    <MapPin className="w-4 h-4 text-gold" />
                                                     <span>{trip.duration}</span>
                                                 </div>
                                                 <div className="flex items-center gap-2">
-                                                    <Users className="w-4 h-4 text-teal-600" />
+                                                    <Users className="w-4 h-4 text-gold" />
                                                     <span>{trip.participants} travelers</span>
                                                 </div>
                                             </div>
@@ -188,7 +188,7 @@ export default function MyTripsPage() {
 
                                         <CardFooter>
                                             <Link href={`/trip/${trip.id}`} className="w-full">
-                                                <button className="w-full bg-teal-600 hover:bg-teal-700 text-white font-semibold py-3 px-6 rounded-xl transition-colors flex items-center justify-center gap-2 group">
+                                                <button className="w-full bg-gold hover:bg-yellow-600 text-black font-semibold py-3 px-6 rounded-xl transition-colors flex items-center justify-center gap-2 group">
                                                     View Trip Details
                                                     <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                                                 </button>
@@ -199,13 +199,13 @@ export default function MyTripsPage() {
                             </div>
                         ) : (
                             <div className="text-center py-16">
-                                <div className="w-24 h-24 bg-gray-200 rounded-full flex items-center justify-center mx-auto mb-4">
-                                    <Calendar className="w-12 h-12 text-gray-400" />
+                                <div className="w-24 h-24 bg-white/5 rounded-full flex items-center justify-center mx-auto mb-4 border border-white/10">
+                                    <Calendar className="w-12 h-12 text-gray-600" />
                                 </div>
-                                <h3 className="text-xl font-semibold text-gray-900 mb-2">No Upcoming Trips</h3>
-                                <p className="text-gray-600 mb-6">Start planning your next adventure!</p>
+                                <h3 className="text-xl font-semibold text-white mb-2">No Upcoming Trips</h3>
+                                <p className="text-gray-400 mb-6">Start planning your next adventure!</p>
                                 <Link href="/">
-                                    <button className="bg-teal-600 hover:bg-teal-700 text-white font-semibold py-3 px-6 rounded-xl transition-colors">
+                                    <button className="bg-gold hover:bg-yellow-600 text-black font-semibold py-3 px-6 rounded-xl transition-colors">
                                         Explore Trips
                                     </button>
                                 </Link>
@@ -220,7 +220,7 @@ export default function MyTripsPage() {
                         {pastTrips.length > 0 ? (
                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                                 {pastTrips.map((trip) => (
-                                    <Card key={trip.id} className="overflow-hidden border-none shadow-lg hover:shadow-xl transition-shadow group">
+                                    <Card key={trip.id} className="overflow-hidden border-white/10 bg-white/5 shadow-lg hover:shadow-gold/20 transition-shadow group">
                                         {/* Trip Image */}
                                         <div className="relative h-64 overflow-hidden">
                                             <img
@@ -228,20 +228,20 @@ export default function MyTripsPage() {
                                                 alt={trip.title}
                                                 className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
                                             />
-                                            <div className="absolute top-4 right-4 px-3 py-1 bg-green-600 text-white text-xs font-semibold rounded-full flex items-center gap-1">
-                                                <span className="w-1.5 h-1.5 bg-white rounded-full"></span>
+                                            <div className="absolute top-4 right-4 px-3 py-1 bg-green-900/80 backdrop-blur-sm text-green-100 text-xs font-semibold rounded-full flex items-center gap-1 border border-green-500/30">
+                                                <span className="w-1.5 h-1.5 bg-green-400 rounded-full"></span>
                                                 Completed
                                             </div>
-                                            <div className="absolute top-4 left-4 px-3 py-1 bg-white/90 backdrop-blur-sm text-teal-600 text-xs font-semibold rounded-full">
+                                            <div className="absolute top-4 left-4 px-3 py-1 bg-black/80 backdrop-blur-sm text-gold text-xs font-semibold rounded-full border border-gold/20">
                                                 {trip.category}
                                             </div>
                                         </div>
 
                                         <CardHeader className="pb-3">
-                                            <h3 className="text-xl font-bold text-gray-900 line-clamp-2 group-hover:text-teal-600 transition-colors">
+                                            <h3 className="text-xl font-bold text-white line-clamp-2 group-hover:text-gold transition-colors">
                                                 {trip.title}
                                             </h3>
-                                            <p className="text-sm text-gray-600 line-clamp-2 mt-2">
+                                            <p className="text-sm text-gray-400 line-clamp-2 mt-2">
                                                 {trip.shortDescription}
                                             </p>
                                         </CardHeader>
@@ -254,19 +254,19 @@ export default function MyTripsPage() {
                                                         <Star
                                                             key={i}
                                                             className={`w-4 h-4 ${i < Math.floor(trip.rating)
-                                                                    ? 'fill-yellow-400 text-yellow-400'
-                                                                    : 'fill-gray-200 text-gray-200'
+                                                                ? 'fill-gold text-gold'
+                                                                : 'fill-gray-700 text-gray-700'
                                                                 }`}
                                                         />
                                                     ))}
                                                 </div>
-                                                <span className="text-sm font-semibold text-gray-900">{trip.rating}</span>
+                                                <span className="text-sm font-semibold text-white">{trip.rating}</span>
                                                 <span className="text-sm text-gray-500">({trip.totalReviews} reviews)</span>
                                             </div>
 
-                                            <div className="space-y-2 text-sm text-gray-600">
+                                            <div className="space-y-2 text-sm text-gray-400">
                                                 <div className="flex items-center gap-2">
-                                                    <Calendar className="w-4 h-4 text-teal-600" />
+                                                    <Calendar className="w-4 h-4 text-gold" />
                                                     <span>
                                                         {new Date(trip.completedDate).toLocaleDateString('en-US', {
                                                             year: 'numeric',
@@ -275,7 +275,7 @@ export default function MyTripsPage() {
                                                     </span>
                                                 </div>
                                                 <div className="flex items-center gap-2">
-                                                    <MapPin className="w-4 h-4 text-teal-600" />
+                                                    <MapPin className="w-4 h-4 text-gold" />
                                                     <span>{trip.duration}</span>
                                                 </div>
                                             </div>
@@ -283,7 +283,7 @@ export default function MyTripsPage() {
 
                                         <CardFooter>
                                             <Link href={`/past-trips/${trip.id}`} className="w-full">
-                                                <button className="w-full bg-teal-600 hover:bg-teal-700 text-white font-semibold py-3 px-6 rounded-xl transition-colors flex items-center justify-center gap-2 group">
+                                                <button className="w-full bg-gold hover:bg-yellow-600 text-black font-semibold py-3 px-6 rounded-xl transition-colors flex items-center justify-center gap-2 group">
                                                     View Details & Reviews
                                                     <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                                                 </button>
@@ -294,11 +294,11 @@ export default function MyTripsPage() {
                             </div>
                         ) : (
                             <div className="text-center py-16">
-                                <div className="w-24 h-24 bg-gray-200 rounded-full flex items-center justify-center mx-auto mb-4">
-                                    <MapPin className="w-12 h-12 text-gray-400" />
+                                <div className="w-24 h-24 bg-white/5 rounded-full flex items-center justify-center mx-auto mb-4 border border-white/10">
+                                    <MapPin className="w-12 h-12 text-gray-600" />
                                 </div>
-                                <h3 className="text-xl font-semibold text-gray-900 mb-2">No Past Trips</h3>
-                                <p className="text-gray-600 mb-6">Your travel history will appear here.</p>
+                                <h3 className="text-xl font-semibold text-white mb-2">No Past Trips</h3>
+                                <p className="text-gray-400 mb-6">Your travel history will appear here.</p>
                             </div>
                         )}
                     </div>
