@@ -33,7 +33,8 @@ export function DashboardHeader() {
       <div className="container flex h-16 items-center justify-between py-4">
         <div className="flex items-center">
           <Link href="/dashboard" className="font-bold text-2xl ml-7">
-            <Image src={logo} width={70} alt="kurukshetra"/>
+            {/* <Image src={logo} width={70} alt="kurukshetra"/> */}
+            Con-Sol
           </Link>
         </div>
         {/* Desktop navigation */}
