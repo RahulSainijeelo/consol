@@ -4,6 +4,7 @@ import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import { Star, Calendar, Users, MapPin, ArrowRight } from 'lucide-react';
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
+import BottomTabBar from '@/components/layout/BottomTabBar';
 
 export const metadata: Metadata = {
     title: 'Past Trips - Consol Travel',
@@ -88,17 +89,17 @@ const pastTrips = [
 
 export default function PastTripsPage() {
     return (
-        <div className="min-h-screen bg-gray-50 pb-16 md:pb-0">
+        <div className="min-h-screen bg-black pb-16 md:pb-0">
             <Header />
 
             {/* Hero Section */}
-            <div className="text-black py-4 md:py-6">
+            <div className="text-white py-4 md:py-6">
                 <div className="container mx-auto px-4">
                     <div className="max-w-3xl">
-                        <div className="inline-block px-4 py-1 bg-gray-600/20 backdrop-blur-sm text-black text-sm font-medium rounded-full mb-4">
+                        <div className="inline-block px-4 py-1 bg-white/10 backdrop-blur-sm text-gold text-sm font-medium rounded-full mb-4 border border-gold/20">
                             Completed Adventures
                         </div>
-                        <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
+                        <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold mb-6">
                             Past Trips
                         </h1>
                     </div>
@@ -108,7 +109,7 @@ export default function PastTripsPage() {
             <div className="container mx-auto px-4 py-12">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     {pastTrips.map((trip) => (
-                        <Card key={trip.id} className="overflow-hidden border-none shadow-lg hover:shadow-xl transition-shadow group">
+                        <Card key={trip.id} className="overflow-hidden border-white/10 bg-white/5 shadow-lg hover:shadow-gold/20 transition-shadow group">
                             {/* Trip Image */}
                             <div className="relative h-64 overflow-hidden">
                                 <img
@@ -116,20 +117,20 @@ export default function PastTripsPage() {
                                     alt={trip.title}
                                     className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
                                 />
-                                <div className="absolute top-4 right-4 px-3 py-1 bg-green-600 text-white text-xs font-semibold rounded-full flex items-center gap-1">
-                                    <span className="w-1.5 h-1.5 bg-white rounded-full"></span>
+                                <div className="absolute top-4 right-4 px-3 py-1 bg-green-900/80 backdrop-blur-sm text-green-100 text-xs font-semibold rounded-full flex items-center gap-1 border border-green-500/30">
+                                    <span className="w-1.5 h-1.5 bg-green-400 rounded-full"></span>
                                     Completed
                                 </div>
-                                <div className="absolute top-4 left-4 px-3 py-1 bg-white/90 backdrop-blur-sm text-teal-600 text-xs font-semibold rounded-full">
+                                <div className="absolute top-4 left-4 px-3 py-1 bg-black/80 backdrop-blur-sm text-gold text-xs font-semibold rounded-full border border-gold/20">
                                     {trip.category}
                                 </div>
                             </div>
 
                             <CardHeader className="pb-3">
-                                <h3 className="text-xl font-bold text-gray-900 line-clamp-2 group-hover:text-teal-600 transition-colors">
+                                <h3 className="text-xl font-bold text-white line-clamp-2 group-hover:text-gold transition-colors">
                                     {trip.title}
                                 </h3>
-                                <p className="text-sm text-gray-600 line-clamp-2 mt-2">
+                                <p className="text-sm text-gray-400 line-clamp-2 mt-2">
                                     {trip.shortDescription}
                                 </p>
                             </CardHeader>
@@ -142,20 +143,20 @@ export default function PastTripsPage() {
                                             <Star
                                                 key={i}
                                                 className={`w-4 h-4 ${i < Math.floor(trip.rating)
-                                                    ? 'fill-yellow-400 text-yellow-400'
-                                                    : 'fill-gray-200 text-gray-200'
+                                                    ? 'fill-gold text-gold'
+                                                    : 'fill-gray-700 text-gray-700'
                                                     }`}
                                             />
                                         ))}
                                     </div>
-                                    <span className="text-sm font-semibold text-gray-900">{trip.rating}</span>
+                                    <span className="text-sm font-semibold text-white">{trip.rating}</span>
                                     <span className="text-sm text-gray-500">({trip.totalReviews} reviews)</span>
                                 </div>
 
                                 {/* Trip Info */}
-                                <div className="space-y-2 text-sm text-gray-600">
+                                <div className="space-y-2 text-sm text-gray-400">
                                     <div className="flex items-center gap-2">
-                                        <Calendar className="w-4 h-4 text-teal-600" />
+                                        <Calendar className="w-4 h-4 text-gold" />
                                         <span>
                                             {new Date(trip.completedDate).toLocaleDateString('en-US', {
                                                 year: 'numeric',
@@ -164,11 +165,11 @@ export default function PastTripsPage() {
                                         </span>
                                     </div>
                                     <div className="flex items-center gap-2">
-                                        <MapPin className="w-4 h-4 text-teal-600" />
+                                        <MapPin className="w-4 h-4 text-gold" />
                                         <span>{trip.duration}</span>
                                     </div>
                                     <div className="flex items-center gap-2">
-                                        <Users className="w-4 h-4 text-teal-600" />
+                                        <Users className="w-4 h-4 text-gold" />
                                         <span>{trip.participants} travelers</span>
                                     </div>
                                 </div>
@@ -176,7 +177,7 @@ export default function PastTripsPage() {
 
                             <CardFooter>
                                 <Link href={`/past-trips/${trip.id}`} className="w-full">
-                                    <button className="w-full bg-teal-600 hover:bg-teal-700 text-white font-semibold py-3 px-6 rounded-xl transition-colors flex items-center justify-center gap-2 group">
+                                    <button className="w-full bg-gold hover:bg-yellow-600 text-black font-semibold py-3 px-6 rounded-xl transition-colors flex items-center justify-center gap-2 group">
                                         View Details & Reviews
                                         <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                                     </button>
@@ -186,6 +187,7 @@ export default function PastTripsPage() {
                     ))}
                 </div>
             </div>
+            <BottomTabBar />
 
             <Footer />
         </div>

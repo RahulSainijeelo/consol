@@ -16,18 +16,18 @@ export function HeroSection() {
 
             {/* Content */}
             <div className="relative z-10 flex h-full flex-col items-center justify-center text-center text-white px-4">
-                <h1 className="mb-6 text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl lg:text-7xl">
-                    Discover Your Next <span className="text-teal-400">Adventure</span>
+                <h1 className="mb-6 text-4xl font-display font-bold tracking-tight sm:text-5xl md:text-6xl lg:text-7xl">
+                    Discover Your Next <span className="text-gold">Adventure</span>
                 </h1>
                 <p className="mb-8 max-w-2xl text-lg text-gray-200 sm:text-xl">
                     Explore the world's most breathtaking destinations with our curated travel experiences.
                     Your journey begins here.
                 </p>
                 <div className="flex flex-col gap-4 sm:flex-row">
-                    <Button size="lg" className="bg-teal-600 hover:bg-teal-700 text-white border-none text-lg px-8 py-6">
+                    <Button size="lg" className="bg-gold hover:bg-yellow-600 text-black font-semibold border-none text-lg px-8 py-6">
                         Explore Trips
                     </Button>
-                    <Button size="lg" variant="outline" className="bg-transparent text-white border-white hover:bg-white/10 hover:text-white text-lg px-8 py-6">
+                    <Button size="lg" variant="outline" className="bg-transparent text-white border-white hover:bg-white/10 hover:text-gold hover:border-gold text-lg px-8 py-6">
                         Contact Us
                     </Button>
                 </div>

@@ -185,7 +185,7 @@ export default async function TripPage({ params }: TripPageProps) {
   return (
     <>
       <JsonLd data={articleJsonLd} />
-      <div className="min-h-screen bg-white pb-16 md:pb-0">
+      <div className="min-h-screen bg-black pb-16 md:pb-0">
         <Header />
 
         {/* Hero Image Section */}
@@ -197,21 +197,21 @@ export default async function TripPage({ params }: TripPageProps) {
               className="h-full w-full object-cover"
             />
           ) : (
-            <div className="h-full w-full bg-gradient-to-br from-teal-400 to-teal-600" />
+            <div className="h-full w-full bg-gradient-to-br from-gray-900 to-black" />
           )}
           <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
 
           {/* Title Overlay */}
           <div className="absolute bottom-0 left-0 right-0 p-6 md:p-12">
             <div className="container mx-auto">
-              <div className="inline-block px-4 py-1 bg-teal-600 text-white text-sm font-medium rounded-full mb-4">
+              <div className="inline-block px-4 py-1 bg-gold text-black text-sm font-bold rounded-full mb-4">
                 {trip.category}
               </div>
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4">
                 {trip.title}
               </h1>
               {trip.shortDescription && (
-                <p className="text-lg md:text-xl text-gray-200 max-w-3xl">
+                <p className="text-lg md:text-xl text-gray-300 max-w-3xl">
                   {trip.shortDescription}
                 </p>
               )}
@@ -225,20 +225,20 @@ export default async function TripPage({ params }: TripPageProps) {
             {/* Left Column - Main Content */}
             <div className="lg:col-span-2 space-y-8">
               {/* Trip Overview */}
-              <div className="bg-white rounded-2xl border border-gray-200 p-6 md:p-8">
-                <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-6">
+              <div className="bg-white/5 rounded-2xl border border-white/10 p-6 md:p-8">
+                <h2 className="text-2xl md:text-3xl font-display font-bold text-white mb-6">
                   Trip Overview
                 </h2>
                 <div
-                  className="prose prose-lg max-w-none text-gray-700 leading-relaxed"
+                  className="prose prose-lg max-w-none text-gray-300 leading-relaxed prose-headings:text-white prose-strong:text-gold"
                   dangerouslySetInnerHTML={{ __html: trip.content || trip.description }}
                 />
               </div>
 
               {/* Image Gallery */}
               {trip.images && trip.images.length > 1 && (
-                <div className="bg-white rounded-2xl border border-gray-200 p-6 md:p-8">
-                  <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-6">
+                <div className="bg-white/5 rounded-2xl border border-white/10 p-6 md:p-8">
+                  <h2 className="text-2xl md:text-3xl font-display font-bold text-white mb-6">
                     Gallery
                   </h2>
                   <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
@@ -259,26 +259,26 @@ export default async function TripPage({ params }: TripPageProps) {
             {/* Right Column - Sidebar */}
             <div className="space-y-6">
               {/* Trip Details Card */}
-              <div className="bg-gradient-to-br from-teal-50 to-teal-100 rounded-2xl p-6 border border-teal-200 sticky top-24">
-                <h3 className="text-xl font-bold text-gray-900 mb-6">Trip Details</h3>
+              <div className="bg-gradient-to-br from-gray-900 to-black rounded-2xl p-6 border border-white/10 sticky top-24">
+                <h3 className="text-xl font-bold text-white mb-6">Trip Details</h3>
 
                 <div className="space-y-4">
                   {/* Author */}
                   <div className="flex items-start gap-3">
-                    <div className="flex-shrink-0 w-10 h-10 bg-teal-600 rounded-full flex items-center justify-center text-white font-bold">
+                    <div className="flex-shrink-0 w-10 h-10 bg-gold rounded-full flex items-center justify-center text-black font-bold">
                       {trip.author.charAt(0).toUpperCase()}
                     </div>
                     <div>
-                      <p className="text-sm text-gray-600">Organized by</p>
-                      <p className="font-semibold text-gray-900">{trip.author}</p>
+                      <p className="text-sm text-gray-400">Organized by</p>
+                      <p className="font-semibold text-white">{trip.author}</p>
                     </div>
                   </div>
 
-                  <div className="border-t border-teal-200 pt-4 space-y-3">
+                  <div className="border-t border-white/10 pt-4 space-y-3">
                     {/* Publish Date */}
                     <div>
-                      <p className="text-sm text-gray-600">Trip Start Date</p>
-                      <p className="font-medium text-gray-900">
+                      <p className="text-sm text-gray-400">Trip Start Date</p>
+                      <p className="font-medium text-white">
                         {new Date(trip.publishDate).toLocaleDateString('en-US', {
                           year: 'numeric',
                           month: 'long',
@@ -289,11 +289,11 @@ export default async function TripPage({ params }: TripPageProps) {
                   </div>
 
                   {/* CTA Button */}
-                  <button className="w-full mt-6 bg-teal-600 hover:bg-teal-700 text-white font-semibold py-3 px-6 rounded-xl transition-colors">
+                  <button className="w-full mt-6 bg-gold hover:bg-yellow-600 text-black font-semibold py-3 px-6 rounded-xl transition-colors">
                     Book This Trip
                   </button>
 
-                  <button className="w-full bg-white hover:bg-gray-50 text-teal-600 font-semibold py-3 px-6 rounded-xl border-2 border-teal-600 transition-colors">
+                  <button className="w-full bg-transparent hover:bg-white/5 text-gold font-semibold py-3 px-6 rounded-xl border-2 border-gold transition-colors">
                     Contact Us
                   </button>
                 </div>

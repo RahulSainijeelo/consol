@@ -4,6 +4,8 @@ import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ManageArticles } from "@/components/dashboard/portfolio/ManageArticles";
 import { TopLoadingBar } from "@/components/ui/TopLoadingBar";
+import { ContactEnquiries } from "@/components/dashboard/contact/ContactEnquiries";
+import { ManageReviews } from "@/components/dashboard/reviews/ManageReviews";
 export default function Dashboard() {
   return (
     <>
@@ -64,7 +66,7 @@ export default function Dashboard() {
               boxShadow: "0 1px 3px 0 rgba(0, 0, 0, 0.1)",
             }}
           >
-            <Tabs defaultValue="news" className="space-y-6">
+            <Tabs defaultValue="trips" className="space-y-6">
               <div className="w-full overflow-x-auto no-scrollbar md:overflow-visible flex justify-center">
                 <TabsList
                   className="flex min-w-max md:min-w-0 p-1 rounded-xl shadow-sm"
@@ -73,13 +75,11 @@ export default function Dashboard() {
                     border: "1px solid #e5e7eb",
                     boxShadow: "0 1px 3px 0 rgba(0, 0, 0, 0.1)",
                     WebkitOverflowScrolling: "touch",
-                    display:"none"
                   }}
                 >
-
                   <TabsTrigger
-                    value="news"
-                    className="px-6 py-3 text-sm font-medium rounded-lg transition-all duration-200"
+                    value="enquiries"
+                    className="px-6 py-3 text-sm font-medium rounded-lg transition-all duration-200 data-[state=active]:shadow-sm"
                     style={{
                       color: "#4b5563",
                       fontWeight: "500",
@@ -89,11 +89,46 @@ export default function Dashboard() {
                       justifyContent: "center",
                       gap: "8px",
                     }}
-                    // data-active-style={{
-                    //   backgroundColor: "#10b981",
-                    //   color: "#ffffff",
-                    //   boxShadow: "0 2px 4px 0 rgba(16, 185, 129, 0.3)",
-                    // }}
+                    data-active-style={{
+                      backgroundColor: "#3b82f6",
+                      color: "#ffffff",
+                      boxShadow: "0 2px 4px 0 rgba(59, 130, 246, 0.3)",
+                    }}
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-4 w-4"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                      />
+                    </svg>
+                    Enquiries
+                  </TabsTrigger>
+
+                  <TabsTrigger
+                    value="trips"
+                    className="px-6 py-3 text-sm font-medium rounded-lg transition-all duration-200 data-[state=active]:shadow-sm"
+                    style={{
+                      color: "#4b5563",
+                      fontWeight: "500",
+                      minWidth: "140px",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      gap: "8px",
+                    }}
+                    data-active-style={{
+                      backgroundColor: "#10b981",
+                      color: "#ffffff",
+                      boxShadow: "0 2px 4px 0 rgba(16, 185, 129, 0.3)",
+                    }}
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -109,26 +144,61 @@ export default function Dashboard() {
                         d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"
                       />
                     </svg>
-                    Article
+                    Trips
+                  </TabsTrigger>
+
+                  <TabsTrigger
+                    value="reviews"
+                    className="px-6 py-3 text-sm font-medium rounded-lg transition-all duration-200 data-[state=active]:shadow-sm"
+                    style={{
+                      color: "#4b5563",
+                      fontWeight: "500",
+                      minWidth: "140px",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      gap: "8px",
+                    }}
+                    data-active-style={{
+                      backgroundColor: "#f59e0b",
+                      color: "#ffffff",
+                      boxShadow: "0 2px 4px 0 rgba(245, 158, 11, 0.3)",
+                    }}
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-4 w-4"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"
+                      />
+                    </svg>
+                    Reviews
                   </TabsTrigger>
                 </TabsList>
               </div>
 
-              {/* <TabsContent value="enquiries" className="space-y-4">
+              <TabsContent value="enquiries" className="space-y-4">
                 <div style={{ color: "#000000" }}>
                   <ContactEnquiries />
                 </div>
-              </TabsContent> */}
-              <TabsContent value="news" className="space-y-4">
+              </TabsContent>
+              <TabsContent value="trips" className="space-y-4">
                 <div style={{ color: "#000000" }}>
                   <ManageArticles />
                 </div>
               </TabsContent>
-              {/* <TabsContent value="reviews" className="space-y-4">
+              <TabsContent value="reviews" className="space-y-4">
                 <div style={{ color: "#000000" }}>
                   <ManageReviews />
                 </div>
-              </TabsContent> */}
+              </TabsContent>
             </Tabs>
           </div>
         </div>

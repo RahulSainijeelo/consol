@@ -12,22 +12,22 @@ export default function Footer() {
   ];
 
   return (
-    <footer className="bg-white text-gray-900">
+    <footer className="bg-black text-white border-t border-white/10">
       {/* Main Footer Content */}
       <div className="container mx-auto px-4 py-16">
         <div className="flex items-center justify-center">
-          <h2 className="text-6xl md:text-8xl lg:text-9xl font-black tracking-tighter">
+          <h2 className="text-6xl md:text-8xl lg:text-9xl font-display font-black tracking-tighter text-gold/20">
             CONSOL
           </h2>
         </div>
       </div>
 
       {/* Bottom Bar */}
-      <div className="border-t border-gray-200">
+      <div className="border-t border-white/10">
         <div className="container mx-auto px-4 py-6">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
             {/* Copyright */}
-            <p className="text-sm text-gray-600">
+            <p className="text-sm text-gray-400">
               © {currentYear} Consol. All rights reserved.
             </p>
 
@@ -41,7 +41,7 @@ export default function Footer() {
                     href={social.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-gray-600 hover:text-teal-600 transition-colors"
+                    className="text-gray-400 hover:text-gold transition-colors"
                     aria-label={social.label}
                   >
                     <Icon className="h-5 w-5" />

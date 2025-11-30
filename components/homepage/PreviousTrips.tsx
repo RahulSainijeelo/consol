@@ -45,13 +45,13 @@ const testimonials = [
 
 export function PreviousTrips() {
     return (
-        <section className="py-20 bg-white dark:bg-black">
+        <section className="py-20 bg-black/95">
             <div className="container mx-auto px-4">
                 <div className="mb-12 text-center">
-                    <h2 className="mb-4 text-3xl font-bold text-gray-900 dark:text-white sm:text-4xl">
-                        Memories from <span className="text-orange-500">Previous Trips</span>
+                    <h2 className="mb-4 text-3xl font-display font-bold text-white sm:text-4xl">
+                        Memories from <span className="text-gold">Previous Trips</span>
                     </h2>
-                    <p className="mx-auto max-w-2xl text-gray-600 dark:text-gray-400">
+                    <p className="mx-auto max-w-2xl text-gray-400">
                         Hear from our happy travelers and see where we've been.
                     </p>
                 </div>
@@ -68,19 +68,19 @@ export function PreviousTrips() {
                             {testimonials.map((testimonial) => (
                                 <CarouselItem key={testimonial.id} className="pl-2 md:pl-4 md:basis-1/2 lg:basis-1/3">
                                     <div className="p-1">
-                                        <Card className="h-full border-gray-200 shadow-sm hover:shadow-md transition-shadow">
+                                        <Card className="h-full border-white/10 bg-white/5 shadow-sm hover:shadow-gold/10 transition-shadow">
                                             <CardContent className="flex flex-col items-center p-6 text-center h-full">
-                                                <div className="mb-4 h-20 w-20 overflow-hidden rounded-full border-4 border-orange-100">
+                                                <div className="mb-4 h-20 w-20 overflow-hidden rounded-full border-4 border-gold/30">
                                                     <img
                                                         src={testimonial.image}
                                                         alt={testimonial.name}
                                                         className="h-full w-full object-cover"
                                                     />
                                                 </div>
-                                                <h3 className="mb-1 text-lg font-bold text-gray-900 dark:text-white">
+                                                <h3 className="mb-1 text-lg font-bold text-white">
                                                     {testimonial.name}
                                                 </h3>
-                                                <p className="mb-3 text-sm font-medium text-orange-600">
+                                                <p className="mb-3 text-sm font-medium text-gold">
                                                     {testimonial.trip}
                                                 </p>
                                                 <div className="mb-4 flex">
@@ -88,13 +88,13 @@ export function PreviousTrips() {
                                                         <Star
                                                             key={i}
                                                             className={`h-4 w-4 ${i < testimonial.rating
-                                                                    ? "fill-yellow-400 text-yellow-400"
-                                                                    : "fill-gray-200 text-gray-200"
+                                                                ? "fill-gold text-gold"
+                                                                : "fill-gray-700 text-gray-700"
                                                                 }`}
                                                         />
                                                     ))}
                                                 </div>
-                                                <p className="text-sm text-gray-600 dark:text-gray-400 italic">
+                                                <p className="text-sm text-gray-400 italic">
                                                     "{testimonial.comment}"
                                                 </p>
                                             </CardContent>
@@ -104,8 +104,8 @@ export function PreviousTrips() {
                             ))}
                         </CarouselContent>
                         <div className="hidden md:block">
-                            <CarouselPrevious className="-left-12 border-orange-200 text-orange-600 hover:bg-orange-50 hover:text-orange-700" />
-                            <CarouselNext className="-right-12 border-orange-200 text-orange-600 hover:bg-orange-50 hover:text-orange-700" />
+                            <CarouselPrevious className="-left-12 border-white/20 bg-black/50 text-gold hover:bg-gold hover:text-black" />
+                            <CarouselNext className="-right-12 border-white/20 bg-black/50 text-gold hover:bg-gold hover:text-black" />
                         </div>
                     </Carousel>
                 </div>
