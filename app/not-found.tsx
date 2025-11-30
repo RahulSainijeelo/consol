@@ -1,7 +1,3 @@
-import Link from 'next/link';
-import { Home, Search, FileText } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import Header from '@/components/layout/Header';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -16,8 +12,6 @@ export const metadata: Metadata = {
 const NotFound = () => {
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
-      <Header />
-
       <main className="flex-1 flex items-center justify-center px-4 py-12">
         <div className="max-w-4xl mx-auto text-center">
           {/* Lottie Animation */}

@@ -1,13 +1,14 @@
+"use client"
 import React from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/lib/auth";
+import { useSession } from "next-auth/react";
+import { User } from "lucide-react";
+import { useUser } from "@clerk/nextjs";
 
-export default async function Header() {
-  const session = await getServerSession(authOptions);
-  const firstName = session?.user?.name?.split(" ")[0];
-
+export default function Header() {
+  const session = useSession();
+  console.log(session.status)
   return (
     <header className="sticky top-0 z-50 w-full border-b border-white/10 bg-black/95 backdrop-blur supports-[backdrop-filter]:bg-black/60">
       <div className="container mx-auto px-4 h-16 flex items-center justify-between">
@@ -24,13 +25,22 @@ export default async function Header() {
           <Link href="/my-trips" className="text-sm font-medium text-gray-300 hover:text-gold transition-colors">
             My Trips
           </Link>
-       
+          {session.status === "authenticated" ? (
+            <div className="flex flex-col">
+              <div className="flex justify-center">
+                <User />
+
+              </div>
+              <p>{session.data.user?.name?.split(" ")[0]}</p>
+
+            </div>
+          ) : (
             <Link href="/auth/login">
               <Button className="bg-gold hover:bg-yellow-600 text-black font-semibold">
                 Login
               </Button>
             </Link>
-
+          )}
         </nav>
       </div>
     </header>

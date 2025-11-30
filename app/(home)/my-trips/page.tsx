@@ -7,6 +7,7 @@ import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import { Star, Calendar, Users, MapPin, ArrowRight, Clock } from 'lucide-react';
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
+import BottomTabBar from '@/components/layout/BottomTabBar';
 
 // Demo data for upcoming trips
 const upcomingTrips = [
@@ -304,6 +305,7 @@ export default function MyTripsPage() {
                     </div>
                 )}
             </div>
+            <BottomTabBar />
 
             <Footer />
         </div>

@@ -4,6 +4,7 @@ import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import { Star, Calendar, Users, MapPin, ArrowRight } from 'lucide-react';
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
+import BottomTabBar from '@/components/layout/BottomTabBar';
 
 export const metadata: Metadata = {
     title: 'Past Trips - Consol Travel',
@@ -186,6 +187,7 @@ export default function PastTripsPage() {
                     ))}
                 </div>
             </div>
+            <BottomTabBar />
 
             <Footer />
         </div>

@@ -17,6 +17,7 @@ import {
     Hotel,
     Utensils
 } from 'lucide-react';
+import BottomTabBar from '@/components/layout/BottomTabBar';
 
 interface MyTripPageProps {
     params: Promise<{
@@ -384,6 +385,7 @@ export default async function MyTripDetailPage({ params }: MyTripPageProps) {
                     </div>
                 </div>
             </div>
+            <BottomTabBar />
 
             <Footer />
         </div>

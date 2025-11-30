@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import { Star, Calendar, Users, MapPin, Quote } from 'lucide-react';
+import BottomTabBar from '@/components/layout/BottomTabBar';
 
 interface PrevTripPageProps {
     params: Promise<{
@@ -350,6 +351,7 @@ export default async function PrevTripPage({ params }: PrevTripPageProps) {
                     </div>
                 </div>
             </div>
+            <BottomTabBar />
 
             <Footer />
         </div>
