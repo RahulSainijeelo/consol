@@ -1,110 +1,68 @@
-import {
-    Card,
-    CardContent,
-    CardDescription,
-    CardFooter,
-    CardHeader,
-    CardTitle,
-} from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Calendar, MapPin, Clock } from "lucide-react";
+"use client";
 
-const trips = [
-    {
-        id: 1,
-        title: "Bali Island Escape",
-        location: "Bali, Indonesia",
-        date: "April 15 - 22, 2024",
-        duration: "7 Days",
-        price: "$1,299",
-        image: "https://images.unsplash.com/photo-1537996194471-e657df975ab4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1038&q=80",
-        description: "Experience the magic of Bali with pristine beaches, lush rice terraces, and vibrant culture.",
-    },
-    {
-        id: 2,
-        title: "Swiss Alps Adventure",
-        location: "Zermatt, Switzerland",
-        date: "May 10 - 17, 2024",
-        duration: "8 Days",
-        price: "$2,499",
-        image: "https://images.unsplash.com/photo-1531366936337-7c912a4589a7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
-        description: "Hiking, skiing, and breathtaking views in the heart of the Swiss Alps.",
-    },
-    {
-        id: 3,
-        title: "Kyoto Cherry Blossoms",
-        location: "Kyoto, Japan",
-        date: "March 25 - April 2, 2024",
-        duration: "9 Days",
-        price: "$3,199",
-        image: "https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
-        description: "Witness the stunning cherry blossom season in the historic city of Kyoto.",
-    },
-];
+import { useEffect, useState } from "react";
+import { Loader2 } from "lucide-react";
+import { Trip } from "@/types/Trip";
+import { Badge } from "@/components/ui/badge";
+import { TripRowItem } from "@/components/trips/TripRowItem";
 
 export function UpcomingTrips() {
+    const [trips, setTrips] = useState<Trip[]>([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchTrips = async () => {
+            try {
+                const res = await fetch("/api/trips?status=published&limit=5");
+                if (!res.ok) throw new Error("Failed to fetch trips");
+                const data = await res.json();
+                setTrips(data.data || []);
+            } catch (error) {
+                console.error("Error fetching trips:", error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchTrips();
+    }, []);
+
+    if (loading) {
+        return (
+            <section className="py-20 bg-black" style={{ borderRadius: "10px 10px 0 0" }}>
+                <div className="container mx-auto px-4 flex justify-center">
+                    <Loader2 className="h-8 w-8 animate-spin text-gold" />
+                </div>
+            </section>
+        );
+    }
+
+    if (trips.length === 0) {
+        return null; // Or show a "No upcoming trips" message
+    }
+
     return (
-        <section className="py-20 bg-black">
-            <div className="container mx-auto px-4">
-                <div className="mb-12 text-center">
-                    <h2 className="mb-4 text-3xl font-display font-bold text-white sm:text-4xl">
-                        Upcoming <span className="text-gold">Trips</span>
+        <section className="py-4 md:py-8 lg:py-10 xl:py-12 bg-black relative overflow-hidden" style={{ borderRadius: "20px 20px 0 0" }}>
+            {/* Background Elements */}
+            <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
+                <div className="absolute top-[10%] right-[-10%] w-[600px] h-[600px] bg-gold/5 rounded-full blur-[100px]" />
+                <div className="absolute bottom-[10%] left-[-10%] w-[600px] h-[600px] bg-orange-500/5 rounded-full blur-[100px]" />
+            </div>
+
+            <div className="container mx-auto px-4 relative z-10">
+                <div className="mb-20 text-center">
+                    <h2 className="mb-6 text-4xl md:text-5xl font-display font-bold text-white">
+                        Upcoming <span className="text-shadow:0 0 30px rgba(255, 215, 0, 0.5), 0 2px 20px rgba(0,0,0,0.5);filter:brightness(1.2)">Expeditions</span>
                     </h2>
-                    <p className="mx-auto max-w-2xl text-gray-400">
-                        Join us on our next adventures. Limited spots available for these exclusive experiences.
+                    <p className="mx-auto max-w-2xl text-gray-400 text-lg">
+                        Immerse yourself in journeys designed for the soul. Each trip is a chapter in your life's story.
                     </p>
                 </div>
 
-                <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-                    {trips.map((trip) => (
-                        <Card key={trip.id} className="overflow-hidden border-white/10 bg-white/5 shadow-lg transition-transform hover:-translate-y-1 hover:shadow-gold/20">
-                            <div className="relative h-64 w-full overflow-hidden">
-                                <img
-                                    src={trip.image}
-                                    alt={trip.title}
-                                    className="h-full w-full object-cover transition-transform duration-300 hover:scale-110"
-                                />
-                                <div className="absolute top-4 right-4 rounded-full bg-black/80 px-3 py-1 text-sm font-bold text-gold shadow-sm backdrop-blur-sm border border-gold/20">
-                                    {trip.price}
-                                </div>
-                            </div>
-                            <CardHeader>
-                                <div className="flex items-center justify-between">
-                                    <div className="flex items-center text-sm text-gray-400">
-                                        <MapPin className="mr-1 h-4 w-4 text-gold" />
-                                        {trip.location}
-                                    </div>
-                                </div>
-                                <CardTitle className="text-xl font-bold mt-2 text-white">{trip.title}</CardTitle>
-                                <CardDescription className="line-clamp-2 mt-2 text-gray-400">
-                                    {trip.description}
-                                </CardDescription>
-                            </CardHeader>
-                            <CardContent>
-                                <div className="flex items-center justify-between text-sm text-gray-400">
-                                    <div className="flex items-center">
-                                        <Calendar className="mr-2 h-4 w-4 text-gold" />
-                                        {trip.date}
-                                    </div>
-                                    <div className="flex items-center">
-                                        <Clock className="mr-2 h-4 w-4 text-gold" />
-                                        {trip.duration}
-                                    </div>
-                                </div>
-                            </CardContent>
-                            <CardFooter>
-                                <Button className="w-full bg-gold hover:bg-yellow-600 text-black font-semibold">
-                                    View Details
-                                </Button>
-                            </CardFooter>
-                        </Card>
+                <div className="flex flex-col gap-8">
+                    {trips.map((trip, index) => (
+                        <TripRowItem key={trip.id} trip={trip} index={index} />
                     ))}
-                </div>
-
-                <div className="mt-12 text-center">
-                    <Button variant="outline" size="lg" className="border-gold text-gold hover:bg-gold/10">
-                        View All Destinations
-                    </Button>
                 </div>
             </div>
         </section>

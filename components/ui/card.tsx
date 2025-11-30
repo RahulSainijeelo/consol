@@ -10,7 +10,6 @@ const Card = React.forwardRef<
     style={{
       backgroundColor: "var(--color-surface)",
       color: "var(--color-text-primary)",
-      borderRadius: "var(--radius-lg)",
       boxShadow: "var(--shadow-md)", // You can use var(--shadow-sm) or another shadow if preferred
       ...style,
     }}

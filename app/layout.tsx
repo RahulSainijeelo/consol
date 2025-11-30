@@ -8,9 +8,25 @@ import { SpeedInsights } from '@vercel/speed-insights/react';
 import { JsonLd } from "@/components/seo/JsonLd";
 import { GoogleAnalytics } from "@/components/seo/GoogleAnalytics";
 import NextTopLoader from 'nextjs-toploader';
+import localFont from 'next/font/local';
 import Script from 'next/script';
 import "./globals.css";
-
+const primaryFont = localFont({
+  src: '../public/fonts/seb-neue/SebneueRegular-eAGm.otf',
+  variable: '--fpr1',
+});
+const primaryFontBold = localFont({
+  src: '../public/fonts/seb-neue/SebneueExtrabold.otf',
+  variable: '--fpr1-bold',
+});
+const HeadingFontBold = localFont({
+  src: '../public/fonts/clear_metal.ttf',
+  variable: '--heading-bold',
+});
+const HeartAndLove = localFont({
+  src: '../public/fonts/heart.otf',
+  variable: '--heart',
+});
 const inter = Inter({
   subsets: ["latin"],
   variable: '--font-inter',
@@ -49,7 +65,7 @@ export const metadata: Metadata = {
   keywords: [
     "Kurukshetra", "dharma", "truth", "authentic news", "Indian journalism",
     "dharmic values", "civilizational awakening", "Bharat", "Hindu dharma",
-    "politics", "nation","bharat", "culture", "history", "spiritual journalism",
+    "politics", "nation", "bharat", "culture", "history", "spiritual journalism",
     "Rajiv Dixit", "truth movement", "anti-colonial", "indigenous knowledge",
     "Bharatiya values", "dharma yuddha", "righteous journalism"
   ],
@@ -225,7 +241,7 @@ export default function RootLayout({
   };
 
   return (
-    <html lang="en" suppressHydrationWarning className={`${inter.variable} ${notoSansDevanagari.variable}`}>
+    <html lang="en" suppressHydrationWarning className={`${inter.variable} ${notoSansDevanagari.variable} `}>
       <head>
         {/* Preconnect to external domains */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -234,7 +250,7 @@ export default function RootLayout({
         <link rel="preconnect" href="https://platform.twitter.com" />
         <link rel="preconnect" href="https://www.youtube.com" />
         <link rel="preconnect" href="https://pagead2.googlesyndication.com" />
-        
+
         {/* Manifest and PWA */}
         <link rel="manifest" href="/site.webmanifest" />
         <meta name="msapplication-TileColor" content="#ea580c" />
@@ -242,23 +258,23 @@ export default function RootLayout({
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-        
+
         {/* Structured Data - Organization */}
         <JsonLd data={organizationJsonLd} />
-        
+
         {/* Structured Data - Website */}
         <JsonLd data={websiteJsonLd} />
-        
+
         {/* Google Analytics */}
         <GoogleAnalytics />
       </head>
-      <body className={`${inter.className} antialiased`}>
-        <NextTopLoader showSpinner={false}/>
-        
+      <body className={`${inter.className} ${primaryFont.variable} ${HeartAndLove.variable} ${HeadingFontBold.variable} ${primaryFontBold.variable} antialiased`}>
+        <NextTopLoader showSpinner={false} />
+
         <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-orange-600 text-white px-4 py-2 rounded-md z-50">
           Skip to main content
         </a>
-        
+
         <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
           <ClerkProvider>
             <div id="main-content">

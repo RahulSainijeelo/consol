@@ -19,12 +19,23 @@ export const metadata: Metadata = {
 
 export default async function HomePage() {
   return (
-    <main className="min-h-screen bg-black pb-16 md:pb-0">
+    <main className="relative min-h-screen bg-black">
       <Header />
-      <HeroSection />
-      <UpcomingTrips />
-      <PreviousTrips />
-      <Footer />
+
+      {/* Fixed Hero Section */}
+      <div className="fixed inset-0 z-0">
+        <HeroSection />
+      </div>
+
+      {/* Scrollable Content */}
+      <div className="relative z-10" style={{ marginTop: '100vh' }}>
+        <div className="bg-black" style={{ borderRadius: "40px 40px 0 0", boxShadow: "0px -6px 18px 2px rgba(255,255,255,0.62)" }}>
+          <UpcomingTrips />
+          <PreviousTrips />
+          <Footer />
+        </div>
+      </div>
+
       <BottomTabBar />
     </main>
   );

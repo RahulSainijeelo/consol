@@ -1,19 +1,42 @@
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import Header from '@/components/layout/Header';
-import { JsonLd } from '@/components/seo/JsonLd';
 import Footer from '@/components/layout/Footer';
-import { demoTrip } from '@/public/demo-trip';
 
 interface TripPageProps {
   params: Promise<{
     id: string;
   }>;
 }
-async function getTrip(id: string) {
+
+interface Trip {
+  id: string;
+  title: string;
+  destination: string;
+  category: string;
+  description: string;
+  content: string;
+  images: { url: string; deleteUrl?: string }[];
+  status: string;
+  startDate: string;
+  endDate: string;
+  price: number;
+  maxParticipants: number;
+  currentParticipants?: number;
+  difficulty?: string;
+  duration?: string;
+  included?: string[];
+  notIncluded?: string[];
+  itinerary?: { day: number; title: string; description: string }[];
+  featured?: boolean;
+  rating?: number;
+  reviewCount?: number;
+}
+
+async function getTrip(id: string): Promise<Trip | null> {
   try {
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/api/articles/${id}`,
+      `${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/api/trips/${id}`,
       {
         next: { revalidate: 300 }
       }
@@ -26,165 +49,77 @@ async function getTrip(id: string) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
 
-    const article = await response.json();
-    return article;
+    const trip = await response.json();
+    return trip;
   } catch (error) {
-    console.error('Error fetching article:', error);
+    console.error('Error fetching trip:', error);
     return null;
   }
-}
-
-function extractKeywords(content: string): string[] {
-  const stopWords = ['the', 'a', 'an', 'and', 'or', 'but', 'in', 'on', 'at', 'to', 'for', 'of', 'with', 'by', 'is', 'are', 'was', 'were', 'be', 'been', 'have', 'has', 'had', 'do', 'does', 'did', 'will', 'would', 'should', 'could', 'may', 'might', 'must', 'can'];
-
-  return content
-    .toLowerCase()
-    .replace(/[^\w\s]/g, '')
-    .split(/\s+/)
-    .filter(word => word.length > 3 && !stopWords.includes(word))
-    .reduce((acc: string[], word) => {
-      if (!acc.includes(word)) acc.push(word);
-      return acc;
-    }, [])
-    .slice(0, 20); // Top 20 keywords
-}
-
-function slugify(text: string): string {
-  return text
-    .toLowerCase()
-    .replace(/[^\w\s-]/g, '')
-    .replace(/[\s_-]+/g, '-')
-    .replace(/^-+|-+$/g, '');
 }
 
 // Generate metadata for SEO
 export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
   const resolvedParams = await params;
   const { id } = resolvedParams;
-  const trip = demoTrip;
+  const trip = await getTrip(id);
 
   if (!trip) {
     return {
-      title: 'Trip Not Found - Kurukshetra',
+      title: 'Trip Not Found - ConSoul',
       description: 'The requested trip could not be found.',
     };
   }
 
-  const publishedTime = new Date(trip.publishDate).toISOString();
-  const modifiedTime = trip.updatedDate ? new Date(trip.updatedDate).toISOString() : publishedTime;
-
   return {
-    title: `${trip.title} - Kurukshetra`,
-    description: trip.description || trip.shortDescription || trip.title.slice(0, 160),
+    title: `${trip.title} - ConSoul`,
+    description: trip.description,
     keywords: [
       trip.category.toLowerCase(),
-      trip.author.toLowerCase(),
-      'kurukshetra',
-      'dharma',
-      'news',
-      'truth',
-      'authentic journalism',
-      ...extractKeywords(trip.content)
+      trip.destination.toLowerCase(),
+      'travel',
+      'adventure',
+      'trip planning',
     ].join(', '),
-
-    authors: [{ name: trip.author, url: `/author/${slugify(trip.author)}` }],
-    category: trip.category,
 
     openGraph: {
       title: trip.title,
-      description: trip.description || trip.shortDescription,
+      description: trip.description,
       url: `/trip/${id}`,
-      siteName: 'Kurukshetra.info',
-      locale: 'en_IN',
-      type: 'article',
-      publishedTime,
-      modifiedTime,
-      expirationTime: new Date(Date.now() + 365 * 24 * 60 * 60 * 1000).toISOString(), // 1 year
-      authors: [trip.author],
-      section: trip.category,
-      tags: extractKeywords(trip.content),
-      images: trip.images?.map((img: any, index: any) => ({
+      siteName: 'ConSoul',
+      locale: 'en_US',
+      type: 'website',
+      images: trip.images?.map((img, index) => ({
         url: img.url,
         width: 1200,
         height: 630,
         alt: `${trip.title} - Image ${index + 1}`,
-        type: 'image/jpeg',
       })) || [],
     },
 
     twitter: {
       card: 'summary_large_image',
-      site: '@kurukshetra',
-      creator: `@${slugify(trip.author)}`,
       title: trip.title,
-      description: trip.description || trip.shortDescription,
+      description: trip.description,
       images: trip.images?.[0]?.url ? [trip.images[0].url] : [],
     },
 
     alternates: {
-      canonical: `/news/${id}`,
-    },
-
-    other: {
-      'article:published_time': publishedTime,
-      'article:modified_time': modifiedTime,
-      'article:author': trip.author,
-      'article:section': trip.category,
-      'article:tag': extractKeywords(trip.content).join(','),
+      canonical: `/trip/${id}`,
     },
   };
 }
 
-
-
 export default async function TripPage({ params }: TripPageProps) {
   const resolvedParams = await params;
   const { id } = resolvedParams;
-  const trip = await demoTrip;
+  const trip = await getTrip(id);
+
   if (!trip) {
     notFound();
   }
 
-  const articleJsonLd = {
-    "@context": "https://schema.org",
-    "@type": "NewsArticle",
-    "headline": trip.title,
-    "description": trip.description || trip.shortDescription,
-    "image": trip.images?.map((img: any) => img.url) || [],
-    "author": {
-      "@type": "Person",
-      "name": trip.author,
-      "url": `${process.env.NEXT_PUBLIC_SITE_URL}/author/${slugify(trip.author)}`
-    },
-    "publisher": {
-      "@type": "NewsMediaOrganization",
-      "name": "Kurukshetra",
-      "logo": {
-        "@type": "ImageObject",
-        "url": `${process.env.NEXT_PUBLIC_SITE_URL}/logo.png`
-      }
-    },
-    "datePublished": trip.publishDate,
-    "dateModified": trip.updatedDate || trip.publishDate,
-    "mainEntityOfPage": {
-      "@type": "WebPage",
-      "@id": `${process.env.NEXT_PUBLIC_SITE_URL}/trip/${id}`
-    },
-    "articleSection": trip.category,
-    "keywords": extractKeywords(trip.content).join(', '),
-    "wordCount": trip.content.split(' ').length,
-    "inLanguage": "en-IN",
-    "isAccessibleForFree": true,
-    "hasPart": trip.images?.map((img: any, index: any) => ({
-      "@type": "ImageObject",
-      "url": img.url,
-      "caption": `${trip.title} - Image ${index + 1}`
-    })) || []
-  };
-
   return (
     <>
-      <JsonLd data={articleJsonLd} />
       <div className="min-h-screen bg-black pb-16 md:pb-0">
         <Header />
 
@@ -210,9 +145,9 @@ export default async function TripPage({ params }: TripPageProps) {
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4">
                 {trip.title}
               </h1>
-              {trip.shortDescription && (
+              {trip.description && (
                 <p className="text-lg md:text-xl text-gray-300 max-w-3xl">
-                  {trip.shortDescription}
+                  {trip.description}
                 </p>
               )}
             </div>
@@ -224,15 +159,82 @@ export default async function TripPage({ params }: TripPageProps) {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             {/* Left Column - Main Content */}
             <div className="lg:col-span-2 space-y-8">
-              {/* Trip Overview */}
+              {/* Trip Highlights */}
+              <div className="bg-gradient-to-br from-white/10 to-white/5 rounded-2xl border border-white/10 p-6 md:p-8">
+                <h2 className="text-2xl md:text-3xl font-display font-bold text-white mb-6">
+                  Trip Highlights
+                </h2>
+                <div className="grid md:grid-cols-2 gap-4">
+                  <div className="flex items-start gap-3 p-4 bg-black/30 rounded-xl border border-gold/10 hover:border-gold/30 transition-colors">
+                    <svg className="w-5 h-5 text-gold flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                    </svg>
+                    <div>
+                      <h4 className="font-semibold text-white mb-1">Scenic {trip.category} Views</h4>
+                      <p className="text-sm text-gray-400">Experience breathtaking {trip.destination}</p>
+                    </div>
+                  </div>
+                  <div className="flex items-start gap-3 p-4 bg-black/30 rounded-xl border border-gold/10 hover:border-gold/30 transition-colors">
+                    <svg className="w-5 h-5 text-gold flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                    </svg>
+                    <div>
+                      <h4 className="font-semibold text-white mb-1">Cultural Immersion</h4>
+                      <p className="text-sm text-gray-400">Connect with local traditions and culture</p>
+                    </div>
+                  </div>
+                  <div className="flex items-start gap-3 p-4 bg-black/30 rounded-xl border border-gold/10 hover:border-gold/30 transition-colors">
+                    <svg className="w-5 h-5 text-gold flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                    </svg>
+                    <div>
+                      <h4 className="font-semibold text-white mb-1">Adventure Activities</h4>
+                      <p className="text-sm text-gray-400">Exciting outdoor experiences</p>
+                    </div>
+                  </div>
+                  <div className="flex items-start gap-3 p-4 bg-black/30 rounded-xl border border-gold/10 hover:border-gold/30 transition-colors">
+                    <svg className="w-5 h-5 text-gold flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                    </svg>
+                    <div>
+                      <h4 className="font-semibold text-white mb-1">Premium Experience</h4>
+                      <p className="text-sm text-gray-400">Carefully curated journey</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Itinerary Overview */}
+              {trip.itinerary && trip.itinerary.length > 0 && (
+                <div className="bg-white/5 rounded-2xl border border-white/10 p-6 md:p-8">
+                  <h2 className="text-2xl md:text-3xl font-display font-bold text-white mb-6">
+                    Itinerary Overview
+                  </h2>
+                  <div className="space-y-6">
+                    {trip.itinerary.map((item, index) => (
+                      <div key={index} className={`relative pl-8 ${index !== trip.itinerary!.length - 1 ? 'pb-6 border-l-2 border-gold/30' : ''}`}>
+                        <div className="absolute -left-2.5 top-0 w-5 h-5 bg-gold rounded-full border-4 border-black" />
+                        <div className="bg-black/40 rounded-xl p-5 border border-white/10 hover:border-gold/30 transition-colors">
+                          <div className="flex items-center justify-between mb-3">
+                            <h3 className="text-xl font-bold text-white">Day {item.day}</h3>
+                          </div>
+                          <h4 className="text-lg font-semibold text-gray-200 mb-2">{item.title}</h4>
+                          <p className="text-gray-400">{item.description}</p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Trip Details/Content */}
               <div className="bg-white/5 rounded-2xl border border-white/10 p-6 md:p-8">
                 <h2 className="text-2xl md:text-3xl font-display font-bold text-white mb-6">
-                  Trip Overview
+                  About This Trip
                 </h2>
-                <div
-                  className="prose prose-lg max-w-none text-gray-300 leading-relaxed prose-headings:text-white prose-strong:text-gold"
-                  dangerouslySetInnerHTML={{ __html: trip.content || trip.description }}
-                />
+                <div className="prose prose-lg max-w-none text-gray-300 leading-relaxed prose-headings:text-white prose-strong:text-gold">
+                  <p>{trip.content}</p>
+                </div>
               </div>
 
               {/* Image Gallery */}
@@ -242,7 +244,7 @@ export default async function TripPage({ params }: TripPageProps) {
                     Gallery
                   </h2>
                   <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                    {trip.images.slice(1).map((image: any, index: number) => (
+                    {trip.images.slice(1).map((image, index) => (
                       <div key={index} className="relative aspect-square rounded-xl overflow-hidden group cursor-pointer">
                         <img
                           src={image.url}
@@ -258,38 +260,16 @@ export default async function TripPage({ params }: TripPageProps) {
 
             {/* Right Column - Sidebar */}
             <div className="space-y-6">
-              {/* Trip Details Card */}
-              <div className="bg-gradient-to-br from-gray-900 to-black rounded-2xl p-6 border border-white/10 sticky top-24">
-                <h3 className="text-xl font-bold text-white mb-6">Trip Details</h3>
+              {/* Price & Booking Card */}
+              <div className="bg-gradient-to-br from-gold/10 to-orange-500/5 rounded-2xl p-6 border border-gold/20">
+                <div className="text-center mb-6">
+                  <p className="text-sm text-gray-400 mb-2">Starting from</p>
+                  <p className="text-4xl font-bold text-gold">₹{trip.price.toLocaleString()}</p>
+                  <p className="text-sm text-gray-400 mt-1">per person</p>
+                </div>
 
-                <div className="space-y-4">
-                  {/* Author */}
-                  <div className="flex items-start gap-3">
-                    <div className="flex-shrink-0 w-10 h-10 bg-gold rounded-full flex items-center justify-center text-black font-bold">
-                      {trip.author.charAt(0).toUpperCase()}
-                    </div>
-                    <div>
-                      <p className="text-sm text-gray-400">Organized by</p>
-                      <p className="font-semibold text-white">{trip.author}</p>
-                    </div>
-                  </div>
-
-                  <div className="border-t border-white/10 pt-4 space-y-3">
-                    {/* Publish Date */}
-                    <div>
-                      <p className="text-sm text-gray-400">Trip Start Date</p>
-                      <p className="font-medium text-white">
-                        {new Date(trip.publishDate).toLocaleDateString('en-US', {
-                          year: 'numeric',
-                          month: 'long',
-                          day: 'numeric'
-                        })}
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* CTA Button */}
-                  <button className="w-full mt-6 bg-gold hover:bg-yellow-600 text-black font-semibold py-3 px-6 rounded-xl transition-colors">
+                <div className="space-y-3">
+                  <button className="w-full bg-gold hover:bg-yellow-600 text-black font-semibold py-3 px-6 rounded-xl transition-all duration-300 hover:shadow-lg hover:shadow-gold/30">
                     Book This Trip
                   </button>
 
@@ -298,6 +278,106 @@ export default async function TripPage({ params }: TripPageProps) {
                   </button>
                 </div>
               </div>
+
+              {/* Trip Information Card */}
+              <div className="bg-white/5 rounded-2xl p-6 border border-white/10">
+                <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
+                  <svg className="w-5 h-5 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                  Trip Information
+                </h3>
+
+                <div className="space-y-4">
+                  <div className="flex items-center gap-3 pb-3 border-b border-white/10">
+                    <svg className="w-5 h-5 text-gold flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                    </svg>
+                    <div className="flex-1">
+                      <p className="text-sm text-gray-400">Destination</p>
+                      <p className="font-medium text-white">{trip.destination}</p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-3 pb-3 border-b border-white/10">
+                    <svg className="w-5 h-5 text-gold flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    </svg>
+                    <div className="flex-1">
+                      <p className="text-sm text-gray-400">Start Date</p>
+                      <p className="font-medium text-white">
+                        {new Date(trip.startDate).toLocaleDateString('en-US', {
+                          year: 'numeric',
+                          month: 'long',
+                          day: 'numeric'
+                        })}
+                      </p>
+                    </div>
+                  </div>
+
+                  {trip.duration && (
+                    <div className="flex items-center gap-3 pb-3 border-b border-white/10">
+                      <svg className="w-5 h-5 text-gold flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                      <div className="flex-1">
+                        <p className="text-sm text-gray-400">Duration</p>
+                        <p className="font-medium text-white">{trip.duration}</p>
+                      </div>
+                    </div>
+                  )}
+
+                  <div className="flex items-center gap-3 pb-3 border-b border-white/10">
+                    <svg className="w-5 h-5 text-gold flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                    </svg>
+                    <div className="flex-1">
+                      <p className="text-sm text-gray-400">Group Size</p>
+                      <p className="font-medium text-white">Max {trip.maxParticipants} People</p>
+                      {trip.currentParticipants !== undefined && (
+                        <p className="text-xs text-gray-500 mt-1">{trip.currentParticipants} / {trip.maxParticipants} booked</p>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* What's Included Card */}
+              {trip.included && trip.included.length > 0 && (
+                <div className="bg-white/5 rounded-2xl p-6 border border-white/10">
+                  <h3 className="text-xl font-bold text-white mb-4">What's Included</h3>
+
+                  <div className="space-y-3">
+                    {trip.included.map((item, index) => (
+                      <div key={index} className="flex items-start gap-3">
+                        <svg className="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                        </svg>
+                        <span className="text-gray-300">{item}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* What's Not Included Card */}
+              {trip.notIncluded && trip.notIncluded.length > 0 && (
+                <div className="bg-white/5 rounded-2xl p-6 border border-white/10">
+                  <h3 className="text-xl font-bold text-white mb-4">Not Included</h3>
+
+                  <div className="space-y-3">
+                    {trip.notIncluded.map((item, index) => (
+                      <div key={index} className="flex items-start gap-3">
+                        <svg className="w-5 h-5 text-red-500 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+                        </svg>
+                        <span className="text-gray-300">{item}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </div>

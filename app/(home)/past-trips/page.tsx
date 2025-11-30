@@ -93,20 +93,17 @@ export default function PastTripsPage() {
             <Header />
 
             {/* Hero Section */}
-            <div className="text-white py-4 md:py-6">
-                <div className="container mx-auto px-4">
+            <div className="text-white py-4">
+                <div className="container mx-auto px-4 pt-3 md:pt-20">
                     <div className="max-w-3xl">
-                        <div className="inline-block px-4 py-1 bg-white/10 backdrop-blur-sm text-gold text-sm font-medium rounded-full mb-4 border border-gold/20">
-                            Completed Adventures
-                        </div>
-                        <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold mb-6">
+                        <h1 className="text-4xl md:text-5xl pl-20 sm:pl-0 lg:text-6xl font-display font-bold mb-6">
                             Past Trips
                         </h1>
                     </div>
                 </div>
             </div>
             {/* Trips Grid */}
-            <div className="container mx-auto px-4 py-12">
+            <div className="container mx-auto px-4 pb-8">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     {pastTrips.map((trip) => (
                         <Card key={trip.id} className="overflow-hidden border-white/10 bg-white/5 shadow-lg hover:shadow-gold/20 transition-shadow group">

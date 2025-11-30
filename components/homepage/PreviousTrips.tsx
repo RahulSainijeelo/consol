@@ -45,7 +45,7 @@ const testimonials = [
 
 export function PreviousTrips() {
     return (
-        <section className="py-20 bg-black/95">
+        <section className="py-4 md:py-10 bg-black/95" style={{ borderRadius: "10px 10px 0 0" }}>
             <div className="container mx-auto px-4">
                 <div className="mb-12 text-center">
                     <h2 className="mb-4 text-3xl font-display font-bold text-white sm:text-4xl">
@@ -67,23 +67,26 @@ export function PreviousTrips() {
                         <CarouselContent className="-ml-2 md:-ml-4">
                             {testimonials.map((testimonial) => (
                                 <CarouselItem key={testimonial.id} className="pl-2 md:pl-4 md:basis-1/2 lg:basis-1/3">
-                                    <div className="p-1">
-                                        <Card className="h-full border-white/10 bg-white/5 shadow-sm hover:shadow-gold/10 transition-shadow">
-                                            <CardContent className="flex flex-col items-center p-6 text-center h-full">
-                                                <div className="mb-4 h-20 w-20 overflow-hidden rounded-full border-4 border-gold/30">
+                                    <div className="p-1 h-full">
+                                        <Card className="h-full rounded-lg border-white/10 bg-gradient-to-br from-white/10 via-white/5 to-transparent backdrop-blur-sm hover:border-gold/40 hover:shadow-2xl hover:shadow-gold/20 transition-all duration-500 group relative overflow-hidden">
+                                            {/* Subtle gradient overlay on hover */}
+                                            <div className="absolute inset-0 bg-gradient-to-br from-gold/0 to-gold/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+
+                                            <CardContent className="flex flex-col items-center p-6 text-center h-full relative z-10">
+                                                <div className="mb-4 h-20 w-20 overflow-hidden rounded-full border-4 border-gold/30 group-hover:border-gold/60 transition-colors shadow-lg group-hover:shadow-gold/30">
                                                     <img
                                                         src={testimonial.image}
                                                         alt={testimonial.name}
-                                                        className="h-full w-full object-cover"
+                                                        className="h-full w-full object-cover transform group-hover:scale-110 transition-transform duration-500"
                                                     />
                                                 </div>
-                                                <h3 className="mb-1 text-lg font-bold text-white">
+                                                <h3 className="mb-1 text-lg font-bold text-white group-hover:text-gold transition-colors">
                                                     {testimonial.name}
                                                 </h3>
                                                 <p className="mb-3 text-sm font-medium text-gold">
                                                     {testimonial.trip}
                                                 </p>
-                                                <div className="mb-4 flex">
+                                                <div className="mb-4 flex gap-1">
                                                     {[...Array(5)].map((_, i) => (
                                                         <Star
                                                             key={i}
@@ -94,9 +97,12 @@ export function PreviousTrips() {
                                                         />
                                                     ))}
                                                 </div>
-                                                <p className="text-sm text-gray-400 italic">
+                                                <p className="text-sm text-gray-300 italic leading-relaxed">
                                                     "{testimonial.comment}"
                                                 </p>
+
+                                                {/* Decorative bottom accent */}
+                                                <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-gold/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                                             </CardContent>
                                         </Card>
                                     </div>

@@ -10,33 +10,54 @@ export default function Header() {
   const session = useSession();
   console.log(session.status)
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-white/10 bg-black/95 backdrop-blur supports-[backdrop-filter]:bg-black/60">
-      <div className="container mx-auto px-4 h-16 flex items-center justify-between">
-        {/* Logo - Visible on both Mobile and Desktop */}
-        <Link href="/" className="flex items-center gap-2">
-          <span className="font-display font-bold text-xl tracking-tight text-gold">ConSol</span>
+    <header className="fixed top-0 left-0 right-0 z-50 w-full">
+      <div className="container mx-auto px-4 py-6 flex items-start justify-between">
+        {/* Left Part - Circular Logo (Always visible) */}
+        <Link href="/" className="flex-shrink-0">
+          <div className="w-16 h-16 rounded-full bg-black/95 backdrop-blur-md border border-white/10 flex items-center justify-center hover:border-gold/50 transition-all duration-300 shadow-lg hover:shadow-gold/20">
+            <span
+              style={{ fontFamily: 'var(--heading-bold)' }}
+              className="text-gold text-lg tracking-wider"
+            >
+              CS
+            </span>
+          </div>
         </Link>
 
-        {/* Desktop Navigation - Hidden on mobile, visible on md and up */}
-        <nav className="hidden md:flex items-center gap-8">
-          <Link href="/past-trips" className="text-sm font-medium text-gray-300 hover:text-gold transition-colors">
+        {/* Right Part - Navigation (Desktop only) */}
+        <nav className="hidden md:flex items-center gap-6 bg-black/95 backdrop-blur-md border border-white/10 rounded-full px-8 py-3 shadow-lg">
+          <Link
+            href="/past-trips"
+            className="text-sm font-medium text-gray-300 hover:text-gold transition-colors"
+            style={{ fontFamily: 'var(--fpr1)' }}
+          >
             Past Trips
           </Link>
-          <Link href="/my-trips" className="text-sm font-medium text-gray-300 hover:text-gold transition-colors">
+          <Link
+            href="/my-trips"
+            className="text-sm font-medium text-gray-300 hover:text-gold transition-colors"
+            style={{ fontFamily: 'var(--fpr1)' }}
+          >
             My Trips
           </Link>
+
+          <div className="h-4 w-[1px] bg-white/10" />
+
           {session.status === "authenticated" ? (
-            <div className="flex flex-col">
-              <div className="flex justify-center">
-                <User />
-
+            <div className="flex items-center gap-2">
+              <div className="flex items-center justify-center w-8 h-8 rounded-full bg-gold/10 border border-gold/20">
+                <User className="w-4 h-4 text-gold" />
               </div>
-              <p>{session.data.user?.name?.split(" ")[0]}</p>
-
+              <span
+                className="text-sm font-medium text-white"
+                style={{ fontFamily: 'var(--fpr1)' }}
+              >
+                {session.data.user?.name?.split(" ")[0]}
+              </span>
             </div>
           ) : (
             <Link href="/auth/login">
-              <Button className="bg-gold hover:bg-yellow-600 text-black font-semibold">
+              <Button className="bg-gold hover:bg-yellow-600 text-black font-semibold text-sm px-6 py-2 h-auto rounded-full">
                 Login
               </Button>
             </Link>

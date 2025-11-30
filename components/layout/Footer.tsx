@@ -14,10 +14,10 @@ export default function Footer() {
   return (
     <footer className="bg-black text-white border-t border-white/10">
       {/* Main Footer Content */}
-      <div className="container mx-auto px-4 py-16">
+      <div className="container mx-auto px-4 md:py-16 py-8">
         <div className="flex items-center justify-center">
-          <h2 className="text-6xl md:text-8xl lg:text-9xl font-display font-black tracking-tighter text-gold/20">
-            CONSOL
+          <h2 style={{ fontFamily: 'var(--heading-bold)' }} className="text-5xl tracking-[0.5rem] md:text-6xl lg:text-[12rem] font-display font-black text-gold/20">
+            CON-SOUL
           </h2>
         </div>
       </div>

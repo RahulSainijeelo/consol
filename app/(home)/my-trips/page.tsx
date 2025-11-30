@@ -81,9 +81,9 @@ export default function MyTripsPage() {
 
             {/* Hero Section */}
             <div className="text-white py-6 md:py-8">
-                <div className="container mx-auto px-4">
+                <div className="container mx-auto px-4 pt-3 md:pt-20">
                     <div className="max-w-3xl">
-                        <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold mb-4">
+                        <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold mb-4 pl-20 sm:pl-0">
                             My Trips
                         </h1>
                         <p className="text-lg md:text-xl text-gray-400">
@@ -94,9 +94,9 @@ export default function MyTripsPage() {
             </div>
 
             {/* Tabs */}
-            <div className="bg-black/95 border-b border-white/10 sticky top-16 z-40 backdrop-blur supports-[backdrop-filter]:bg-black/60">
+            <div className="bg-black/95 border-b border-white/10 sticky top-7 z-40 backdrop-blur supports-[backdrop-filter]:bg-black/60">
                 <div className="container mx-auto px-4">
-                    <div className="flex gap-8">
+                    <div className="flex gap-5 justify-end md:justify-center">
                         <button
                             onClick={() => setActiveTab('upcoming')}
                             className={`py-4 px-2 font-semibold border-b-2 transition-colors ${activeTab === 'upcoming'
