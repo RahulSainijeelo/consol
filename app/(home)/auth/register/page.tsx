@@ -14,6 +14,7 @@ export default function RegisterPage() {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [number, setNumber] = useState("");
     const [isLoading, setIsLoading] = useState(false);
     const { data: session } = useSession();
 
@@ -31,7 +32,7 @@ export default function RegisterPage() {
             const res = await fetch("/api/auth/register", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ name, email, password }),
+                body: JSON.stringify({ name, email, password, number }),
             });
 
             if (res.ok) {
@@ -101,6 +102,21 @@ export default function RegisterPage() {
                                         onChange={(e) => setEmail(e.target.value)}
                                         className="w-full bg-black/50 border border-white/10 rounded-xl py-3 pl-12 pr-4 text-white placeholder:text-gray-600 focus:border-gold focus:ring-1 focus:ring-gold transition-all outline-none"
                                         placeholder="name@example.com"
+                                        required
+                                    />
+                                </div>
+                            </div>
+
+                            <div className="space-y-2">
+                                <label className="text-sm font-medium text-gray-300 ml-1">Email Address</label>
+                                <div className="relative">
+                                    <Mail className="absolute left-4 top-3.5 h-5 w-5 text-gray-500" />
+                                    <input
+                                        type="number"
+                                        value={number}
+                                        onChange={(e) => setNumber(e.target.value)}
+                                        className="w-full bg-black/50 border border-white/10 rounded-xl py-3 pl-12 pr-4 text-white placeholder:text-gray-600 focus:border-gold focus:ring-1 focus:ring-gold transition-all outline-none"
+                                        placeholder="9876543210"
                                         required
                                     />
                                 </div>

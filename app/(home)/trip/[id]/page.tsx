@@ -1,13 +1,13 @@
-import { Metadata } from 'next';
+'use client';
+
+import { useState, useEffect } from 'react';
+import { useSession } from 'next-auth/react';
+import { useParams, useRouter } from 'next/navigation';
 import { notFound } from 'next/navigation';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
-
-interface TripPageProps {
-  params: Promise<{
-    id: string;
-  }>;
-}
+import Link from 'next/link';
+import { CheckCircle2, Clock, XCircle } from 'lucide-react';
 
 interface Trip {
   id: string;
@@ -33,90 +33,123 @@ interface Trip {
   reviewCount?: number;
 }
 
-async function getTrip(id: string): Promise<Trip | null> {
-  try {
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/api/trips/${id}`,
-      {
-        next: { revalidate: 300 }
-      }
-    );
-
-    if (!response.ok) {
-      if (response.status === 404) {
-        return null;
-      }
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-
-    const trip = await response.json();
-    return trip;
-  } catch (error) {
-    console.error('Error fetching trip:', error);
-    return null;
-  }
+interface Booking {
+  id: string;
+  status: string;
+  tripId: string;
 }
 
-// Generate metadata for SEO
-export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
-  const resolvedParams = await params;
-  const { id } = resolvedParams;
-  const trip = await getTrip(id);
+interface TripPageProps {
+  params: { id: string };
+}
 
-  if (!trip) {
-    return {
-      title: 'Trip Not Found - ConSoul',
-      description: 'The requested trip could not be found.',
+export default function TripPage() {
+  const { data: session } = useSession();
+  const params = useParams();
+  const router = useRouter();
+  const [trip, setTrip] = useState<Trip | null>(null);
+  const [booking, setBooking] = useState<Booking | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        // Fetch trip data
+        const tripRes = await fetch(`/api/trips/${params.id}`);
+        if (!tripRes.ok) {
+          setTrip(null);
+          setLoading(false);
+          return;
+        }
+        const tripData = await tripRes.json();
+        setTrip(tripData);
+
+        // Fetch user's booking if logged in
+        if (session?.user?.email && params?.id) {
+          const tripId = Array.isArray(params.id) ? params.id[0] : params.id;
+          const bookingsRes = await fetch(`/api/user/bookings?tripId=${tripId}&checkOnly=true`);
+          if (bookingsRes.ok) {
+            const bookingData = await bookingsRes.json();
+            if (bookingData.exists && bookingData.booking) {
+              setBooking(bookingData.booking);
+            }
+          }
+        }
+      } catch (error) {
+        console.error('Error fetching trip:', error);
+      } finally {
+        setLoading(false);
+      }
     };
+
+    fetchData();
+  }, [params.id, session]);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-black flex items-center justify-center">
+        <div className="w-16 h-16 border-4 border-gold border-t-transparent rounded-full animate-spin"></div>
+      </div>
+    );
   }
-
-  return {
-    title: `${trip.title} - ConSoul`,
-    description: trip.description,
-    keywords: [
-      trip.category.toLowerCase(),
-      trip.destination.toLowerCase(),
-      'travel',
-      'adventure',
-      'trip planning',
-    ].join(', '),
-
-    openGraph: {
-      title: trip.title,
-      description: trip.description,
-      url: `/trip/${id}`,
-      siteName: 'ConSoul',
-      locale: 'en_US',
-      type: 'website',
-      images: trip.images?.map((img, index) => ({
-        url: img.url,
-        width: 1200,
-        height: 630,
-        alt: `${trip.title} - Image ${index + 1}`,
-      })) || [],
-    },
-
-    twitter: {
-      card: 'summary_large_image',
-      title: trip.title,
-      description: trip.description,
-      images: trip.images?.[0]?.url ? [trip.images[0].url] : [],
-    },
-
-    alternates: {
-      canonical: `/trip/${id}`,
-    },
-  };
-}
-
-export default async function TripPage({ params }: TripPageProps) {
-  const resolvedParams = await params;
-  const { id } = resolvedParams;
-  const trip = await getTrip(id);
 
   if (!trip) {
     notFound();
   }
+
+  const getBookingStatusButton = () => {
+    if (!booking) {
+      return (
+        <Link href={`/trip/${params.id}/join`} className="w-full">
+          <button className="w-full bg-gold hover:bg-yellow-600 text-black font-semibold py-3 px-6 rounded-xl transition-all duration-300 hover:shadow-lg hover:shadow-gold/30">
+            Book This Trip
+          </button>
+        </Link>
+      );
+    }
+
+    // User has a booking
+    switch (booking.status) {
+      case 'confirmed':
+        return (
+          <div className="w-full">
+            <button className="w-full bg-green-600 text-white font-semibold py-3 px-6 rounded-xl cursor-default flex items-center justify-center gap-2">
+              <CheckCircle2 className="w-5 h-5" />
+              Booking Confirmed
+            </button>
+            <p className="text-xs text-center text-gray-400 mt-2">Your trip is confirmed!</p>
+          </div>
+        );
+      case 'pending':
+        return (
+          <div className="w-full">
+            <button className="w-full bg-yellow-600 text-black font-semibold py-3 px-6 rounded-xl cursor-default flex items-center justify-center gap-2">
+              <Clock className="w-5 h-5" />
+              Booking Pending
+            </button>
+            <p className="text-xs text-center text-gray-400 mt-2">Awaiting confirmation</p>
+          </div>
+        );
+      case 'rejected':
+        return (
+          <div className="w-full">
+            <button className="w-full bg-red-600 text-white font-semibold py-3 px-6 rounded-xl cursor-default flex items-center justify-center gap-2">
+              <XCircle className="w-5 h-5" />
+              Booking Rejected
+            </button>
+            <p className="text-xs text-center text-gray-400 mt-2">Please contact support</p>
+          </div>
+        );
+      default:
+        return (
+          <Link href={`/trip/${params.id}/join`} className="w-full">
+            <button className="w-full bg-gold hover:bg-yellow-600 text-black font-semibold py-3 px-6 rounded-xl transition-all duration-300 hover:shadow-lg hover:shadow-gold/30">
+              Book This Trip
+            </button>
+          </Link>
+        );
+    }
+  };
 
   return (
     <>
@@ -269,9 +302,7 @@ export default async function TripPage({ params }: TripPageProps) {
                 </div>
 
                 <div className="space-y-3">
-                  <button className="w-full bg-gold hover:bg-yellow-600 text-black font-semibold py-3 px-6 rounded-xl transition-all duration-300 hover:shadow-lg hover:shadow-gold/30">
-                    Book This Trip
-                  </button>
+                  {getBookingStatusButton()}
 
                   <button className="w-full bg-transparent hover:bg-white/5 text-gold font-semibold py-3 px-6 rounded-xl border-2 border-gold transition-colors">
                     Contact Us
@@ -340,6 +371,18 @@ export default async function TripPage({ params }: TripPageProps) {
                       )}
                     </div>
                   </div>
+
+                  {trip.difficulty && (
+                    <div className="flex items-center gap-3">
+                      <svg className="w-5 h-5 text-gold flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                      </svg>
+                      <div className="flex-1">
+                        <p className="text-sm text-gray-400">Difficulty</p>
+                        <p className="font-medium text-white">{trip.difficulty}</p>
+                      </div>
+                    </div>
+                  )}
                 </div>
               </div>
 

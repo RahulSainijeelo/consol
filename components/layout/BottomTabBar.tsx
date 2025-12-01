@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Home, MapPin, Briefcase, User } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useSession } from "next-auth/react";
 
 const tabs = [
     { name: "Home", href: "/", icon: Home },
@@ -14,7 +15,13 @@ const tabs = [
 
 export default function BottomTabBar() {
     const pathname = usePathname();
-
+    const { data: session } = useSession();
+    let firstName = "";
+    if (session && session.user && session.user.name) firstName = session?.user?.name?.split(" ")[0];
+    if (firstName) {
+        tabs.pop();
+        tabs.push({ name: firstName, href: "/profile", icon: User })
+    }
     return (
         <nav className="fixed bottom-0 left-0 right-0 z-50 bg-black/95 backdrop-blur border-t border-white/10 md:hidden">
             <div className="grid grid-cols-4 h-16">

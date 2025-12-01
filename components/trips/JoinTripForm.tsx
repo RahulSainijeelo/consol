@@ -36,12 +36,70 @@ export default function JoinTripForm({
         mobileNo: "",
         email: userEmail,
         aadhaarImage: "",
+        paymentrefno: "",
         paymentScreenshot: "",
     });
+
+    const [errors, setErrors] = useState<Record<string, string>>({});
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
         setFormData((prev) => ({ ...prev, [name]: value }));
+        // Clear error when user starts typing
+        if (errors[name]) {
+            setErrors((prev) => ({ ...prev, [name]: "" }));
+        }
+    };
+
+    const validateForm = (): boolean => {
+        const newErrors: Record<string, string> = {};
+
+        // Full Name validation
+        if (!formData.fullName.trim()) {
+            newErrors.fullName = "Full name is required";
+        } else if (formData.fullName.trim().length < 3) {
+            newErrors.fullName = "Name must be at least 3 characters";
+        }
+
+        // Email validation
+        if (!formData.email.trim()) {
+            newErrors.email = "Email is required";
+        } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+            newErrors.email = "Invalid email format";
+        }
+
+        // Mobile number validation
+        if (!formData.mobileNo.trim()) {
+            newErrors.mobileNo = "Mobile number is required";
+        } else if (!/^\d{10}$/.test(formData.mobileNo)) {
+            newErrors.mobileNo = "Mobile number must be exactly 10 digits";
+        }
+
+        // Aadhaar number validation
+        if (!formData.aadhaarNo.trim()) {
+            newErrors.aadhaarNo = "Aadhaar number is required";
+        } else if (!/^\d{12}$/.test(formData.aadhaarNo)) {
+            newErrors.aadhaarNo = "Aadhaar number must be exactly 12 digits";
+        }
+
+        // Payment Reference Number validation
+        if (!formData.paymentrefno.trim()) {
+            newErrors.paymentrefno = "Payment reference number is required";
+        } else if (formData.paymentrefno.trim().length < 5) {
+            newErrors.paymentrefno = "Reference number must be at least 5 characters";
+        }
+
+        // Image uploads validation
+        if (!formData.aadhaarImage) {
+            newErrors.aadhaarImage = "Please upload Aadhaar card image";
+        }
+
+        if (!formData.paymentScreenshot) {
+            newErrors.paymentScreenshot = "Please upload payment screenshot";
+        }
+
+        setErrors(newErrors);
+        return Object.keys(newErrors).length === 0;
     };
 
     const handleImageUpload = async (
@@ -56,6 +114,10 @@ export default function JoinTripForm({
         try {
             const result = await uploadImageToImgBB(file);
             setFormData((prev) => ({ ...prev, [field]: result.url }));
+            // Clear error for this field
+            if (errors[field]) {
+                setErrors((prev) => ({ ...prev, [field]: "" }));
+            }
             toast({
                 title: "Image Uploaded",
                 description: "Image uploaded successfully",
@@ -78,10 +140,11 @@ export default function JoinTripForm({
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
-        if (!formData.aadhaarImage || !formData.paymentScreenshot) {
+        // Validate form
+        if (!validateForm()) {
             toast({
-                title: "Missing Images",
-                description: "Please upload both Aadhaar card and payment screenshot",
+                title: "Validation Failed",
+                description: "Please fix the errors in the form",
                 variant: "destructive",
             });
             return;
@@ -111,7 +174,7 @@ export default function JoinTripForm({
                 description: "Your booking request has been received. We will confirm shortly.",
             });
 
-            router.push("/dashboard"); // Or a success page
+            router.push("/my-trips"); // Redirect to my trips
         } catch (error) {
             toast({
                 title: "Booking Failed",
@@ -144,10 +207,13 @@ export default function JoinTripForm({
                                 name="fullName"
                                 value={formData.fullName}
                                 onChange={handleInputChange}
-                                className="bg-black/50 border-white/10 text-white mt-1"
+                                className={`bg-black/50 border-white/10 text-white mt-1 ${errors.fullName ? 'border-red-500' : ''}`}
                                 placeholder="As per Aadhaar"
                                 required
                             />
+                            {errors.fullName && (
+                                <p className="text-red-500 text-sm mt-1">{errors.fullName}</p>
+                            )}
                         </div>
 
                         <div>
@@ -158,9 +224,12 @@ export default function JoinTripForm({
                                 type="email"
                                 value={formData.email}
                                 onChange={handleInputChange}
-                                className="bg-black/50 border-white/10 text-white mt-1"
+                                className={`bg-black/50 border-white/10 text-white mt-1 ${errors.email ? 'border-red-500' : ''}`}
                                 required
                             />
+                            {errors.email && (
+                                <p className="text-red-500 text-sm mt-1">{errors.email}</p>
+                            )}
                         </div>
 
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -171,11 +240,14 @@ export default function JoinTripForm({
                                     name="mobileNo"
                                     value={formData.mobileNo}
                                     onChange={handleInputChange}
-                                    className="bg-black/50 border-white/10 text-white mt-1"
+                                    className={`bg-black/50 border-white/10 text-white mt-1 ${errors.mobileNo ? 'border-red-500' : ''}`}
                                     placeholder="10 digits"
                                     pattern="\d{10}"
                                     required
                                 />
+                                {errors.mobileNo && (
+                                    <p className="text-red-500 text-sm mt-1">{errors.mobileNo}</p>
+                                )}
                             </div>
                             <div>
                                 <Label htmlFor="aadhaarNo" className="text-gray-300">Aadhaar Number</Label>
@@ -184,16 +256,38 @@ export default function JoinTripForm({
                                     name="aadhaarNo"
                                     value={formData.aadhaarNo}
                                     onChange={handleInputChange}
-                                    className="bg-black/50 border-white/10 text-white mt-1"
+                                    className={`bg-black/50 border-white/10 text-white mt-1 ${errors.aadhaarNo ? 'border-red-500' : ''}`}
                                     placeholder="12 digits"
                                     pattern="\d{12}"
                                     required
                                 />
+                                {errors.aadhaarNo && (
+                                    <p className="text-red-500 text-sm mt-1">{errors.aadhaarNo}</p>
+                                )}
                             </div>
                         </div>
 
                         <div>
+                            <Label htmlFor="paymentrefno" className="text-gray-300">Payment Reference Number</Label>
+                            <Input
+                                id="paymentrefno"
+                                name="paymentrefno"
+                                type="text"
+                                value={formData.paymentrefno}
+                                onChange={handleInputChange}
+                                className={`bg-black/50 border-white/10 text-white mt-1 ${errors.paymentrefno ? 'border-red-500' : ''}`}
+                                required
+                            />
+                            {errors.paymentrefno && (
+                                <p className="text-red-500 text-sm mt-1">{errors.paymentrefno}</p>
+                            )}
+                        </div>
+
+                        <div>
                             <Label className="text-gray-300">Upload Aadhaar Card</Label>
+                            {errors.aadhaarImage && (
+                                <p className="text-red-500 text-sm mt-1">{errors.aadhaarImage}</p>
+                            )}
                             <div className="mt-2">
                                 {formData.aadhaarImage ? (
                                     <div className="relative group w-full h-48 bg-black/50 rounded-lg border border-white/10 overflow-hidden">
@@ -259,7 +353,11 @@ export default function JoinTripForm({
                             <div className="flex items-center justify-between p-3 bg-black/30 rounded border border-white/5">
                                 <div>
                                     <p className="text-xs text-gray-400">UPI ID</p>
-                                    <p className="text-white font-mono">pay.kurukshetra@upi</p>
+                                    <p ref={(node) => {
+                                        if (node) {
+                                            node.style.setProperty("font-family", "monospace", "important");
+                                        }
+                                    }} className="text-white">pay.kurukshetra@upi</p>
                                 </div>
                                 <Button
                                     variant="ghost"
@@ -272,10 +370,18 @@ export default function JoinTripForm({
                             </div>
 
                             <div className="flex items-center justify-between p-3 bg-black/30 rounded border border-white/5">
-                                <div>
+                                <div >
                                     <p className="text-xs text-gray-400">Bank Account</p>
-                                    <p className="text-white font-mono">987654321012</p>
-                                    <p className="text-xs text-gray-500">IFSC: KURU0001234</p>
+                                    <p ref={(node) => {
+                                        if (node) {
+                                            node.style.setProperty("font-family", "monospace", "important");
+                                        }
+                                    }} className="text-white">987654321012</p>
+                                    <p ref={(node) => {
+                                        if (node) {
+                                            node.style.setProperty("font-family", "monospace", "important");
+                                        }
+                                    }} className="text-xs text-gray-500">IFSC: KURU0001234</p>
                                 </div>
                                 <Button
                                     variant="ghost"
@@ -297,6 +403,9 @@ export default function JoinTripForm({
 
                         <div>
                             <Label className="text-gray-300">Upload Payment Screenshot</Label>
+                            {errors.paymentScreenshot && (
+                                <p className="text-red-500 text-sm mt-1">{errors.paymentScreenshot}</p>
+                            )}
                             <div className="mt-2">
                                 {formData.paymentScreenshot ? (
                                     <div className="relative group w-full h-48 bg-black/50 rounded-lg border border-white/10 overflow-hidden">

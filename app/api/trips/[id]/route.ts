@@ -4,7 +4,7 @@ import { db } from "@/config/firebase";
 // GET /api/trips/[id] - Get a single trip by ID
 export async function GET(
     request: NextRequest,
-    { params }: { params: { id: string } }
+    { params }: { params: Promise<{ id: string }> }
 ) {
     try {
         const { id } = await params;

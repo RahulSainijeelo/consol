@@ -35,6 +35,9 @@ export async function GET(request: NextRequest) {
 
         const { category, status, page, limit, featured } = queryResult.data;
 
+        // Get 'completed' parameter (for past trips)
+        const completed = searchParams.get("completed") === "true";
+
         // Build Firestore query
         let query = db.collection("trips").orderBy("createdAt", "desc");
 
@@ -47,6 +50,13 @@ export async function GET(request: NextRequest) {
         }
         if (featured !== undefined) {
             query = query.where("featured", "==", featured) as any;
+        }
+
+        // Filter for completed trips (past endDate)
+        if (completed) {
+            query = query.where("completed", "==", true) as any;
+        } else {
+            query = query.where("completed", "==", false) as any;
         }
 
         // Execute query

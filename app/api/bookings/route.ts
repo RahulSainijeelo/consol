@@ -3,26 +3,27 @@ import { db } from "@/config/firebase";
 import { bookingSchema } from "@/lib/validations/booking";
 import { auth, currentUser } from '@clerk/nextjs/server';
 import { FieldValue } from "firebase-admin/firestore";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth";
 
 // POST /api/bookings - Create a new booking
 export async function POST(request: NextRequest) {
     try {
-        // Check authentication
-        const { isAuthenticated, userId } = await auth();
-        const user = await currentUser();
-
-        if (!isAuthenticated || !userId) {
-            return NextResponse.json(
-                { error: "Unauthorized" },
-                { status: 401 }
-            );
-        }
-
+        const session = await getServerSession(authOptions);
         const body = await request.json();
 
         // Validate request body
         const validationResult = bookingSchema.safeParse(body);
 
+        if (!session || !session.user?.email || session.user.email !== body.email) {
+            return NextResponse.json(
+                { error: "Unauthorized" },
+                { status: 401 }
+            );
+        }
+        console.log("this is the user", session.user)
+        console.log("this is the body", body)
+        console.log("this is validatation res", validationResult.error?.toString())
         if (!validationResult.success) {
             return NextResponse.json(
                 {
@@ -60,8 +61,6 @@ export async function POST(request: NextRequest) {
         // Add metadata
         const newBooking = {
             ...bookingData,
-            userId: userId,
-            userEmail: user?.emailAddresses?.[0]?.emailAddress || "unknown",
             createdAt: new Date().toISOString(),
             updatedAt: new Date().toISOString(),
             status: "pending", // Default status

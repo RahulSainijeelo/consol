@@ -1,31 +1,72 @@
-import { redirect } from "next/navigation";
-import { currentUser } from "@clerk/nextjs/server";
-import { db } from "@/config/firebase";
+"use client";
+
+import { useState, useEffect } from "react";
+import { useSession } from "next-auth/react";
+import { useRouter, useParams } from "next/navigation";
 import JoinTripForm from "@/components/trips/JoinTripForm";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import LoginTC from "@/components/auth/LoginTC";
 
-export default async function JoinTripPage({ params }: { params: Promise<{ id: string }> }) {
-    const user = await currentUser();
-    const resolvedParams = await params;
-    const { id } = resolvedParams;
+interface Trip {
+    id: string;
+    title: string;
+    destination: string;
+    duration?: string;
+    price: number;
+    category: string;
+    description: string;
+    images: { url: string }[];
+    maxParticipants: number;
+    currentParticipants?: number;
+}
 
-    if (!user) {
-        redirect(`/auth/login?redirect=/trip/${id}/join`);
-    }
+export default function JoinTripPage() {
+    const { data: session, status } = useSession();
+    const router = useRouter();
+    const params = useParams();
+    const tripId = typeof params.id === 'string' ? params.id : '';
+    const [trip, setTrip] = useState<Trip | null>(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(false);
 
-    // Fetch trip directly from Firestore
-    const tripRef = db.collection("trips").doc(id);
-    const tripDoc = await tripRef.get();
+    useEffect(() => {
+        // Fetch trip data
+        const fetchTrip = async () => {
+            try {
+                const response = await fetch(`/api/trips/${tripId}`);
 
-    if (!tripDoc.exists) {
+                if (!response.ok) {
+                    setError(true);
+                    return;
+                }
+
+                const data = await response.json();
+                setTrip(data);
+            } catch (err) {
+                console.error("Error fetching trip:", err);
+                setError(true);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        if (status === 'authenticated') {
+            fetchTrip();
+        } else if (status === 'unauthenticated') {
+            setLoading(false);
+        }
+    }, [tripId, status]);
+
+    // Show loading state
+    if (status === 'loading' || loading) {
         return (
             <div className="min-h-screen bg-black text-white flex flex-col">
                 <Header />
                 <main className="flex-grow flex items-center justify-center">
                     <div className="text-center">
-                        <h1 className="text-2xl font-bold text-gold mb-4">Trip Not Found</h1>
-                        <p className="text-gray-400">The trip you are looking for does not exist.</p>
+                        <div className="w-16 h-16 border-4 border-gold border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+                        <p className="text-gray-400">Loading...</p>
                     </div>
                 </main>
                 <Footer />
@@ -33,7 +74,32 @@ export default async function JoinTripPage({ params }: { params: Promise<{ id: s
         );
     }
 
-    const trip = tripDoc.data();
+    // Show login prompt if not authenticated
+    if (status === 'unauthenticated') {
+        return <LoginTC />;
+    }
+
+    // Show error if trip not found
+    if (error || !trip) {
+        return (
+            <div className="min-h-screen bg-black text-white flex flex-col">
+                <Header />
+                <main className="flex-grow flex items-center justify-center">
+                    <div className="text-center">
+                        <h1 className="text-2xl font-bold text-gold mb-4">Trip Not Found</h1>
+                        <p className="text-gray-400 mb-6">The trip you are looking for does not exist.</p>
+                        <button
+                            onClick={() => router.push("/")}
+                            className="bg-gold hover:bg-yellow-600 text-black font-semibold py-3 px-6 rounded-xl transition-colors"
+                        >
+                            Back to Home
+                        </button>
+                    </div>
+                </main>
+                <Footer />
+            </div>
+        );
+    }
 
     return (
         <div className="min-h-screen bg-black text-white flex flex-col">
@@ -42,18 +108,18 @@ export default async function JoinTripPage({ params }: { params: Promise<{ id: s
                 <div className="max-w-5xl mx-auto">
                     <div className="mb-8 text-center">
                         <h1 className="text-3xl md:text-4xl font-display font-bold text-gold mb-2">
-                            Join Trip: {trip?.title}
+                            Join Trip: {trip.title}
                         </h1>
                         <p className="text-gray-400">
-                            {trip?.destination} • {trip?.duration}
+                            {trip.destination} • {trip.duration}
                         </p>
                     </div>
 
                     <JoinTripForm
-                        tripId={id}
-                        tripTitle={trip?.title || ""}
-                        tripPrice={trip?.price || 0}
-                        userEmail={user.emailAddresses[0]?.emailAddress}
+                        tripId={tripId}
+                        tripTitle={trip.title}
+                        tripPrice={trip.price}
+                        userEmail={session?.user?.email || ""}
                     />
                 </div>
             </main>

@@ -11,6 +11,7 @@ export const bookingSchema = z.object({
     userId: z.string().optional(), // Will be populated from session
     status: z.enum(["pending", "confirmed", "rejected"]).default("pending"),
     amount: z.number().positive(),
+    paymentrefno: z.string().min(1, "Payment Reference Number is required"),
     bookingDate: z.string().optional(), // ISO string
 });
 

@@ -8,10 +8,9 @@ import { useUser } from "@clerk/nextjs";
 
 export default function Header() {
   const session = useSession();
-  console.log(session.status)
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 w-full">
-      <div className="container mx-auto px-4 py-6 flex items-start justify-between">
+    <header className="fixed top-0 px-4 py-6 flex justify-end left-0 right-0 z-50 w-full">
+      <div className="container mx-auto flex items-start justify-between">
         {/* Left Part - Circular Logo (Always visible) */}
         <Link href="/" className="flex-shrink-0">
           <div className="w-16 h-16 rounded-full bg-black/95 backdrop-blur-md border border-white/10 flex items-center justify-center hover:border-gold/50 transition-all duration-300 shadow-lg hover:shadow-gold/20">
