@@ -99,7 +99,6 @@ const CardFooter = React.forwardRef<
       display: "flex",
       alignItems: "center",
       padding: "1.5rem",
-      paddingTop: 0,
       ...style,
     }}
     className={cn(className)}

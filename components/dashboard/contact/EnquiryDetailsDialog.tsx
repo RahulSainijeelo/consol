@@ -27,13 +27,13 @@ export function EnquiryDetailsDialog({
   const getStatusColor = (status: string) => {
     switch (status) {
       case "new":
-        return "bg-blue-500 hover:bg-blue-600";
+        return "bg-blue-500/20 text-blue-400 border-blue-500/30";
       case "contacted":
-        return "bg-amber-500 hover:bg-amber-600";
+        return "bg-amber-500/20 text-amber-400 border-amber-500/30";
       case "completed":
-        return "bg-green-500 hover:bg-green-600";
+        return "bg-green-500/20 text-green-400 border-green-500/30";
       default:
-        return "bg-gray-500 hover:bg-gray-600";
+        return "bg-gray-500/20 text-gray-400 border-gray-500/30";
     }
   };
 
@@ -52,37 +52,37 @@ export function EnquiryDetailsDialog({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-md responsive-portfolio-modal">
+      <DialogContent className="sm:max-w-md bg-gray-900 border-white/10 text-white">
         <DialogHeader>
-          <DialogTitle>Enquiry Details</DialogTitle>
-          <DialogDescription>
+          <DialogTitle className="text-white">Enquiry Details</DialogTitle>
+          <DialogDescription className="text-gray-400">
             Received on {formatDate(enquiry.time)}
           </DialogDescription>
         </DialogHeader>
         <div className="space-y-4 mt-4">
           <div>
-            <h3 className="font-semibold">Customer Information</h3>
-            <p className="mt-1">Name: {enquiry.name}</p>
-            <p>Mobile: {enquiry.mobile}</p>
+            <h3 className="font-semibold text-gray-300">Customer Information</h3>
+            <p className="mt-1 text-white">Name: {enquiry.name}</p>
+            <p className="text-white">Mobile: {enquiry.mobile}</p>
           </div>
           <div>
-            <h3 className="font-semibold">Service Required</h3>
-            <p className="mt-1">{enquiry.serviceType}</p>
+            <h3 className="font-semibold text-gray-300">Service Required</h3>
+            <p className="mt-1 text-white">{enquiry.serviceType}</p>
           </div>
           <div>
-            <h3 className="font-semibold">Message</h3>
-            <p className="mt-1 text-gray-700">{enquiry.message}</p>
+            <h3 className="font-semibold text-gray-300">Message</h3>
+            <p className="mt-1 text-gray-300">{enquiry.message}</p>
           </div>
           <div>
-            <h3 className="font-semibold">Status</h3>
-            <Badge className={`mt-1 ${getStatusColor(enquiry.status)}`}>
+            <h3 className="font-semibold text-gray-300">Status</h3>
+            <Badge className={`mt-1 border ${getStatusColor(enquiry.status)}`}>
               {enquiry.status.charAt(0).toUpperCase() + enquiry.status.slice(1)}
             </Badge>
           </div>
           <div className="flex space-x-2 pt-4">
             <Button
               variant="outline"
-              className="flex-1"
+              className="flex-1 border-white/10 hover:bg-white/10 text-white"
               onClick={() => onCall(enquiry.mobile)}
             >
               <Phone className="mr-2 h-4 w-4" />
@@ -90,7 +90,7 @@ export function EnquiryDetailsDialog({
             </Button>
             <Button
               variant="outline"
-              className="flex-1"
+              className="flex-1 border-white/10 hover:bg-white/10 text-white"
               onClick={() => onWhatsApp(enquiry.mobile, enquiry.name)}
             >
               <svg
@@ -105,7 +105,7 @@ export function EnquiryDetailsDialog({
             </Button>
             <Button
               variant="outline"
-              className="flex-1"
+              className="flex-1 border-white/10 hover:bg-white/10 text-white"
               onClick={() => onSMS(enquiry.mobile)}
             >
               <MessageSquare className="mr-2 h-4 w-4" />

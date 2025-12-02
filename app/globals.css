@@ -100,6 +100,9 @@
     --input: 45 30% 20%;
     --ring: 45 90% 50%;
   }
+  .theme {
+    --animate-shine: shine var(--duration) infinite linear;
+  }
 }
 
 @layer base {
@@ -211,4 +214,18 @@ p {
 
 .animate-slide-up {
   animation: slide-up 1s ease-out 0.2s both;
+}
+
+@theme inline {
+  @keyframes shine {
+  0% {
+    background-position: 0% 0%;
+    }
+  50% {
+    background-position: 100% 100%;
+    }
+  to {
+    background-position: 0% 0%;
+    }
+  }
 }

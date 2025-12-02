@@ -186,6 +186,14 @@ const TripItems: React.FC<TripItemsProps> = ({
                 </Button>
               </Link>
 
+              {/* Bookings */}
+              <Link href={`/dashboard/trips/${trip.id}/bookings`}>
+                <Button variant="outline" size="sm" className="flex items-center gap-2 border-white/10 text-gray-300 hover:bg-white/5">
+                  <Users className="w-4 h-4" />
+                  Bookings
+                </Button>
+              </Link>
+
               {/* Delete Trip */}
               <Button
                 variant="destructive"

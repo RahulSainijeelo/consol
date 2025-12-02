@@ -1,15 +1,34 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { useEnquiries } from "./useEnquiries";
 import { EnquiryTable } from "./EnquiryTable";
 import { EnquiryDetailsDialog } from "./EnquiryDetailsDialog";
 import { Phone, MessageSquare, Mail } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 export function ContactEnquiries() {
   const { enquiries, loading, updateStatus } = useEnquiries();
   const [selectedEnquiry, setSelectedEnquiry] = useState<any>(null);
   const [isViewOpen, setIsViewOpen] = useState(false);
+  const [pendingBookings, setPendingBookings] = useState<any[]>([]);
+  const router = useRouter();
+
+  useEffect(() => {
+    const fetchPendingBookings = async () => {
+      try {
+        const res = await fetch("/api/bookings/pending");
+        if (res.ok) {
+          const data = await res.json();
+          setPendingBookings(data);
+        }
+      } catch (error) {
+        console.error("Error fetching pending bookings:", error);
+      }
+    };
+    fetchPendingBookings();
+  }, []);
 
   const handleCall = (mobile: string) => {
     window.location.href = `tel:${mobile}`;
@@ -27,7 +46,6 @@ export function ContactEnquiries() {
     )}&body=${encodeURIComponent(body)}`;
   };
 
-  // Updated message for tech services instead of construction
   const handleWhatsApp = (mobile: string, name: string) => {
     const message = `Hello ${name}, this is Tech Solutions Team regarding your enquiry about our digital services. We'd be happy to discuss your project requirements.`;
     window.open(
@@ -37,116 +55,104 @@ export function ContactEnquiries() {
   };
 
   return (
-    <div
-      className="space-y-6"
-      style={{
-        backgroundColor: "#ffffff",
-        color: "#000000",
-        fontFamily: "var(--font-primary)",
-      }}
-    >
+    <div className="space-y-6 text-white font-primary">
       {/* Header Section */}
-      <div
-        className="flex items-center justify-between p-6 rounded-lg border"
-        style={{
-          backgroundColor: "#f8fafc",
-          borderColor: "#e2e8f0",
-          borderWidth: "1px",
-        }}
-      >
+      <div className="flex items-center justify-between p-6 rounded-lg border border-white/10 bg-white/5 backdrop-blur-sm">
         <div>
-          <h2
-            className="text-2xl font-semibold mb-1"
-            style={{
-              color: "#000000",
-              fontFamily: "var(--font-heading)",
-            }}
-          >
+          <h2 className="text-2xl font-semibold mb-1 text-gold font-heading">
             Contact Enquiries
           </h2>
-          <p className="text-base" style={{ color: "#64748b" }}>
+          <p className="text-base text-gray-400">
             Manage and respond to client inquiries
           </p>
         </div>
 
         {/* Quick Stats */}
         <div className="flex items-center gap-4">
-          <div
-            className="text-center px-4 py-2 rounded-lg"
-            style={{ backgroundColor: "#dbeafe" }}
-          >
-            <div className="text-lg font-semibold" style={{ color: "#1e40af" }}>
+          <div className="text-center px-4 py-2 rounded-lg bg-blue-500/10 border border-blue-500/20">
+            <div className="text-lg font-semibold text-blue-400">
               {enquiries?.length || 0}
             </div>
-            <div className="text-xs" style={{ color: "#64748b" }}>
+            <div className="text-xs text-gray-400">
               Total
             </div>
           </div>
-          <div
-            className="text-center px-4 py-2 rounded-lg"
-            style={{ backgroundColor: "#fef3c7" }}
-          >
-            <div className="text-lg font-semibold" style={{ color: "#d97706" }}>
-              {enquiries?.filter((e) => e.status === "pending")?.length || 0}
+          <div className="text-center px-4 py-2 rounded-lg bg-yellow-500/10 border border-yellow-500/20">
+            <div className="text-lg font-semibold text-yellow-400">
+              {(enquiries?.filter((e) => e.status === "pending")?.length || 0) + pendingBookings.length}
             </div>
-            <div className="text-xs" style={{ color: "#64748b" }}>
+            <div className="text-xs text-gray-400">
               Pending
             </div>
           </div>
         </div>
       </div>
 
-      {/* Content Section */}
-      <div
-        className="rounded-lg border"
-        style={{
-          backgroundColor: "#ffffff",
-          borderColor: "#e5e7eb",
-          borderWidth: "1px",
-        }}
-      >
-        <div className="p-6 border-b" style={{ borderColor: "#f3f4f6" }}>
-          <h3
-            className="text-lg font-medium mb-2"
-            style={{
-              color: "#000000",
-              fontFamily: "var(--font-heading)",
-            }}
-          >
+      {/* Pending Bookings Section */}
+      <div className="rounded-lg border border-white/10 bg-white/5 backdrop-blur-sm">
+        <div className="p-6 border-b border-white/10">
+          <h3 className="text-lg font-medium text-white font-heading">
+            Pending Trip Bookings
+          </h3>
+        </div>
+        <div className="p-6">
+          {pendingBookings.length === 0 ? (
+            <p className="text-gray-400 text-center py-4">No pending bookings.</p>
+          ) : (
+            <div className="grid gap-4">
+              {pendingBookings.map((booking: any) => (
+                <div key={booking.id} className="flex flex-col md:flex-row items-start md:items-center justify-between p-4 rounded-lg border border-white/10 bg-black/40 hover:bg-black/60 transition-colors gap-4">
+                  <div>
+                    <h4 className="font-medium text-white text-lg">{booking.fullName}</h4>
+                    <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 text-sm text-gray-400 mt-1">
+                      <span className="text-gold">{booking.tripTitle}</span>
+                      <span className="hidden sm:inline">•</span>
+                      <span>{new Date(booking.createdAt).toLocaleDateString()}</span>
+                      <span className="hidden sm:inline">•</span>
+                      <span>{booking.mobileNo}</span>
+                    </div>
+                  </div>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => router.push(`/dashboard/bookings/${booking.id}`)}
+                    className="w-full md:w-auto border-gold/50 text-gold hover:bg-gold hover:text-black transition-colors"
+                  >
+                    View Details
+                  </Button>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* Recent Enquiries Section */}
+      <div className="rounded-lg border border-white/10 bg-white/5 backdrop-blur-sm">
+        <div className="p-6 border-b border-white/10">
+          <h3 className="text-lg font-medium mb-2 text-white font-heading">
             Recent Enquiries
           </h3>
 
           {/* Action Legend */}
           <div className="flex items-center gap-6 text-sm">
             <div className="flex items-center gap-2">
-              <div
-                className="w-8 h-8 rounded-full flex items-center justify-center"
-                style={{ backgroundColor: "#dcfce7" }}
-              >
-                <Phone className="h-4 w-4" style={{ color: "#16a34a" }} />
+              <div className="w-8 h-8 rounded-full flex items-center justify-center bg-green-500/10">
+                <Phone className="h-4 w-4 text-green-400" />
               </div>
-              <span style={{ color: "#64748b" }}>Call</span>
+              <span className="text-gray-400">Call</span>
             </div>
             <div className="flex items-center gap-2">
-              <div
-                className="w-8 h-8 rounded-full flex items-center justify-center"
-                style={{ backgroundColor: "#dbeafe" }}
-              >
-                <MessageSquare
-                  className="h-4 w-4"
-                  style={{ color: "#2563eb" }}
-                />
+              <div className="w-8 h-8 rounded-full flex items-center justify-center bg-blue-500/10">
+                <MessageSquare className="h-4 w-4 text-blue-400" />
               </div>
-              <span style={{ color: "#64748b" }}>WhatsApp</span>
+              <span className="text-gray-400">WhatsApp</span>
             </div>
             <div className="flex items-center gap-2">
-              <div
-                className="w-8 h-8 rounded-full flex items-center justify-center"
-                style={{ backgroundColor: "#fef3c7" }}
-              >
-                <Mail className="h-4 w-4" style={{ color: "#d97706" }} />
+              <div className="w-8 h-8 rounded-full flex items-center justify-center bg-yellow-500/10">
+                <Mail className="h-4 w-4 text-yellow-400" />
               </div>
-              <span style={{ color: "#64748b" }}>Email</span>
+              <span className="text-gray-400">Email</span>
             </div>
           </div>
         </div>
@@ -166,8 +172,6 @@ export function ContactEnquiries() {
           />
         </div>
       </div>
-
-      {/* Enquiry Details Dialog */}
       <EnquiryDetailsDialog
         enquiry={selectedEnquiry}
         open={isViewOpen}

@@ -50,29 +50,13 @@ export function EnquiryTable({
   const getStatusColor = (status: string) => {
     switch (status) {
       case "new":
-        return {
-          backgroundColor: "#3b82f6",
-          color: "#ffffff",
-          hoverColor: "#2563eb",
-        };
+        return "bg-blue-500/20 text-blue-400 border-blue-500/30";
       case "contacted":
-        return {
-          backgroundColor: "#f59e0b",
-          color: "#ffffff",
-          hoverColor: "#d97706",
-        };
+        return "bg-yellow-500/20 text-yellow-400 border-yellow-500/30";
       case "completed":
-        return {
-          backgroundColor: "#10b981",
-          color: "#ffffff",
-          hoverColor: "#059669",
-        };
+        return "bg-green-500/20 text-green-400 border-green-500/30";
       default:
-        return {
-          backgroundColor: "#6b7280",
-          color: "#ffffff",
-          hoverColor: "#4b5563",
-        };
+        return "bg-gray-500/20 text-gray-400 border-gray-500/30";
     }
   };
 
@@ -93,60 +77,27 @@ export function EnquiryTable({
 
   if (loading) {
     return (
-      <div
-        className="rounded-lg border overflow-hidden"
-        style={{
-          backgroundColor: "#ffffff",
-          borderColor: "#e5e7eb",
-        }}
-      >
+      <div className="rounded-lg border border-white/10 overflow-hidden bg-white/5">
         <Table>
           <TableHeader>
-            <TableRow style={{ backgroundColor: "#f8fafc" }}>
-              <TableHead style={{ color: "#374151", fontWeight: "600" }}>
-                View
-              </TableHead>
-              <TableHead style={{ color: "#374151", fontWeight: "600" }}>
-                Client Name
-              </TableHead>
-              <TableHead style={{ color: "#374151", fontWeight: "600" }}>
-                Service Type
-              </TableHead>
-              <TableHead style={{ color: "#374151", fontWeight: "600" }}>
-                Date & Time
-              </TableHead>
-              <TableHead style={{ color: "#374151", fontWeight: "600" }}>
-                Status
-              </TableHead>
-              <TableHead
-                className="text-right"
-                style={{ color: "#374151", fontWeight: "600" }}
-              >
-                Actions
-              </TableHead>
+            <TableRow className="bg-white/5 border-white/10 hover:bg-white/5">
+              <TableHead className="text-gray-300 font-semibold">View</TableHead>
+              <TableHead className="text-gray-300 font-semibold">Client Name</TableHead>
+              <TableHead className="text-gray-300 font-semibold">Service Type</TableHead>
+              <TableHead className="text-gray-300 font-semibold">Date & Time</TableHead>
+              <TableHead className="text-gray-300 font-semibold">Status</TableHead>
+              <TableHead className="text-right text-gray-300 font-semibold">Actions</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {Array.from({ length: 5 }).map((_, i) => (
-              <TableRow key={i} style={{ borderColor: "#f3f4f6" }}>
-                <TableCell>
-                  <Skeleton className="h-8 w-8 rounded" />
-                </TableCell>
-                <TableCell>
-                  <Skeleton className="h-4 w-24" />
-                </TableCell>
-                <TableCell>
-                  <Skeleton className="h-4 w-20" />
-                </TableCell>
-                <TableCell>
-                  <Skeleton className="h-4 w-28" />
-                </TableCell>
-                <TableCell>
-                  <Skeleton className="h-6 w-16 rounded-full" />
-                </TableCell>
-                <TableCell className="text-right">
-                  <Skeleton className="h-8 w-8 rounded ml-auto" />
-                </TableCell>
+              <TableRow key={i} className="border-white/10 hover:bg-white/5">
+                <TableCell><Skeleton className="h-8 w-8 rounded bg-white/10" /></TableCell>
+                <TableCell><Skeleton className="h-4 w-24 bg-white/10" /></TableCell>
+                <TableCell><Skeleton className="h-4 w-20 bg-white/10" /></TableCell>
+                <TableCell><Skeleton className="h-4 w-28 bg-white/10" /></TableCell>
+                <TableCell><Skeleton className="h-6 w-16 rounded-full bg-white/10" /></TableCell>
+                <TableCell className="text-right"><Skeleton className="h-8 w-8 rounded ml-auto bg-white/10" /></TableCell>
               </TableRow>
             ))}
           </TableBody>
@@ -157,18 +108,12 @@ export function EnquiryTable({
 
   if (!enquiries || enquiries.length === 0) {
     return (
-      <div
-        className="rounded-lg border p-12 text-center"
-        style={{
-          backgroundColor: "#ffffff",
-          borderColor: "#e5e7eb",
-        }}
-      >
+      <div className="rounded-lg border border-white/10 p-12 text-center bg-white/5">
         <div className="text-6xl mb-4 opacity-50">📋</div>
-        <h3 className="text-xl font-semibold mb-2" style={{ color: "#000000" }}>
+        <h3 className="text-xl font-semibold mb-2 text-white">
           No Enquiries Yet
         </h3>
-        <p style={{ color: "#6b7280" }}>
+        <p className="text-gray-400">
           New client enquiries will appear here when they contact you.
         </p>
       </div>
@@ -176,56 +121,26 @@ export function EnquiryTable({
   }
 
   return (
-    <div
-      className="rounded-lg border overflow-hidden"
-      style={{
-        backgroundColor: "#ffffff",
-        borderColor: "#e5e7eb",
-      }}
-    >
+    <div className="rounded-lg border border-white/10 overflow-hidden bg-white/5">
       <Table>
         <TableHeader>
-          <TableRow
-            style={{
-              backgroundColor: "#f8fafc",
-              borderColor: "#e5e7eb",
-            }}
-          >
-            <TableHead className="font-semibold" style={{ color: "#374151" }}>
-              View
-            </TableHead>
-            <TableHead className="font-semibold" style={{ color: "#374151" }}>
-              Client Name
-            </TableHead>
-            <TableHead className="font-semibold" style={{ color: "#374151" }}>
-              Service Type
-            </TableHead>
-            <TableHead className="font-semibold" style={{ color: "#374151" }}>
-              Date & Time
-            </TableHead>
-            <TableHead className="font-semibold" style={{ color: "#374151" }}>
-              Status
-            </TableHead>
-            <TableHead
-              className="text-right font-semibold"
-              style={{ color: "#374151" }}
-            >
-              Actions
-            </TableHead>
+          <TableRow className="bg-white/5 border-white/10 hover:bg-white/5">
+            <TableHead className="font-semibold text-gray-300">View</TableHead>
+            <TableHead className="font-semibold text-gray-300">Client Name</TableHead>
+            <TableHead className="font-semibold text-gray-300">Service Type</TableHead>
+            <TableHead className="font-semibold text-gray-300">Date & Time</TableHead>
+            <TableHead className="font-semibold text-gray-300">Status</TableHead>
+            <TableHead className="text-right font-semibold text-gray-300">Actions</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
-          {enquiries.map((enquiry, index) => {
-            const statusColors = getStatusColor(enquiry.status);
+          {enquiries.map((enquiry) => {
+            const statusClasses = getStatusColor(enquiry.status);
 
             return (
               <TableRow
                 key={enquiry.id}
-                className="hover:bg-gray-50 transition-colors"
-                style={{
-                  borderColor: "#f3f4f6",
-                  backgroundColor: index % 2 === 0 ? "#ffffff" : "#fafafa",
-                }}
+                className="hover:bg-white/5 transition-colors border-white/10"
               >
                 <TableCell>
                   <Button
@@ -233,52 +148,23 @@ export function EnquiryTable({
                     size="icon"
                     onClick={() => onView(enquiry)}
                     aria-label="View details"
-                    className="hover:bg-blue-50"
-                    style={{
-                      color: "#3b82f6",
-                      borderRadius: "6px",
-                    }}
+                    className="hover:bg-blue-500/10 text-blue-400 hover:text-blue-300"
                   >
                     <Eye className="h-4 w-4" />
                   </Button>
                 </TableCell>
-                <TableCell
-                  className="font-medium"
-                  style={{
-                    color: "#000000",
-                    fontSize: "14px",
-                  }}
-                >
+                <TableCell className="font-medium text-white text-sm">
                   {enquiry.name}
                 </TableCell>
-                <TableCell
-                  style={{
-                    color: "#4b5563",
-                    fontSize: "14px",
-                  }}
-                >
+                <TableCell className="text-gray-300 text-sm">
                   {enquiry.serviceType}
                 </TableCell>
-                <TableCell
-                  style={{
-                    color: "#6b7280",
-                    fontSize: "13px",
-                  }}
-                >
+                <TableCell className="text-gray-400 text-xs">
                   {formatDate(enquiry.time)}
                 </TableCell>
                 <TableCell>
-                  <Badge
-                    className="font-medium text-xs px-3 py-1"
-                    style={{
-                      backgroundColor: statusColors.backgroundColor,
-                      color: statusColors.color,
-                      border: "none",
-                      borderRadius: "20px",
-                    }}
-                  >
-                    {enquiry.status.charAt(0).toUpperCase() +
-                      enquiry.status.slice(1)}
+                  <Badge className={`font-medium text-xs px-3 py-1 border ${statusClasses}`}>
+                    {enquiry.status.charAt(0).toUpperCase() + enquiry.status.slice(1)}
                   </Badge>
                 </TableCell>
                 <TableCell className="text-right">
@@ -286,8 +172,7 @@ export function EnquiryTable({
                     <DropdownMenuTrigger asChild>
                       <Button
                         variant="ghost"
-                        className="h-8 w-8 p-0 hover:bg-gray-100"
-                        style={{ color: "#6b7280" }}
+                        className="h-8 w-8 p-0 hover:bg-white/10 text-gray-400"
                       >
                         <span className="sr-only">Open menu</span>
                         <MoreHorizontal className="h-4 w-4" />
@@ -295,94 +180,46 @@ export function EnquiryTable({
                     </DropdownMenuTrigger>
                     <DropdownMenuContent
                       align="end"
-                      style={{
-                        backgroundColor: "#ffffff",
-                        borderColor: "#e5e7eb",
-                        borderRadius: "8px",
-                        boxShadow: "0 10px 15px -3px rgba(0, 0, 0, 0.1)",
-                      }}
+                      className="bg-gray-900 border-white/10 text-white"
                     >
-                      <DropdownMenuLabel
-                        style={{
-                          color: "#374151",
-                          fontWeight: "600",
-                          fontSize: "12px",
-                        }}
-                      >
+                      <DropdownMenuLabel className="text-gray-400 text-xs font-semibold">
                         Quick Actions
                       </DropdownMenuLabel>
-                      <DropdownMenuItem
-                        onClick={() => onView(enquiry)}
-                        className="gap-2"
-                        style={{ color: "#374151" }}
-                      >
+                      <DropdownMenuItem onClick={() => onView(enquiry)} className="gap-2 focus:bg-white/10 focus:text-white cursor-pointer">
                         <Eye className="h-4 w-4" />
                         View Details
                       </DropdownMenuItem>
-                      <DropdownMenuItem
-                        onClick={() => onCall(enquiry.mobile)}
-                        className="gap-2"
-                        style={{ color: "#059669" }}
-                      >
+                      <DropdownMenuItem onClick={() => onCall(enquiry.mobile)} className="gap-2 text-green-400 focus:bg-green-500/10 focus:text-green-300 cursor-pointer">
                         <Phone className="h-4 w-4" />
                         Call Client
                       </DropdownMenuItem>
-                      <DropdownMenuItem
-                        onClick={() => onWhatsApp(enquiry.mobile, enquiry.name)}
-                        className="gap-2"
-                        style={{ color: "#25d366" }}
-                      >
+                      <DropdownMenuItem onClick={() => onWhatsApp(enquiry.mobile, enquiry.name)} className="gap-2 text-green-500 focus:bg-green-500/10 focus:text-green-400 cursor-pointer">
                         <MessageSquare className="h-4 w-4" />
                         WhatsApp
                       </DropdownMenuItem>
-                      <DropdownMenuItem
-                        onClick={() => onSMS(enquiry.mobile)}
-                        className="gap-2"
-                        style={{ color: "#3b82f6" }}
-                      >
+                      <DropdownMenuItem onClick={() => onSMS(enquiry.mobile)} className="gap-2 text-blue-400 focus:bg-blue-500/10 focus:text-blue-300 cursor-pointer">
                         <MessageCircle className="h-4 w-4" />
                         Send SMS
                       </DropdownMenuItem>
                       {onEmail && enquiry.email && (
-                        <DropdownMenuItem
-                          onClick={() => onEmail(enquiry.email, enquiry.name)}
-                          className="gap-2"
-                          style={{ color: "#d97706" }}
-                        >
+                        <DropdownMenuItem onClick={() => onEmail(enquiry.email, enquiry.name)} className="gap-2 text-yellow-400 focus:bg-yellow-500/10 focus:text-yellow-300 cursor-pointer">
                           <Mail className="h-4 w-4" />
                           Send Email
                         </DropdownMenuItem>
                       )}
 
-                      <DropdownMenuSeparator
-                        style={{ backgroundColor: "#f3f4f6" }}
-                      />
+                      <DropdownMenuSeparator className="bg-white/10" />
 
-                      <DropdownMenuLabel
-                        style={{
-                          color: "#374151",
-                          fontWeight: "600",
-                          fontSize: "12px",
-                        }}
-                      >
+                      <DropdownMenuLabel className="text-gray-400 text-xs font-semibold">
                         Update Status
                       </DropdownMenuLabel>
-                      <DropdownMenuItem
-                        onClick={() => onStatusChange(enquiry.id, "new")}
-                        style={{ color: "#3b82f6" }}
-                      >
+                      <DropdownMenuItem onClick={() => onStatusChange(enquiry.id, "new")} className="text-blue-400 focus:bg-blue-500/10 focus:text-blue-300 cursor-pointer">
                         Mark as New
                       </DropdownMenuItem>
-                      <DropdownMenuItem
-                        onClick={() => onStatusChange(enquiry.id, "contacted")}
-                        style={{ color: "#f59e0b" }}
-                      >
+                      <DropdownMenuItem onClick={() => onStatusChange(enquiry.id, "contacted")} className="text-yellow-400 focus:bg-yellow-500/10 focus:text-yellow-300 cursor-pointer">
                         Mark as Contacted
                       </DropdownMenuItem>
-                      <DropdownMenuItem
-                        onClick={() => onStatusChange(enquiry.id, "completed")}
-                        style={{ color: "#10b981" }}
-                      >
+                      <DropdownMenuItem onClick={() => onStatusChange(enquiry.id, "completed")} className="text-green-400 focus:bg-green-500/10 focus:text-green-300 cursor-pointer">
                         Mark as Completed
                       </DropdownMenuItem>
                     </DropdownMenuContent>
