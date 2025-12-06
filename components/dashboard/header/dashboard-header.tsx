@@ -16,6 +16,7 @@ import { LogOut, User, Loader2 } from "lucide-react";
 import { useUser, useClerk } from "@clerk/nextjs";
 import logo from "@/public/images/logo_name.png"
 import Image from "next/image";
+
 export function DashboardHeader() {
   const { user, isSignedIn } = useUser();
   const { signOut } = useClerk();
@@ -29,11 +30,11 @@ export function DashboardHeader() {
   };
 
   return (
-    <header className="sticky top-0 z-40 shadow-lg bg-white text-black">
+    <header className="sticky top-0 z-40 border-b border-white/10 bg-black text-white backdrop-blur-md">
       <div className="container flex h-16 items-center justify-between py-4">
         <div className="flex items-center">
-          <Link href="/dashboard" className="font-bold text-2xl ml-7">
-            {/* <Image src={logo} width={70} alt="kurukshetra"/> */}
+          <Link href="/dashboard" className="font-bold text-2xl ml-7 text-white hover:text-gold transition-colors">
+            {/* <Image src={logo} width={70} alt="Con-Soul"/> */}
             Con-Sol
           </Link>
         </div>
@@ -41,7 +42,7 @@ export function DashboardHeader() {
         <nav className="flex items-center gap-6">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="ghost" className="relative h-8 w-8 rounded-full">
+              <Button variant="ghost" className="relative h-8 w-8 rounded-full ring-2 ring-gold/20 hover:ring-gold/50 transition-all">
                 <Avatar className="h-8 w-8">
                   {user?.imageUrl ? (
                     <AvatarImage
@@ -49,7 +50,7 @@ export function DashboardHeader() {
                       alt={user.fullName || "Profile"}
                     />
                   ) : (
-                    <AvatarFallback>
+                    <AvatarFallback className="bg-gray-800 text-gold">
                       {user?.firstName?.[0]}
                       {user?.lastName?.[0]}
                     </AvatarFallback>
@@ -57,26 +58,26 @@ export function DashboardHeader() {
                 </Avatar>
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent className="w-56" align="end" forceMount>
+            <DropdownMenuContent className="w-56 bg-black border-white/10 text-white" align="end" forceMount>
               <DropdownMenuLabel className="font-normal">
                 <div className="flex flex-col space-y-1">
-                  <p className="text-sm font-medium leading-none">
+                  <p className="text-sm font-medium leading-none text-white">
                     {user?.fullName || "User"}
                   </p>
-                  <p className="text-xs leading-none text-muted-foreground">
+                  <p className="text-xs leading-none text-gray-400">
                     {user?.primaryEmailAddress?.emailAddress || "No email"}
                   </p>
                 </div>
               </DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem asChild>
+              <DropdownMenuSeparator className="bg-white/10" />
+              <DropdownMenuItem asChild className="focus:bg-white/10 focus:text-gold cursor-pointer">
                 <Link href="/dashboard/profile">
                   <User className="mr-2 h-4 w-4" />
                   <span>Profile</span>
                 </Link>
               </DropdownMenuItem>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem asChild>
+              <DropdownMenuSeparator className="bg-white/10" />
+              <DropdownMenuItem asChild className="focus:bg-red-500/10 focus:text-red-500 cursor-pointer text-red-400">
                 <button
                   className="flex items-center w-full"
                   onClick={handleLogout}

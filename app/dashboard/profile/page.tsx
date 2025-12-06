@@ -17,6 +17,7 @@ export default function Profile() {
     handleAddPhone,
     handleRemovePhone,
     handlePhotoUpload,
+    handleUpiQrUpload,
     handleSubmit,
   } = useProfile(imgbbApiKey);
 
@@ -33,6 +34,7 @@ export default function Profile() {
       handleAddPhone={handleAddPhone}
       handleRemovePhone={handleRemovePhone}
       handlePhotoUpload={handlePhotoUpload}
+      handleUpiQrUpload={handleUpiQrUpload}
       handleSubmit={handleSubmit}
     />
   );

@@ -36,7 +36,7 @@ export function DeleteReviewDialog({
             <AlertCircle className="h-5 w-5 text-red-500 mt-0.5" />
             <div>
               <p>
-                Review by <span className="font-medium">{review.name}</span>
+                Review by <span className="font-medium">{review.userName}</span>
               </p>
               <p className="text-sm text-gray-500">Rating: {review.rating}/5</p>
             </div>

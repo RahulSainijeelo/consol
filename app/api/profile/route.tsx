@@ -12,6 +12,12 @@ const profileSchema = z.object({
   whatsapp: z.string().optional(),
   experience: z.string().optional(),
   workingHours: z.string().optional(),
+  description: z.string().optional(),
+  bankName: z.string().optional(),
+  accountNo: z.string().optional(),
+  ifscCode: z.string().optional(),
+  upiId: z.string().optional(),
+  upiQrCode: z.string().url("Invalid URL format").optional().or(z.literal("")),
 });
 
 const PROFILE_DOC_ID = "main"; // single profile document

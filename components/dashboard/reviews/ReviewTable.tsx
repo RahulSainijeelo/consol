@@ -44,23 +44,23 @@ export function ReviewTable({
     switch (status) {
       case "approved":
         return {
-          backgroundColor: "#10b981",
-          color: "#ffffff",
+          backgroundColor: "rgba(22, 163, 74, 0.2)",
+          color: "#4ade80",
         };
       case "pending":
         return {
-          backgroundColor: "#f59e0b",
-          color: "#ffffff",
+          backgroundColor: "rgba(217, 119, 6, 0.2)",
+          color: "#fbbf24",
         };
       case "rejected":
         return {
-          backgroundColor: "#ef4444",
-          color: "#ffffff",
+          backgroundColor: "rgba(220, 38, 38, 0.2)",
+          color: "#f87171",
         };
       default:
         return {
-          backgroundColor: "#6b7280",
-          color: "#ffffff",
+          backgroundColor: "rgba(107, 114, 128, 0.2)",
+          color: "#9ca3af",
         };
     }
   };
@@ -70,31 +70,31 @@ export function ReviewTable({
       <div
         className="rounded-lg border overflow-hidden"
         style={{
-          backgroundColor: "#ffffff",
-          borderColor: "#e5e7eb",
+          backgroundColor: "#000",
+          borderColor: "#333",
         }}
       >
         <Table>
           <TableHeader>
-            <TableRow style={{ backgroundColor: "#f8fafc" }}>
-              <TableHead style={{ color: "#374151", fontWeight: "600" }}>
+            <TableRow style={{ backgroundColor: "#111", borderColor: "#333" }}>
+              <TableHead style={{ color: "#9ca3af", fontWeight: "600" }}>
                 View
               </TableHead>
-              <TableHead style={{ color: "#374151", fontWeight: "600" }}>
+              <TableHead style={{ color: "#9ca3af", fontWeight: "600" }}>
                 Customer Name
               </TableHead>
-              <TableHead style={{ color: "#374151", fontWeight: "600" }}>
+              <TableHead style={{ color: "#9ca3af", fontWeight: "600" }}>
                 Rating
               </TableHead>
-              <TableHead style={{ color: "#374151", fontWeight: "600" }}>
+              <TableHead style={{ color: "#9ca3af", fontWeight: "600" }}>
                 Date
               </TableHead>
-              <TableHead style={{ color: "#374151", fontWeight: "600" }}>
+              <TableHead style={{ color: "#9ca3af", fontWeight: "600" }}>
                 Status
               </TableHead>
               <TableHead
                 className="text-right"
-                style={{ color: "#374151", fontWeight: "600" }}
+                style={{ color: "#9ca3af", fontWeight: "600" }}
               >
                 Actions
               </TableHead>
@@ -102,30 +102,30 @@ export function ReviewTable({
           </TableHeader>
           <TableBody>
             {Array.from({ length: 5 }).map((_, i) => (
-              <TableRow key={i} style={{ borderColor: "#f3f4f6" }}>
+              <TableRow key={i} style={{ borderColor: "#333" }}>
                 <TableCell>
-                  <Skeleton className="h-8 w-8 rounded" />
+                  <Skeleton className="h-8 w-8 rounded bg-gray-800" />
                 </TableCell>
                 <TableCell>
-                  <Skeleton className="h-4 w-24" />
+                  <Skeleton className="h-4 w-24 bg-gray-800" />
                 </TableCell>
                 <TableCell>
                   <div className="flex gap-1">
                     {Array.from({ length: 5 }).map((_, j) => (
-                      <Skeleton key={j} className="h-4 w-4 rounded" />
+                      <Skeleton key={j} className="h-4 w-4 rounded bg-gray-800" />
                     ))}
                   </div>
                 </TableCell>
                 <TableCell>
-                  <Skeleton className="h-4 w-20" />
+                  <Skeleton className="h-4 w-20 bg-gray-800" />
                 </TableCell>
                 <TableCell>
-                  <Skeleton className="h-6 w-16 rounded-full" />
+                  <Skeleton className="h-6 w-16 rounded-full bg-gray-800" />
                 </TableCell>
                 <TableCell className="text-right">
                   <div className="flex justify-end gap-2">
-                    <Skeleton className="h-8 w-8 rounded" />
-                    <Skeleton className="h-8 w-8 rounded" />
+                    <Skeleton className="h-8 w-8 rounded bg-gray-800" />
+                    <Skeleton className="h-8 w-8 rounded bg-gray-800" />
                   </div>
                 </TableCell>
               </TableRow>
@@ -141,15 +141,15 @@ export function ReviewTable({
       <div
         className="rounded-lg border p-12 text-center"
         style={{
-          backgroundColor: "#ffffff",
-          borderColor: "#e5e7eb",
+          backgroundColor: "#000",
+          borderColor: "#333",
         }}
       >
         <div className="text-6xl mb-4 opacity-50">⭐</div>
-        <h3 className="text-xl font-semibold mb-2" style={{ color: "#000000" }}>
+        <h3 className="text-xl font-semibold mb-2" style={{ color: "#fff" }}>
           No Reviews Yet
         </h3>
-        <p style={{ color: "#6b7280" }}>
+        <p style={{ color: "#9ca3af" }}>
           Customer reviews will appear here once they're submitted.
         </p>
       </div>
@@ -160,36 +160,36 @@ export function ReviewTable({
     <div
       className="rounded-lg border overflow-hidden"
       style={{
-        backgroundColor: "#ffffff",
-        borderColor: "#e5e7eb",
+        backgroundColor: "#000",
+        borderColor: "#333",
       }}
     >
       <Table>
         <TableHeader>
           <TableRow
             style={{
-              backgroundColor: "#f8fafc",
-              borderColor: "#e5e7eb",
+              backgroundColor: "#111",
+              borderColor: "#333",
             }}
           >
-            <TableHead className="font-semibold" style={{ color: "#374151" }}>
+            <TableHead className="font-semibold" style={{ color: "#9ca3af" }}>
               View
             </TableHead>
-            <TableHead className="font-semibold" style={{ color: "#374151" }}>
+            <TableHead className="font-semibold" style={{ color: "#9ca3af" }}>
               Customer Name
             </TableHead>
-            <TableHead className="font-semibold" style={{ color: "#374151" }}>
+            <TableHead className="font-semibold" style={{ color: "#9ca3af" }}>
               Rating
             </TableHead>
-            <TableHead className="font-semibold" style={{ color: "#374151" }}>
+            <TableHead className="font-semibold" style={{ color: "#9ca3af" }}>
               Date
             </TableHead>
-            <TableHead className="font-semibold" style={{ color: "#374151" }}>
+            <TableHead className="font-semibold" style={{ color: "#9ca3af" }}>
               Status
             </TableHead>
             <TableHead
               className="text-right font-semibold"
-              style={{ color: "#374151" }}
+              style={{ color: "#9ca3af" }}
             >
               Actions
             </TableHead>
@@ -202,10 +202,10 @@ export function ReviewTable({
             return (
               <TableRow
                 key={review.id}
-                className="hover:bg-gray-50 transition-colors"
+                className="hover:bg-white/5 transition-colors"
                 style={{
-                  borderColor: "#f3f4f6",
-                  backgroundColor: index % 2 === 0 ? "#ffffff" : "#fafafa",
+                  borderColor: "#333",
+                  backgroundColor: index % 2 === 0 ? "#000" : "#0a0a0a",
                 }}
               >
                 <TableCell>
@@ -214,9 +214,9 @@ export function ReviewTable({
                     size="icon"
                     onClick={() => onView(review)}
                     aria-label="View details"
-                    className="hover:bg-blue-50"
+                    className="hover:bg-blue-500/10"
                     style={{
-                      color: "#3b82f6",
+                      color: "#60a5fa",
                       borderRadius: "6px",
                     }}
                   >
@@ -226,11 +226,11 @@ export function ReviewTable({
                 <TableCell
                   className="font-medium"
                   style={{
-                    color: "#000000",
+                    color: "#fff",
                     fontSize: "14px",
                   }}
                 >
-                  {review.name}
+                  {review.userName}
                 </TableCell>
                 <TableCell>
                   <div className="flex items-center gap-1">
@@ -239,14 +239,14 @@ export function ReviewTable({
                         key={i}
                         className="h-4 w-4"
                         style={{
-                          color: i < review.rating ? "#fbbf24" : "#d1d5db",
+                          color: i < review.rating ? "#fbbf24" : "#4b5563",
                           fill: i < review.rating ? "#fbbf24" : "transparent",
                         }}
                       />
                     ))}
                     <span
                       className="ml-2 text-sm font-medium"
-                      style={{ color: "#374151" }}
+                      style={{ color: "#9ca3af" }}
                     >
                       {review.rating}/5
                     </span>
@@ -254,7 +254,7 @@ export function ReviewTable({
                 </TableCell>
                 <TableCell
                   style={{
-                    color: "#6b7280",
+                    color: "#9ca3af",
                     fontSize: "13px",
                   }}
                 >
@@ -281,12 +281,12 @@ export function ReviewTable({
                         <Button
                           variant="outline"
                           size="sm"
-                          className="hover:bg-green-50 border-green-200"
+                          className="hover:bg-green-500/10 border-green-500/30"
                           onClick={() => onApprove(review.id)}
                           style={{
-                            color: "#16a34a",
-                            borderColor: "#bbf7d0",
-                            backgroundColor: "#ffffff",
+                            color: "#4ade80",
+                            borderColor: "rgba(74, 222, 128, 0.3)",
+                            backgroundColor: "transparent",
                           }}
                         >
                           <Check className="h-4 w-4 mr-1" />
@@ -295,12 +295,12 @@ export function ReviewTable({
                         <Button
                           variant="outline"
                           size="sm"
-                          className="hover:bg-red-50 border-red-200"
+                          className="hover:bg-red-500/10 border-red-500/30"
                           onClick={() => onReject(review.id)}
                           style={{
-                            color: "#dc2626",
-                            borderColor: "#fecaca",
-                            backgroundColor: "#ffffff",
+                            color: "#f87171",
+                            borderColor: "rgba(248, 113, 113, 0.3)",
+                            backgroundColor: "transparent",
                           }}
                         >
                           <X className="h-4 w-4 mr-1" />
@@ -313,8 +313,8 @@ export function ReviewTable({
                       <div
                         className="text-xs px-2 py-1 rounded-md"
                         style={{
-                          backgroundColor: "#f3f4f6",
-                          color: "#6b7280",
+                          backgroundColor: "#1f2937",
+                          color: "#9ca3af",
                         }}
                       >
                         {review.status === "approved"
@@ -326,10 +326,10 @@ export function ReviewTable({
                     <Button
                       variant="ghost"
                       size="sm"
-                      className="hover:bg-red-50"
+                      className="hover:bg-red-500/10"
                       onClick={() => onDelete(review)}
                       style={{
-                        color: "#dc2626",
+                        color: "#f87171",
                       }}
                     >
                       <Trash2 className="h-4 w-4" />

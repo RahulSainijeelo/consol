@@ -17,6 +17,7 @@ export function ProfileForm({
   handleAddPhone,
   handleRemovePhone,
   handlePhotoUpload,
+  handleUpiQrUpload,
   handleSubmit,
 }: any) {
   if (loading) {
@@ -171,6 +172,74 @@ export function ProfileForm({
               ))}
             </div>
           </div>
+
+          {/* Payment Details Section */}
+          <div className="md:col-span-2 mt-6">
+            <h3 className="text-lg font-semibold mb-4">Payment Details</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <Label>Bank Name</Label>
+                <Input
+                  name="bankName"
+                  value={profile.bankName || ""}
+                  onChange={handleChange}
+                  disabled={!editMode}
+                  placeholder="e.g. HDFC Bank"
+                />
+              </div>
+              <div>
+                <Label>Account Number</Label>
+                <Input
+                  name="accountNo"
+                  value={profile.accountNo || ""}
+                  onChange={handleChange}
+                  disabled={!editMode}
+                  placeholder="Enter account number"
+                />
+              </div>
+              <div>
+                <Label>IFSC Code</Label>
+                <Input
+                  name="ifscCode"
+                  value={profile.ifscCode || ""}
+                  onChange={handleChange}
+                  disabled={!editMode}
+                  placeholder="e.g. HDFC0001234"
+                />
+              </div>
+              <div>
+                <Label>UPI ID</Label>
+                <Input
+                  name="upiId"
+                  value={profile.upiId || ""}
+                  onChange={handleChange}
+                  disabled={!editMode}
+                  placeholder="e.g. username@upi"
+                />
+              </div>
+              <div className="md:col-span-2">
+                <Label>UPI QR Code</Label>
+                <div className="mt-2 flex items-center gap-4">
+                  {profile.upiQrCode && (
+                    <img
+                      src={profile.upiQrCode}
+                      alt="UPI QR Code"
+                      className="w-32 h-32 object-contain border rounded-lg"
+                    />
+                  )}
+                  {editMode && (
+                    <Input
+                      type="file"
+                      accept="image/*"
+                      onChange={handleUpiQrUpload}
+                      disabled={submitting}
+                      className="max-w-xs"
+                    />
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
           {editMode && (
             <div className="flex justify-end gap-2 mt-4">
               <Button type="submit" disabled={submitting}>
@@ -188,6 +257,6 @@ export function ProfileForm({
           )}
         </form>
       </CardContent>
-    </Card>
+    </Card >
   );
 }

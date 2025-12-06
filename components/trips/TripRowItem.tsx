@@ -5,7 +5,7 @@ import { Calendar, MapPin, Clock, ArrowRight } from "lucide-react";
 import { Trip } from "@/types/Trip";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
-
+import { ShineBorder } from "../ui/shine-border";
 interface TripRowItemProps {
     trip: Trip;
     index: number;
@@ -14,8 +14,9 @@ interface TripRowItemProps {
 export function TripRowItem({ trip, index }: TripRowItemProps) {
     return (
         <Link href={`/trip/${trip.id}`} className="group block w-full">
-            <div className="flex flex-col md:flex-row gap-8 items-center py-12 border-b border-white/10 last:border-0 group-hover:bg-white/5 transition-colors duration-500 rounded-3xl px-4 md:px-8">
-                {/* Image Section - Alternating Order */}
+            <div className="flex flex-col md:flex-row gap-8 items-center py-12 border-b border-white/10 last:border-0 group-hover:bg-white/5 transition-colors duration-500 rounded-3xl px-4 md:px-8 relative overflow-hidden">
+                <ShineBorder shineColor={["#A07CFE", "#FE8FB5", "#FFBE7B"]} duration={4} borderWidth={3} />
+
                 <div className={cn(
                     "w-full md:w-5/12 overflow-hidden rounded-2xl relative aspect-[4/3] md:aspect-[16/10]",
                     index % 2 === 1 ? "md:order-2" : "md:order-1"
@@ -34,7 +35,6 @@ export function TripRowItem({ trip, index }: TripRowItemProps) {
                         </Badge>
                     </div>
                 </div>
-
                 {/* Content Section */}
                 <div className={cn(
                     "w-full md:w-7/12 space-y-6",

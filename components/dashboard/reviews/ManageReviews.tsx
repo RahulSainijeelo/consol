@@ -33,8 +33,8 @@ export function ManageReviews() {
     <div
       className="space-y-6"
       style={{
-        backgroundColor: "#ffffff",
-        color: "#000000",
+        backgroundColor: "#000000",
+        color: "#ffffff",
         fontFamily: "var(--font-primary)",
       }}
     >
@@ -42,8 +42,8 @@ export function ManageReviews() {
       <div
         className="flex items-center justify-between p-6 rounded-lg border"
         style={{
-          backgroundColor: "#f8fafc",
-          borderColor: "#e2e8f0",
+          backgroundColor: "#111111",
+          borderColor: "#333333",
           borderWidth: "1px",
         }}
       >
@@ -51,13 +51,13 @@ export function ManageReviews() {
           <h2
             className="text-2xl font-semibold mb-1"
             style={{
-              color: "#000000",
+              color: "#ffffff",
               fontFamily: "var(--font-heading)",
             }}
           >
             Review Management
           </h2>
-          <p className="text-base" style={{ color: "#64748b" }}>
+          <p className="text-base" style={{ color: "#9ca3af" }}>
             Moderate and manage customer feedback
           </p>
         </div>
@@ -66,7 +66,7 @@ export function ManageReviews() {
         <div className="flex items-center gap-3">
           <div
             className="flex items-center gap-2 px-4 py-2 rounded-lg"
-            style={{ backgroundColor: "#fef3c7" }}
+            style={{ backgroundColor: "rgba(217, 119, 6, 0.1)" }}
           >
             <Clock className="h-4 w-4" style={{ color: "#d97706" }} />
             <div className="text-center">
@@ -76,7 +76,7 @@ export function ManageReviews() {
               >
                 {pendingCount}
               </div>
-              <div className="text-xs" style={{ color: "#64748b" }}>
+              <div className="text-xs" style={{ color: "#9ca3af" }}>
                 Pending
               </div>
             </div>
@@ -84,7 +84,7 @@ export function ManageReviews() {
 
           <div
             className="flex items-center gap-2 px-4 py-2 rounded-lg"
-            style={{ backgroundColor: "#dcfce7" }}
+            style={{ backgroundColor: "rgba(22, 163, 74, 0.1)" }}
           >
             <CheckCircle className="h-4 w-4" style={{ color: "#16a34a" }} />
             <div className="text-center">
@@ -94,7 +94,7 @@ export function ManageReviews() {
               >
                 {approvedCount}
               </div>
-              <div className="text-xs" style={{ color: "#64748b" }}>
+              <div className="text-xs" style={{ color: "#9ca3af" }}>
                 Approved
               </div>
             </div>
@@ -102,7 +102,7 @@ export function ManageReviews() {
 
           <div
             className="flex items-center gap-2 px-4 py-2 rounded-lg"
-            style={{ backgroundColor: "#fee2e2" }}
+            style={{ backgroundColor: "rgba(220, 38, 38, 0.1)" }}
           >
             <XCircle className="h-4 w-4" style={{ color: "#dc2626" }} />
             <div className="text-center">
@@ -112,7 +112,7 @@ export function ManageReviews() {
               >
                 {rejectedCount}
               </div>
-              <div className="text-xs" style={{ color: "#64748b" }}>
+              <div className="text-xs" style={{ color: "#9ca3af" }}>
                 Rejected
               </div>
             </div>
@@ -124,18 +124,18 @@ export function ManageReviews() {
       <div
         className="rounded-lg border"
         style={{
-          backgroundColor: "#ffffff",
-          borderColor: "#e5e7eb",
+          backgroundColor: "#111111",
+          borderColor: "#333333",
           borderWidth: "1px",
         }}
       >
-        <div className="p-6 border-b" style={{ borderColor: "#f3f4f6" }}>
+        <div className="p-6 border-b" style={{ borderColor: "#333333" }}>
           <div className="flex items-center justify-between">
             <div>
               <h3
                 className="text-lg font-medium mb-2"
                 style={{
-                  color: "#000000",
+                  color: "#ffffff",
                   fontFamily: "var(--font-heading)",
                 }}
               >
@@ -147,32 +147,32 @@ export function ManageReviews() {
                 <div className="flex items-center gap-2">
                   <div
                     className="w-8 h-8 rounded-full flex items-center justify-center"
-                    style={{ backgroundColor: "#dcfce7" }}
+                    style={{ backgroundColor: "rgba(22, 163, 74, 0.1)" }}
                   >
                     <CheckCircle
                       className="h-4 w-4"
                       style={{ color: "#16a34a" }}
                     />
                   </div>
-                  <span style={{ color: "#64748b" }}>Approve</span>
+                  <span style={{ color: "#9ca3af" }}>Approve</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <div
                     className="w-8 h-8 rounded-full flex items-center justify-center"
-                    style={{ backgroundColor: "#fee2e2" }}
+                    style={{ backgroundColor: "rgba(220, 38, 38, 0.1)" }}
                   >
                     <XCircle className="h-4 w-4" style={{ color: "#dc2626" }} />
                   </div>
-                  <span style={{ color: "#64748b" }}>Reject</span>
+                  <span style={{ color: "#9ca3af" }}>Reject</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <div
                     className="w-8 h-8 rounded-full flex items-center justify-center"
-                    style={{ backgroundColor: "#fef3c7" }}
+                    style={{ backgroundColor: "rgba(217, 119, 6, 0.1)" }}
                   >
                     <Star className="h-4 w-4" style={{ color: "#d97706" }} />
                   </div>
-                  <span style={{ color: "#64748b" }}>View Details</span>
+                  <span style={{ color: "#9ca3af" }}>View Details</span>
                 </div>
               </div>
             </div>
@@ -180,12 +180,12 @@ export function ManageReviews() {
             {/* Summary Stats */}
             <div
               className="text-right p-4 rounded-lg"
-              style={{ backgroundColor: "#f1f5f9" }}
+              style={{ backgroundColor: "#000000" }}
             >
-              <div className="text-2xl font-bold" style={{ color: "#000000" }}>
+              <div className="text-2xl font-bold" style={{ color: "#ffffff" }}>
                 {reviews.length}
               </div>
-              <div className="text-sm" style={{ color: "#64748b" }}>
+              <div className="text-sm" style={{ color: "#9ca3af" }}>
                 Total Reviews
               </div>
             </div>

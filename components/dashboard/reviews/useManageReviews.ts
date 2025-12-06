@@ -5,10 +5,11 @@ export type ExtendedReview = {
   id: string;
   email: string;
   enquiryId: string;
-  name: string;
+  userName: string;
   rating: number;
   comment: string;
   time: string;
+  images: string[];
   status: "approved" | "pending" | "rejected";
 };
 

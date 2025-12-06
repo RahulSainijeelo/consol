@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/input";
 import { ArrowLeft, Mail, Shield } from "lucide-react";
 import Google from "@/public/icons/Google.png";
 import Image from "next/image";
+
 export default function CustomSignInForm() {
   const { signIn, isLoaded } = useSignIn();
   const [email, setEmail] = useState("");
@@ -137,9 +138,9 @@ export default function CustomSignInForm() {
           onClick={() => router.push("/")}
           aria-label="Back to home"
           title="Back to home"
-          className="hover:bg-gray-100"
+          className="hover:bg-white/10"
           style={{
-            color: "#6b7280",
+            color: "#9ca3af",
             borderRadius: "8px",
           }}
         >
@@ -149,21 +150,21 @@ export default function CustomSignInForm() {
         <div className="text-center flex-1">
           <div
             className="w-12 h-12 mx-auto mb-3 rounded-full flex items-center justify-center"
-            style={{ backgroundColor: "#dbeafe" }}
+            style={{ backgroundColor: "rgba(217, 119, 6, 0.1)" }}
           >
-            <Shield className="h-6 w-6" style={{ color: "#3b82f6" }} />
+            <Shield className="h-6 w-6" style={{ color: "#d97706" }} />
           </div>
           <h2
             className="text-2xl font-bold"
             style={{
-              color: "#000000",
+              color: "#ffffff",
               fontFamily: "var(--font-heading)",
             }}
           >
             Welcome Back
           </h2>
-          <p className="text-sm mt-1" style={{ color: "#64748b" }}>
-            Sign in to access your Kurukshetra dashboard
+          <p className="text-sm mt-1" style={{ color: "#9ca3af" }}>
+            Sign in to access your Con-Soul dashboard
           </p>
         </div>
       </div>
@@ -174,14 +175,14 @@ export default function CustomSignInForm() {
           <div className="mb-4">
             <label
               className="block text-sm font-medium mb-2"
-              style={{ color: "#374151" }}
+              style={{ color: "#d1d5db" }}
             >
               Email Address
             </label>
             <div className="relative">
               <Mail
                 className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4"
-                style={{ color: "#9ca3af" }}
+                style={{ color: "#6b7280" }}
               />
               <Input
                 type="email"
@@ -193,9 +194,9 @@ export default function CustomSignInForm() {
                 disabled={pendingOtp || pendingGoogle}
                 className="pl-10"
                 style={{
-                  backgroundColor: "#ffffff",
-                  borderColor: "#d1d5db",
-                  color: "#000000",
+                  backgroundColor: "#111111",
+                  borderColor: "#333333",
+                  color: "#ffffff",
                   fontSize: "14px",
                 }}
               />
@@ -204,10 +205,10 @@ export default function CustomSignInForm() {
 
           <Button
             type="submit"
-            className="w-full mb-4"
+            className="w-full mb-4 hover:opacity-90 transition-opacity"
             disabled={pendingOtp || pendingGoogle}
             style={{
-              backgroundColor: "#3b82f6",
+              backgroundColor: "#d97706",
               color: "#ffffff",
               fontWeight: "600",
               padding: "12px",
@@ -230,7 +231,7 @@ export default function CustomSignInForm() {
           <div className="mb-4">
             <label
               className="block text-sm font-medium mb-2"
-              style={{ color: "#374151" }}
+              style={{ color: "#d1d5db" }}
             >
               Verification Code
             </label>
@@ -244,16 +245,16 @@ export default function CustomSignInForm() {
               maxLength={6}
               className="text-center text-lg tracking-widest"
               style={{
-                backgroundColor: "#ffffff",
-                borderColor: "#d1d5db",
-                color: "#000000",
+                backgroundColor: "#111111",
+                borderColor: "#333333",
+                color: "#ffffff",
                 fontSize: "16px",
                 letterSpacing: "0.2em",
               }}
             />
             <p
               className="text-xs mt-2 text-center"
-              style={{ color: "#64748b" }}
+              style={{ color: "#9ca3af" }}
             >
               Check your email for the verification code
             </p>
@@ -261,10 +262,10 @@ export default function CustomSignInForm() {
 
           <Button
             type="submit"
-            className="w-full mb-4"
+            className="w-full mb-4 hover:opacity-90 transition-opacity"
             disabled={pendingOtp || pendingGoogle}
             style={{
-              backgroundColor: "#10b981",
+              backgroundColor: "#16a34a",
               color: "#ffffff",
               fontWeight: "600",
               padding: "12px",
@@ -285,13 +286,13 @@ export default function CustomSignInForm() {
           <Button
             type="button"
             variant="ghost"
-            className="w-full text-sm"
+            className="w-full text-sm hover:bg-white/10"
             onClick={() => {
               setOtpSent(false);
               setOtp("");
               setPendingVerification(null);
             }}
-            style={{ color: "#6b7280" }}
+            style={{ color: "#9ca3af" }}
           >
             ← Back to email
           </Button>
@@ -302,14 +303,14 @@ export default function CustomSignInForm() {
       <div className="flex items-center my-6">
         <div
           className="flex-grow border-t"
-          style={{ borderColor: "#e5e7eb" }}
+          style={{ borderColor: "#333333" }}
         />
-        <span className="mx-4 text-xs font-medium" style={{ color: "#9ca3af" }}>
+        <span className="mx-4 text-xs font-medium" style={{ color: "#6b7280" }}>
           OR
         </span>
         <div
           className="flex-grow border-t"
-          style={{ borderColor: "#e5e7eb" }}
+          style={{ borderColor: "#333333" }}
         />
       </div>
 
@@ -319,11 +320,11 @@ export default function CustomSignInForm() {
         variant="outline"
         onClick={handleGoogle}
         disabled={pendingGoogle || pendingOtp}
-        className="w-full"
+        className="w-full hover:bg-white/5"
         style={{
-          backgroundColor: "#ffffff",
-          borderColor: "#d1d5db",
-          color: "#374151",
+          backgroundColor: "#000000",
+          borderColor: "#333333",
+          color: "#ffffff",
           fontWeight: "500",
           padding: "12px",
           borderRadius: "8px",

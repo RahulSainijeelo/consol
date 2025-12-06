@@ -66,7 +66,7 @@ export default function SignInPage() {
       {/* Bottom Branding */}
       <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-center">
         <p className="text-sm" style={{ color: "#9ca3af" }}>
-          © 2025 Kurukshetra . All rights reserved.
+          © 2025 Con-Soul . All rights reserved.
         </p>
       </div>
     </div>

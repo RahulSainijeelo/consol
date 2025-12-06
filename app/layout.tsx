@@ -54,59 +54,43 @@ export const viewport: Viewport = {
 }
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://kurukshetra.info'),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://con-soul.online'),
 
   title: {
-    default: "Kurukshetra.info The Intellectual Battlefield for Bharat's Civilizational Future",
-    template: "%s | Kurukshetra.info"
+    default: "con-soul | Expeditions for the Soul",
+    template: "%s | con-soul"
   },
-  description: "Kurukshetra.info is the digital command post in the silent war for Bharat's soul. We provide unflinching analysis on Global, Bharat, Dharma, Politics, and History to arm the modern Intellectual Kshatriya.",
+  description: "Join con-soul for immersive travel experiences. Discover your next adventure with our curated expeditions and journeys designed for the soul.",
 
   keywords: [
-    "Kurukshetra", "dharma", "truth", "authentic news", "Indian journalism",
-    "dharmic values", "civilizational awakening", "Bharat", "Hindu dharma",
-    "politics", "nation", "bharat", "culture", "history", "spiritual journalism",
-    "Rajiv Dixit", "truth movement", "anti-colonial", "indigenous knowledge",
-    "Bharatiya values", "dharma yuddha", "righteous journalism"
+    "travel", "expeditions", "adventure", "soul journeys", "con-soul", "trips", "tours", "spiritual travel", "cultural expeditions"
   ],
 
   authors: [
-    { name: "Kurukshetra Editorial Team" },
-    { name: "Editorial Board" }
+    { name: "con-soul Team" },
+    { name: "Antaryah" }
   ],
-  creator: "Kurukshetra.info Media",
-  publisher: "Kurukshetra.info Digital Media",
+  creator: "con-soul",
+  publisher: "con-soul",
 
   alternates: {
     canonical: '/',
-    languages: {
-      'en-IN': '/en-IN',
-      'hi-IN': '/hi-IN',
-    },
   },
 
   // Open Graph
   openGraph: {
     type: 'website',
-    locale: 'en_IN',
-    alternateLocale: ['hi_IN'],
+    locale: 'en_US',
     url: '/',
-    title: "Kurukshetra.info The Intellectual Battlefield for Bharat's Civilizational Future",
-    description: "Kurukshetra.info is the digital command post in the silent war for Bharat's soul. We provide unflinching analysis on Global, Bharat, Dharma, Politics, and History to arm the modern Intellectual Kshatriya.",
-    siteName: 'Kurukshetra.info',
+    title: "con-soul | Expeditions for the Soul",
+    description: "Join con-soul for immersive travel experiences. Discover your next adventure with our curated expeditions and journeys designed for the soul.",
+    siteName: 'con-soul',
     images: [
       {
         url: '/og-image.jpg',
         width: 1200,
         height: 630,
-        alt: 'Kurukshetra - Dharmic Journalism',
-        type: 'image/jpeg',
-      },
-      {
-        url: '/og-image-square.jpg',
-        width: 1200,
-        height: 1200,
-        alt: 'Kurukshetra Logo',
+        alt: 'con-soul Expeditions',
         type: 'image/jpeg',
       }
     ],
@@ -115,19 +99,19 @@ export const metadata: Metadata = {
   // Twitter Card
   twitter: {
     card: 'summary_large_image',
-    site: '@kurukshetra',
-    creator: '@kurukshetra',
-    title: "Kurukshetra.info The Intellectual Battlefield for Bharat's Civilizational Future",
-    description: "Kurukshetra.info is the digital command post in the silent war for Bharat's soul. We provide unflinching analysis on Global, Bharat, Dharma, Politics, and History to arm the modern Intellectual Kshatriya.",
+    site: '@con-soul',
+    creator: '@con-soul',
+    title: "con-soul | Expeditions for the Soul",
+    description: "Join con-soul for immersive travel experiences. Discover your next adventure with our curated expeditions and journeys designed for the soul.",
     images: ['/twitter-image.jpg'],
   },
 
   // App-specific
-  applicationName: 'Kurukshetra.info',
+  applicationName: 'con-soul',
   appleWebApp: {
     capable: true,
     statusBarStyle: 'default',
-    title: 'Kurukshetra.info',
+    title: 'con-soul',
   },
 
   // Verification
@@ -141,8 +125,8 @@ export const metadata: Metadata = {
   },
 
   // Additional metadata
-  category: 'news',
-  classification: 'News and Media',
+  category: 'travel',
+  classification: 'travel agency',
 
   // Robots
   robots: {
@@ -177,27 +161,26 @@ export default function RootLayout({
 }) {
   const organizationJsonLd = {
     "@context": "https://schema.org",
-    "@type": "NewsMediaOrganization",
-    "name": "Kurukshetra.info",
-    "alternateName": "Kurukshetra Digital Media",
-    "url": process.env.NEXT_PUBLIC_SITE_URL || "https://kurukshetra.info",
+    "@type": "TravelAgency",
+    "name": "con-soul",
+    "alternateName": "con-soul Expeditions",
+    "url": process.env.NEXT_PUBLIC_SITE_URL || "https://con-soul.online",
     "logo": {
       "@type": "ImageObject",
       "url": `${process.env.NEXT_PUBLIC_SITE_URL}/logo.png`,
       "width": 512,
       "height": 512
     },
-    "description": "Kurukshetra.info is the digital command post in the silent war for Bharat's soul. We provide unflinching analysis on Global, Bharat, Dharma, Politics, and History to arm the modern Intellectual Kshatriya.",
-    "foundingDate": "2025",
+    "description": "Join con-soul for immersive travel experiences. Discover your next adventure with our curated expeditions and journeys designed for the soul.",
+    "foundingDate": "2024",
     "founder": {
       "@type": "Person",
-      "name": "Kurukshetra Editorial Team"
+      "name": "con-soul Team"
     },
     "sameAs": [
-      "https://x.com/KURUKSHETRA108?t=-cOx8DWUZF3Oab9z5HNv2g&s=08",
-      "https://www.facebook.com/share/15x8YKAjA5/",
-      "https://www.instagram.com/kurukshetra108?igsh=MTIxNGtrbGJmaHhkbA==",
-      "https://youtube.com/@kuruksetra?si=Zsc_6dA1w_6wnwbB"
+      "https://instagram.com/con-soul",
+      "https://facebook.com/con-soul",
+      "https://twitter.com/con-soul"
     ],
     "address": {
       "@type": "PostalAddress",
@@ -206,33 +189,22 @@ export default function RootLayout({
     },
     "contactPoint": {
       "@type": "ContactPoint",
-      "telephone": "+91-XXXX-XXXXXX",
-      "contactType": "Editorial",
-      "email": "kurukshetra5751@gmail.com"
-    },
-    "publishingPrinciples": `${process.env.NEXT_PUBLIC_SITE_URL}/about`,
-    "diversityPolicy": `${process.env.NEXT_PUBLIC_SITE_URL}/diversity-policy`,
-    "ethicsPolicy": `${process.env.NEXT_PUBLIC_SITE_URL}/ethics-policy`
+      "telephone": "+91-9876543210",
+      "contactType": "Customer Service",
+      "email": "contact@con-soul.online"
+    }
   };
 
   const websiteJsonLd = {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    "name": "Kurukshetra.info",
-    "url": process.env.NEXT_PUBLIC_SITE_URL || "https://kurukshetra.info",
-    "description": "Kurukshetra.info is the digital command post in the silent war for Bharat's soul. We provide unflinching analysis on Global, Bharat, Dharma, Politics, and History to arm the modern Intellectual Kshatriya.",
-    "inLanguage": ["en-IN", "hi-IN"],
-    "potentialAction": {
-      "@type": "SearchAction",
-      "target": {
-        "@type": "EntryPoint",
-        "urlTemplate": `${process.env.NEXT_PUBLIC_SITE_URL}/search?q={search_term_string}`
-      },
-      "query-input": "required name=search_term_string"
-    },
+    "name": "con-soul",
+    "url": process.env.NEXT_PUBLIC_SITE_URL || "https://con-soul.online",
+    "description": "Expeditions for the Soul",
+    "inLanguage": ["en-US"],
     "publisher": {
-      "@type": "NewsMediaOrganization",
-      "name": "Kurukshetra.info",
+      "@type": "Organization",
+      "name": "con-soul",
       "logo": {
         "@type": "ImageObject",
         "url": `${process.env.NEXT_PUBLIC_SITE_URL}/logo.png`

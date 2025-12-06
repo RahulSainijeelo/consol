@@ -43,7 +43,7 @@ export function ReviewDetailsDialog({
         <div className="space-y-4 mt-4">
           <div>
             <h3 className="font-semibold">Customer</h3>
-            <p className="mt-1">{review.name}</p>
+            <p className="mt-1">{review.userName}</p>
           </div>
           <div>
             <h3 className="font-semibold">Rating</h3>
@@ -51,11 +51,10 @@ export function ReviewDetailsDialog({
               {[...Array(5)].map((_, i) => (
                 <Star
                   key={i}
-                  className={`h-5 w-5 ${
-                    i < review.rating
-                      ? "text-yellow-400 fill-yellow-400"
-                      : "text-gray-300"
-                  }`}
+                  className={`h-5 w-5 ${i < review.rating
+                    ? "text-yellow-400 fill-yellow-400"
+                    : "text-gray-300"
+                    }`}
                 />
               ))}
             </div>
@@ -64,6 +63,21 @@ export function ReviewDetailsDialog({
             <h3 className="font-semibold">Review</h3>
             <p className="mt-1 text-gray-700">{review.comment}</p>
           </div>
+          {review.images && review.images.length > 0 && (
+            <div>
+              <h3 className="font-semibold">Images</h3>
+              <div className="flex gap-2 mt-2 overflow-x-auto pb-2">
+                {review.images.map((img, idx) => (
+                  <img
+                    key={idx}
+                    src={img}
+                    alt={`Review image ${idx + 1}`}
+                    className="h-20 w-20 object-cover rounded-md border border-gray-200"
+                  />
+                ))}
+              </div>
+            </div>
+          )}
           <div>
             <h3 className="font-semibold">Status</h3>
             {review.status === "approved" && (

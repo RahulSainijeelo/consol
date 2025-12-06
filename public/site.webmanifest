@@ -1,12 +1,16 @@
 {
-  "name": "Kurukshetra - Take You to the Reality",
-  "short_name": "Kurukshetra",
-  "description": "Dharmic journalism bringing truth and authentic narratives to light",
+  "name": "Cou-Soul",
+  "short_name": "Con-Soul",
+  "description": "Your Trusted Travlling Parner",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#ea580c",
   "orientation": "portrait",
-  "categories": ["news", "education", "lifestyle"],
+  "categories": [
+    "travel",
+    "lifestyle",
+    "luxury"
+  ],
   "lang": "en-IN"
 }

@@ -365,7 +365,7 @@ export default function MyTripsPage() {
                                                     </CardContent>
 
                                                     <CardFooter>
-                                                        <Link href={`/trip/${trip.id}`} className="w-full">
+                                                        <Link href={`/past-trips/${trip.id}`} className="w-full">
                                                             <button className="w-full bg-gold hover:bg-yellow-600 text-black font-semibold py-3 px-6 rounded-xl transition-colors flex items-center justify-center gap-2 group">
                                                                 View Details & Reviews
                                                                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />

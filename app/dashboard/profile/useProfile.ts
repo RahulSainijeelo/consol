@@ -11,6 +11,12 @@ const defaultProfile = {
   whatsapp: "",
   experience: "",
   workingHours: "",
+  description: "",
+  bankName: "",
+  accountNo: "",
+  ifscCode: "",
+  upiId: "",
+  upiQrCode: "",
 };
 
 export function useProfile(imgbbApiKey: string) {
@@ -26,7 +32,7 @@ export function useProfile(imgbbApiKey: string) {
         const res = await fetch("/api/profile");
         if (!res.ok) throw new Error();
         const data = await res.json();
-        setProfile(data);
+        setProfile({ ...defaultProfile, ...data });
       } catch {
         setProfile({ ...defaultProfile });
       }
@@ -62,27 +68,46 @@ export function useProfile(imgbbApiKey: string) {
     }));
   };
 
+  const uploadImage = async (file: File) => {
+    const formData = new FormData();
+    formData.append("image", file);
+    const res = await fetch(
+      `https://api.imgbb.com/1/upload?key=${imgbbApiKey}`,
+      {
+        method: "POST",
+        body: formData,
+      }
+    );
+    const data = await res.json();
+    if (data.success) {
+      return data.data.url;
+    } else {
+      throw new Error("Upload failed");
+    }
+  };
+
   const handlePhotoUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
-    const formData = new FormData();
-    formData.append("image", file);
     setSubmitting(true);
     try {
-      const res = await fetch(
-        `https://api.imgbb.com/1/upload?key=${imgbbApiKey}`,
-        {
-          method: "POST",
-          body: formData,
-        }
-      );
-      const data = await res.json();
-      if (data.success) {
-        setProfile((prev) => ({ ...prev, photo: data.data.url }));
-        toast({ title: "Photo uploaded" });
-      } else {
-        toast({ title: "Upload failed", variant: "destructive" });
-      }
+      const url = await uploadImage(file);
+      setProfile((prev) => ({ ...prev, photo: url }));
+      toast({ title: "Photo uploaded" });
+    } catch {
+      toast({ title: "Upload failed", variant: "destructive" });
+    }
+    setSubmitting(false);
+  };
+
+  const handleUpiQrUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setSubmitting(true);
+    try {
+      const url = await uploadImage(file);
+      setProfile((prev) => ({ ...prev, upiQrCode: url }));
+      toast({ title: "QR Code uploaded" });
     } catch {
       toast({ title: "Upload failed", variant: "destructive" });
     }
@@ -119,6 +144,7 @@ export function useProfile(imgbbApiKey: string) {
     handleAddPhone,
     handleRemovePhone,
     handlePhotoUpload,
+    handleUpiQrUpload,
     handleSubmit,
   };
 }

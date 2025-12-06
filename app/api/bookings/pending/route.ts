@@ -31,11 +31,11 @@ export async function GET(request: NextRequest) {
                 chunks.push(tripIds.slice(i, i + chunkSize));
             }
 
-            const { FieldValue } = require("firebase-admin/firestore");
+            const { FieldPath } = require("firebase-admin/firestore");
 
             await Promise.all(chunks.map(async (chunk) => {
                 const tripsSnapshot = await db.collection("trips")
-                    .where(FieldValue.documentId(), "in", chunk)
+                    .where(FieldPath.documentId(), "in", chunk)
                     .get();
 
                 tripsSnapshot.forEach(doc => {

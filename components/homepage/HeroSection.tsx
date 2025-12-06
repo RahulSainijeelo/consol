@@ -18,11 +18,11 @@ export function HeroSection() {
             </div>
 
             {/* Content */}
-            <div className="relative z-10 flex h-screen items-center justify-center text-center px-4">
+            <div className="relative z-10 md:!pt-16 flex h-screen items-center justify-center text-center px-4">
                 {/* Main Heading Only */}
                 <h1
                     style={{ fontFamily: 'var(--heading-bold)' }}
-                    className="text-6xl sm:text-7xl md:text-8xl lg:text-9xl xl:text-[9.2rem] xl:padding-top-[85px] font-bold tracking-[0.05em] leading-[1.1] animate-slide-up"
+                    className="text-5xl sm:text-5xl md:text-8xl lg:text-9xl xl:text-[9.2rem] xl:padding-top-[85px] font-bold tracking-[0.05em] leading-[1.1] animate-slide-up"
                 >
                     <span className="block text-white mb-6 " style={{ textShadow: '0 2px 20px rgba(0,0,0,0.5)' }}>
                         Discover Your

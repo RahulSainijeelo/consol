@@ -31,7 +31,7 @@ export function DashboardClientWrapper({
   return (
     <>
       <SignedIn>
-        <div className="min-h-screen bg-gray-100">
+        <div className="min-h-screen">
           <DashboardHeader />
           {children}
         </div>

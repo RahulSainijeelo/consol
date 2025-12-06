@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -29,6 +29,8 @@ export default function JoinTripForm({
     const [loading, setLoading] = useState(false);
     const [uploadingAadhaar, setUploadingAadhaar] = useState(false);
     const [uploadingPayment, setUploadingPayment] = useState(false);
+    const [profileData, setProfileData] = useState<any>({});
+    const [profileLoading, setProfileLoading] = useState(true);
 
     const [formData, setFormData] = useState({
         fullName: "",
@@ -41,6 +43,23 @@ export default function JoinTripForm({
     });
 
     const [errors, setErrors] = useState<Record<string, string>>({});
+
+    useEffect(() => {
+        const fetchProfile = async () => {
+            try {
+                const res = await fetch("/api/profile");
+                if (res.ok) {
+                    const data = await res.json();
+                    setProfileData(data);
+                }
+            } catch (error) {
+                console.error("Failed to fetch profile", error);
+            } finally {
+                setProfileLoading(false);
+            }
+        };
+        fetchProfile();
+    }, []);
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
@@ -349,57 +368,95 @@ export default function JoinTripForm({
                             <p className="text-4xl font-bold text-gold">₹{tripPrice.toLocaleString()}</p>
                         </div>
 
-                        <div className="space-y-4">
-                            <div className="flex items-center justify-between p-3 bg-black/30 rounded border border-white/5">
-                                <div>
-                                    <p className="text-xs text-gray-400">UPI ID</p>
-                                    <p ref={(node) => {
-                                        if (node) {
-                                            node.style.setProperty("font-family", "monospace", "important");
-                                        }
-                                    }} className="text-white">pay.kurukshetra@upi</p>
-                                </div>
-                                <Button
-                                    variant="ghost"
-                                    size="sm"
-                                    onClick={() => copyToClipboard("pay.kurukshetra@upi")}
-                                    className="text-gold hover:text-white"
-                                >
-                                    <Copy className="h-4 w-4" />
-                                </Button>
+                        {profileLoading ? (
+                            <div className="flex justify-center py-8">
+                                <Loader2 className="h-8 w-8 text-gold animate-spin" />
                             </div>
+                        ) : (
+                            <div className="space-y-4">
+                                {profileData.upiId && (
+                                    <div className="flex items-center justify-between p-3 bg-black/30 rounded border border-white/5">
+                                        <div>
+                                            <p className="text-xs text-gray-400">UPI ID</p>
+                                            <p ref={(node) => {
+                                                if (node) {
+                                                    node.style.setProperty("font-family", "monospace", "important");
+                                                }
+                                            }} className="text-white">{profileData.upiId}</p>
+                                        </div>
+                                        <Button
+                                            variant="ghost"
+                                            size="sm"
+                                            onClick={() => copyToClipboard(profileData.upiId)}
+                                            className="text-gold hover:text-white"
+                                        >
+                                            <Copy className="h-4 w-4" />
+                                        </Button>
+                                    </div>
+                                )}
 
-                            <div className="flex items-center justify-between p-3 bg-black/30 rounded border border-white/5">
-                                <div >
-                                    <p className="text-xs text-gray-400">Bank Account</p>
-                                    <p ref={(node) => {
-                                        if (node) {
-                                            node.style.setProperty("font-family", "monospace", "important");
-                                        }
-                                    }} className="text-white">987654321012</p>
-                                    <p ref={(node) => {
-                                        if (node) {
-                                            node.style.setProperty("font-family", "monospace", "important");
-                                        }
-                                    }} className="text-xs text-gray-500">IFSC: KURU0001234</p>
-                                </div>
-                                <Button
-                                    variant="ghost"
-                                    size="sm"
-                                    onClick={() => copyToClipboard("987654321012")}
-                                    className="text-gold hover:text-white"
-                                >
-                                    <Copy className="h-4 w-4" />
-                                </Button>
-                            </div>
+                                {(profileData.accountNo || profileData.ifscCode) && (
+                                    <div className="flex items-center justify-between p-3 bg-black/30 rounded border border-white/5">
+                                        <div>
+                                            <p className="text-xs text-gray-400">Bank Account</p>
+                                            {profileData.bankName && <p className="text-xs text-gray-500 mb-1">{profileData.bankName}</p>}
+                                            <p ref={(node) => {
+                                                if (node) {
+                                                    node.style.setProperty("font-family", "monospace", "important");
+                                                }
+                                            }} className="text-white">{profileData.accountNo}</p>
+                                            <p ref={(node) => {
+                                                if (node) {
+                                                    node.style.setProperty("font-family", "monospace", "important");
+                                                }
+                                            }} className="text-xs text-gray-500">IFSC: {profileData.ifscCode}</p>
+                                        </div>
+                                        <Button
+                                            variant="ghost"
+                                            size="sm"
+                                            onClick={() => copyToClipboard(profileData.accountNo)}
+                                            className="text-gold hover:text-white"
+                                        >
+                                            <Copy className="h-4 w-4" />
+                                        </Button>
+                                    </div>
+                                )}
 
-                            <div className="flex justify-center py-4">
-                                <div className="bg-white p-4 rounded-lg">
-                                    <QrCode className="h-32 w-32 text-black" />
-                                </div>
+                                {profileData.upiQrCode ? (
+                                    <div className="flex flex-col items-center py-4 gap-4">
+                                        <div className="bg-white p-4 rounded-lg">
+                                            <img
+                                                src={profileData.upiQrCode}
+                                                alt="UPI QR Code"
+                                                className="h-48 w-48 object-contain"
+                                            />
+                                        </div>
+                                        <Button
+                                            variant="outline"
+                                            size="sm"
+                                            className="border-gold text-gold hover:bg-gold hover:text-black"
+                                            onClick={() => {
+                                                const link = document.createElement('a');
+                                                link.href = profileData.upiQrCode;
+                                                link.download = 'payment-qr.png';
+                                                document.body.appendChild(link);
+                                                link.click();
+                                                document.body.removeChild(link);
+                                            }}
+                                        >
+                                            Download QR Code
+                                        </Button>
+                                    </div>
+                                ) : (
+                                    <div className="flex justify-center py-4">
+                                        <div className="bg-white p-4 rounded-lg">
+                                            <QrCode className="h-32 w-32 text-black" />
+                                        </div>
+                                    </div>
+                                )}
+                                <p className="text-center text-xs text-gray-500">Scan to pay via any UPI app</p>
                             </div>
-                            <p className="text-center text-xs text-gray-500">Scan to pay via any UPI app</p>
-                        </div>
+                        )}
 
                         <div>
                             <Label className="text-gray-300">Upload Payment Screenshot</Label>
